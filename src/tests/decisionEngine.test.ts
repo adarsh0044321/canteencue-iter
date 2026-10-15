@@ -311,5 +311,32 @@ describe("CanteenCue Decision Engine — TCS Problem Statement Tests", () => {
     expect(query3.response.primaryItem!.item.name).toBe("Spl Kitkat");
     expect(query3.response.primaryItem!.selectedPrice).toBe(80);
   });
+
+  // Scenario V — Direct Item Selection & Alternative Inquiries (Ask Assistant & Ask About This)
+  it("Scenario V: Direct item queries and alternative inquiries resolve accurately to primary recommendation", () => {
+    // 1. Menu modal "Ask assistant" on Pineapple
+    const pineappleQuery = processUserDecision("Can I get Pineapple?");
+    expect(pineappleQuery.response.type).toBe("recommendation");
+    expect(pineappleQuery.response.primaryItem).toBeDefined();
+    expect(pineappleQuery.response.primaryItem!.item.name).toBe("Pineapple");
+    expect(pineappleQuery.response.primaryItem!.item.shop).toBe("Iter Juice Centre");
+    expect(pineappleQuery.response.primaryItem!.selectedPrice).toBe(80);
+    expect(pineappleQuery.response.summaryText).toContain("Pineapple");
+
+    // 2. Alternative card "Ask about this" on Café Frappe (Cold Coffee)
+    const altQuery = processUserDecision("What about Café Frappe (Cold Coffee)?");
+    expect(altQuery.response.type).toBe("recommendation");
+    expect(altQuery.response.primaryItem).toBeDefined();
+    expect(altQuery.response.primaryItem!.item.name).toBe("Café Frappe (Cold Coffee)");
+    expect(altQuery.response.primaryItem!.item.shop).toBe("MAGGIE POINT");
+    expect(altQuery.response.primaryItem!.selectedPrice).toBe(80);
+
+    // 3. Alternative card "Tell me more about" on Coffee
+    const coffeeQuery = processUserDecision("Tell me more about Coffee");
+    expect(coffeeQuery.response.type).toBe("recommendation");
+    expect(coffeeQuery.response.primaryItem).toBeDefined();
+    expect(coffeeQuery.response.primaryItem!.item.name).toBe("Coffee");
+    expect(coffeeQuery.response.primaryItem!.item.shop).toBe("Anna's Restaurant & Catering");
+  });
 });
 

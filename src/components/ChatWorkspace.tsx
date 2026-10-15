@@ -28,22 +28,37 @@ export const ChatWorkspace: React.FC<ChatWorkspaceProps> = ({
   onOpenMenuModal,
   onOpenApiConfigModal,
 }) => {
-  const bottomRef = useRef<HTMLDivElement>(null);
+  const latestTurnRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      bottomRef.current?.scrollIntoView({ behavior: "smooth", block: "end" });
-    }, 80);
+      if (latestTurnRef.current) {
+        latestTurnRef.current.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
+      }
+    }, 90);
     return () => clearTimeout(timer);
-  }, [messages, isLoading]);
+  }, [messages.length, isLoading]);
 
   return (
     <div className="chat-workspace" role="log" aria-live="polite">
       <div className="chat-stream">
-        {messages.map((msg) => {
+        {messages.map((msg, index) => {
+          // Keep current interaction turn in view: anchor to the user prompt if assistant replied, or the latest message
+          const isLatestTurnAnchor =
+            messages[messages.length - 1]?.sender === "assistant"
+              ? index === Math.max(0, messages.length - 2)
+              : index === messages.length - 1;
+
           if (msg.sender === "user") {
             return (
-              <div key={msg.id} className="user-message-row">
+              <div
+                key={msg.id}
+                ref={isLatestTurnAnchor ? latestTurnRef : undefined}
+                className="user-message-row"
+              >
                 <div className="msg-user-bubble">
                   {msg.text}
                 </div>
@@ -57,7 +72,11 @@ export const ChatWorkspace: React.FC<ChatWorkspaceProps> = ({
           const decision = msg.decision;
 
           return (
-            <div key={msg.id} className="assistant-message-row">
+            <div
+              key={msg.id}
+              ref={isLatestTurnAnchor ? latestTurnRef : undefined}
+              className="assistant-message-row"
+            >
               {/* Glowing Gradient Circle Avatar matching Image 3 */}
               <div className="ai-avatar-circle" title="CanteenCue AI" />
 
@@ -205,13 +224,11 @@ export const ChatWorkspace: React.FC<ChatWorkspaceProps> = ({
         {/* Dynamic Multi-Statement AI Thinking Phase */}
         {isLoading && <AiThinkingPhase isAiMode={isAiMode} />}
 
-        {/* Scroll anchor with generous bottom clearance above floating composer */}
+        {/* Bottom clearance above floating composer */}
         <div
-          ref={bottomRef}
           style={{
-            height: "8px",
+            height: "16px",
             width: "100%",
-            scrollMarginBottom: "240px",
             pointerEvents: "none",
           }}
         />

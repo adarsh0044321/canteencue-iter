@@ -29,10 +29,27 @@ import {
   setGuestMode,
 } from "./services/authService";
 
+// Helper to check if a Supabase session or guest state exists synchronously before initial async fetch
+function hasLikelyStoredSession(): boolean {
+  try {
+    if (typeof window === "undefined" || !window.localStorage) return false;
+    if (isGuestModeActive()) return true;
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i);
+      if (key && key.startsWith("sb-") && key.endsWith("-auth-token")) {
+        const item = localStorage.getItem(key);
+        if (item && item.includes("access_token")) return true;
+      }
+    }
+  } catch {}
+  return false;
+}
+
 export const App: React.FC = () => {
   // Authentication & Guest State
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [isGuest, setIsGuest] = useState<boolean>(() => isGuestModeActive());
+  const [isAuthInitializing, setIsAuthInitializing] = useState<boolean>(() => hasLikelyStoredSession());
 
   // Mascot Avatar State (Randomized on first visit, switchable anytime)
   const [currentAvatarId, setCurrentAvatarId] = useState<string>(() => getStoredAvatarId());
@@ -129,6 +146,10 @@ export const App: React.FC = () => {
         }
       } catch (err) {
         console.warn("Auth initialization warning:", err);
+      } finally {
+        if (isMounted) {
+          setIsAuthInitializing(false);
+        }
       }
     }
 
@@ -370,6 +391,35 @@ export const App: React.FC = () => {
     }
   }, []);
 
+
+  // While determining session, show subtle ambient loader so LoginPage never flashes on refresh
+  if (isAuthInitializing) {
+    return (
+      <div
+        style={{
+          position: "fixed",
+          inset: 0,
+          background: "#080c0a",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          zIndex: 9999,
+        }}
+      >
+        <div style={{ textAlign: "center" }}>
+          <img
+            src="/logo.png"
+            alt="CanteenCue"
+            style={{
+              width: "56px",
+              height: "56px",
+              opacity: 0.9,
+            }}
+          />
+        </div>
+      </div>
+    );
+  }
 
   // If user is neither signed in nor a guest, show the LoginPage gateway
   if (!currentUser && !isGuest) {

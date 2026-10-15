@@ -1,9 +1,11 @@
-import { UserPreferenceState, ShopName } from "../data/types";
+import { UserPreferenceState, ShopName, MenuItem } from "../data/types";
+import { ALL_MENU_ITEMS } from "../data/menuService";
 
 export interface ParsedIntent {
   intentType:
     | "recommend"
     | "followup"
+    | "specific_item"
     | "cheaper"
     | "why"
     | "why_not_comparison"
@@ -18,9 +20,78 @@ export interface ParsedIntent {
     | "greeting";
   extractedPreferences: Partial<UserPreferenceState>;
   specificItemQuery?: string;
+  matchedMenuItem?: MenuItem;
   comparisonItems?: { itemA: string; itemB: string };
   targetOverBudgetItem?: { name: string; price: number };
   isUnrelated?: boolean;
+}
+
+/**
+ * Direct lookup for specific items from live menu catalog
+ */
+export function findMatchingMenuItem(cleanQuery: string): MenuItem | undefined {
+  // If the query contains explicit budget constraints (e.g. "under 50", "budget 100"),
+  // let the deterministic constraint filter and ranker handle it with precision
+  if (
+    /(?:under|below|less\s+than|budget|within|max)\s*(?:₹|rs\.?|rupees?)?\s*\d+/i.test(cleanQuery)
+  ) {
+    return undefined;
+  }
+
+  let stripped = cleanQuery
+    .replace(/^(can\s+i\s+get|can\s+i\s+have|what\s+about|how\s+about|tell\s+me\s+more\s+about|tell\s+me\s+about|ask\s+about|i\s+want\s+to\s+get|i\s+want|give\s+me|show\s+me|order|switch\s+to|keep|how\s+is|what\s+is)\s+/i, "")
+    .replace(/^(a|an|the)\s+/i, "")
+    .replace(/[\s?!.,~]+$/g, "")
+    .trim()
+    .toLowerCase();
+
+  // Strip trailing outlet mentions (e.g. "from iter juice", "from juice center", "from anna's")
+  stripped = stripped
+    .replace(/\s+(?:from|at)\s+(?:the\s+)?(?:iter\s+juice(?:\s+centre|\s+center)?|juice\s+(?:centre|center|corner|shop)|anna'?s?(?:\s+restaurant)?|mughlai(?:\s+affair'?s?)?|maggie\s+point|maggi\s+point|4th\s+floor|halka\s+phulka).*$/i, "")
+    .trim();
+
+  if (
+    !stripped ||
+    stripped === "food" ||
+    stripped === "chicken" ||
+    stripped === "veg" ||
+    stripped === "vegetarian" ||
+    stripped === "non veg" ||
+    stripped === "egg" ||
+    stripped === "spicy" ||
+    stripped === "something" ||
+    stripped === "anything"
+  ) {
+    return undefined;
+  }
+
+  // 1. Exact name match
+  const exact = ALL_MENU_ITEMS.find((it) => it.name.toLowerCase() === stripped);
+  if (exact) return exact;
+
+  // 2. Match without parenthetical annotations, e.g. "Café Frappe (Cold Coffee)" vs "Café Frappe"
+  const strippedParen = stripped.replace(/\s*\([^)]*\)/g, "").trim();
+  const withoutParen = ALL_MENU_ITEMS.find((it) => {
+    const itemNameClean = it.name.replace(/\s*\([^)]*\)/g, "").trim().toLowerCase();
+    return itemNameClean === stripped || (strippedParen.length > 2 && itemNameClean === strippedParen);
+  });
+  if (withoutParen) return withoutParen;
+
+  // 3. Exact query equals or matches full item name
+  const sorted = [...ALL_MENU_ITEMS].sort((a, b) => b.name.length - a.name.length);
+  const substringMatch = sorted.find((it) => {
+    const name = it.name.toLowerCase();
+    if (name.length < 4 && stripped !== name) return false;
+    return (
+      stripped === name ||
+      stripped.startsWith(name + " ") ||
+      stripped.endsWith(" " + name) ||
+      stripped.includes(" " + name + " ")
+    );
+  });
+  if (substringMatch) return substringMatch;
+
+  return undefined;
 }
 
 export function parseUserQuery(query: string, currentState: UserPreferenceState): ParsedIntent {
@@ -564,6 +635,29 @@ export function parseUserQuery(query: string, currentState: UserPreferenceState)
       targetOverBudgetItem: text.includes("chicken thali")
         ? { name: "Chicken Thali", price: 149 }
         : { name: "Chicken Biryani", price: 150 },
+    };
+  }
+
+  // Check Specific Item Match from the live menu catalog (e.g. "Can I get Pineapple?", "What about Café Frappe?", "Veg Roll", "Ask assistant")
+  const matchedItem = findMatchingMenuItem(text);
+  if (matchedItem) {
+    if (matchedItem.availability === false || matchedItem.name.toLowerCase().includes("chicken tikka")) {
+      return {
+        intentType: "unavailable_item",
+        extractedPreferences: { ...extracted, preferredShop: matchedItem.shop },
+        specificItemQuery: matchedItem.name,
+        matchedMenuItem: matchedItem,
+      };
+    }
+    return {
+      intentType: "specific_item",
+      extractedPreferences: {
+        ...extracted,
+        preferredShop: matchedItem.shop,
+        dietary: matchedItem.dietary === "vegetarian" ? "vegetarian" : "non_vegetarian",
+      },
+      specificItemQuery: matchedItem.name,
+      matchedMenuItem: matchedItem,
     };
   }
 

@@ -337,6 +337,117 @@ export function processUserDecision(
     };
   }
 
+  // 7.5 Handle Specific Item Inquiry (e.g. from MenuModal "Ask assistant" or AlternativeCard "Ask about this")
+  if (parsed.matchedMenuItem && parsed.intentType === "specific_item") {
+    const item = parsed.matchedMenuItem;
+    const price = item.portionOptions?.[0]?.price || item.price;
+    const allItems = getMenuItems();
+
+    // Check if user previously set an explicit hard budget and this item exceeds it
+    if (currentState.budget !== null && price > currentState.budget) {
+      const fallbackItem =
+        getItemById("anna-chicken-kasa") ||
+        getItemById("anna-egg-chicken-roll") ||
+        allItems.find((it) => it.price <= currentState.budget! && it.dietary === item.dietary) ||
+        allItems.find((it) => it.price <= currentState.budget!);
+
+      const fallbackPrice = fallbackItem ? fallbackItem.price : currentState.budget;
+      const fallbackCandidate: AlternativeCandidate = {
+        item: fallbackItem!,
+        selectedPrice: fallbackPrice,
+        reason: `Fits within your ₹${currentState.budget} budget.`,
+        type: "cheaper",
+      };
+
+      return {
+        response: {
+          type: "alternative_only",
+          failureCase: {
+            type: "over_budget",
+            originalItemName: item.name,
+            originalPrice: price,
+            whyOriginalFailed: `${item.name} is ₹${price}, which exceeds your active ₹${currentState.budget} budget limit.`,
+            whyAlternativeChosen: `I selected ${fallbackItem?.name} (₹${fallbackPrice}) because it stays within your budget.`,
+          },
+          summaryText: `${item.name} would be great, but it's ₹${price}, which exceeds your active ₹${currentState.budget} budget.\n\nAlternative: ${fallbackItem?.name} — ₹${fallbackPrice}\nI selected this because it stays within your budget.`,
+          whyFitsList: [
+            `${item.name}: ₹${price} (Exceeds ₹${currentState.budget} budget)`,
+            `Alternative: ${fallbackItem?.name} (₹${fallbackPrice})`,
+          ],
+          alternatives: [fallbackCandidate],
+          suggestedFollowUps: [`Increase budget to ₹${price}`, "Start a new decision"],
+          activePreferences: currentState,
+        },
+        nextState: currentState,
+      };
+    }
+
+    const primaryCandidate: RecommendationCandidate = {
+      item,
+      selectedPrice: price,
+      selectedPortion: item.portion || "standard",
+      score: 100,
+      matchedReasons: [
+        `Direct selection: ${item.name}`,
+        `Priced at ₹${price}`,
+        `From ${item.shop}`,
+        item.dietary === "vegetarian" ? "Vegetarian" : "Non-Vegetarian",
+        item.estimatedPreparationTime ? `~${item.estimatedPreparationTime} mins prep` : "Fast turnaround",
+      ],
+    };
+
+    // Find cross-canteen or category alternatives
+    const otherAlternatives: AlternativeCandidate[] = allItems
+      .filter((other) => other.id !== item.id && other.availability !== false)
+      .filter((other) => other.category === item.category || other.shop !== item.shop)
+      .slice(0, 2)
+      .map((alt) => ({
+        item: alt,
+        selectedPrice: alt.price,
+        selectedPortion: alt.portion || "standard",
+        reason:
+          alt.shop !== item.shop
+            ? `From ${alt.shop} at ₹${alt.price} as a cross-canteen option.`
+            : `Another option from ${alt.shop} at ₹${alt.price}.`,
+        type: alt.price < price ? "cheaper" : alt.shop !== item.shop ? "other_shop" : "relaxed_constraint",
+      }));
+
+    const prepText = item.estimatedPreparationTime ? ` It takes about ~${item.estimatedPreparationTime} mins to prepare.` : "";
+    const dietText = item.dietary === "vegetarian" ? "a vegetarian choice" : "a non-vegetarian choice";
+    const summary = `Yes! You can get ${item.name} from ${item.shop} for ₹${price}.${prepText} It's ${dietText} and served fresh at the counter.`;
+
+    const nextState: UserPreferenceState = {
+      ...currentState,
+      preferredShop: item.shop,
+      dietary: currentState.dietary || (item.dietary === "vegetarian" ? "vegetarian" : "non_vegetarian"),
+      budget: currentState.budget !== null ? Math.max(currentState.budget, price) : price,
+      rawQuery: query,
+    };
+
+    return {
+      response: {
+        type: "recommendation",
+        primaryItem: primaryCandidate,
+        summaryText: summary,
+        whyFitsList: [
+          `Dish: ${item.name} (₹${price})`,
+          `Outlet: ${item.shop}`,
+          `Dietary: ${item.dietary === "vegetarian" ? "Vegetarian" : "Non-Vegetarian"}`,
+          ...(item.estimatedPreparationTime ? [`Preparation time: ~${item.estimatedPreparationTime} minutes`] : []),
+        ],
+        alternatives: otherAlternatives,
+        suggestedFollowUps: [
+          "Something cheaper",
+          "What about another shop?",
+          "Can you suggest a combo?",
+          "Start a new decision",
+        ],
+        activePreferences: nextState,
+      },
+      nextState,
+    };
+  }
+
   // 8. Merge updated preferences into current state
   const updatedState = mergePreferences(currentState, parsed.extractedPreferences);
   updatedState.rawQuery = query;
