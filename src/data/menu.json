@@ -1,0 +1,5445 @@
+[
+  {
+    "id": "anna-veg-roll",
+    "shop": "Anna's Restaurant & Catering",
+    "name": "Veg Roll",
+    "category": "Rolls",
+    "price": 59,
+    "dietary": "vegetarian",
+    "tags": [
+      "filling",
+      "light",
+      "snack",
+      "crispy"
+    ],
+    "estimatedPreparationTime": 10,
+    "availability": true,
+    "spiceLevel": "mild",
+    "fillingLevel": "medium",
+    "foodType": "roll"
+  },
+  {
+    "id": "anna-paneer-roll",
+    "shop": "Anna's Restaurant & Catering",
+    "name": "Paneer Roll",
+    "category": "Rolls",
+    "price": 69,
+    "dietary": "vegetarian",
+    "tags": [
+      "filling",
+      "snack",
+      "paneer",
+      "comfort"
+    ],
+    "estimatedPreparationTime": 10,
+    "availability": true,
+    "spiceLevel": "medium",
+    "fillingLevel": "medium",
+    "foodType": "roll"
+  },
+  {
+    "id": "anna-mushroom-roll",
+    "shop": "Anna's Restaurant & Catering",
+    "name": "Mushroom Roll",
+    "category": "Rolls",
+    "price": 69,
+    "dietary": "vegetarian",
+    "tags": [
+      "filling",
+      "snack",
+      "mushroom"
+    ],
+    "estimatedPreparationTime": 10,
+    "availability": true,
+    "spiceLevel": "medium",
+    "fillingLevel": "medium",
+    "foodType": "roll"
+  },
+  {
+    "id": "anna-mix-veg-roll",
+    "shop": "Anna's Restaurant & Catering",
+    "name": "Mix Veg Roll",
+    "category": "Rolls",
+    "price": 79,
+    "dietary": "vegetarian",
+    "tags": [
+      "healthy",
+      "wholesome",
+      "light",
+      "veggies",
+      "snack"
+    ],
+    "estimatedPreparationTime": 10,
+    "availability": true,
+    "spiceLevel": "mild",
+    "fillingLevel": "medium",
+    "foodType": "roll"
+  },
+  {
+    "id": "anna-egg-roll",
+    "shop": "Anna's Restaurant & Catering",
+    "name": "Egg Roll",
+    "category": "Rolls",
+    "price": 79,
+    "dietary": "contains_egg",
+    "tags": [
+      "filling",
+      "snack",
+      "egg",
+      "protein"
+    ],
+    "estimatedPreparationTime": 10,
+    "availability": true,
+    "spiceLevel": "medium",
+    "fillingLevel": "medium",
+    "foodType": "roll"
+  },
+  {
+    "id": "anna-egg-chicken-roll",
+    "shop": "Anna's Restaurant & Catering",
+    "name": "Egg Chicken Roll",
+    "category": "Rolls",
+    "price": 79,
+    "dietary": "non_vegetarian",
+    "tags": [
+      "filling",
+      "snack",
+      "chicken",
+      "protein"
+    ],
+    "estimatedPreparationTime": 10,
+    "availability": true,
+    "spiceLevel": "medium",
+    "fillingLevel": "medium",
+    "foodType": "roll"
+  },
+  {
+    "id": "anna-veg-noodles",
+    "shop": "Anna's Restaurant & Catering",
+    "name": "Veg Noodles",
+    "category": "Noodles",
+    "price": 79,
+    "portionOptions": [
+      {
+        "portion": "half",
+        "price": 79
+      },
+      {
+        "portion": "full",
+        "price": 99
+      }
+    ],
+    "dietary": "vegetarian",
+    "tags": [
+      "filling",
+      "comfort",
+      "noodles"
+    ],
+    "estimatedPreparationTime": 15,
+    "availability": true,
+    "spiceLevel": "mild",
+    "fillingLevel": "heavy",
+    "foodType": "noodles"
+  },
+  {
+    "id": "anna-veg-schezwan-noodles",
+    "shop": "Anna's Restaurant & Catering",
+    "name": "Veg Schezwan Noodles",
+    "category": "Noodles",
+    "price": 89,
+    "portionOptions": [
+      {
+        "portion": "half",
+        "price": 89
+      },
+      {
+        "portion": "full",
+        "price": 109
+      }
+    ],
+    "dietary": "vegetarian",
+    "tags": [
+      "spicy",
+      "filling",
+      "comfort",
+      "noodles"
+    ],
+    "estimatedPreparationTime": 15,
+    "availability": true,
+    "spiceLevel": "spicy",
+    "fillingLevel": "heavy",
+    "foodType": "noodles"
+  },
+  {
+    "id": "anna-paneer-noodles",
+    "shop": "Anna's Restaurant & Catering",
+    "name": "Paneer Noodles",
+    "category": "Noodles",
+    "price": 89,
+    "portionOptions": [
+      {
+        "portion": "half",
+        "price": 89
+      },
+      {
+        "portion": "full",
+        "price": 129
+      }
+    ],
+    "dietary": "vegetarian",
+    "tags": [
+      "filling",
+      "paneer",
+      "comfort",
+      "noodles"
+    ],
+    "estimatedPreparationTime": 15,
+    "availability": true,
+    "spiceLevel": "medium",
+    "fillingLevel": "heavy",
+    "foodType": "noodles"
+  },
+  {
+    "id": "anna-egg-noodles",
+    "shop": "Anna's Restaurant & Catering",
+    "name": "Egg Noodles",
+    "category": "Noodles",
+    "price": 89,
+    "portionOptions": [
+      {
+        "portion": "half",
+        "price": 89
+      },
+      {
+        "portion": "full",
+        "price": 119
+      }
+    ],
+    "dietary": "contains_egg",
+    "tags": [
+      "filling",
+      "egg",
+      "comfort",
+      "noodles"
+    ],
+    "estimatedPreparationTime": 15,
+    "availability": true,
+    "spiceLevel": "medium",
+    "fillingLevel": "heavy",
+    "foodType": "noodles"
+  },
+  {
+    "id": "anna-paneer-fried-rice",
+    "shop": "Anna's Restaurant & Catering",
+    "name": "Paneer Fried Rice",
+    "category": "Rice",
+    "price": 89,
+    "dietary": "vegetarian",
+    "tags": [
+      "filling",
+      "comfort",
+      "paneer",
+      "rice"
+    ],
+    "estimatedPreparationTime": 15,
+    "availability": true,
+    "spiceLevel": "medium",
+    "fillingLevel": "heavy",
+    "foodType": "rice"
+  },
+  {
+    "id": "anna-egg-fried-rice",
+    "shop": "Anna's Restaurant & Catering",
+    "name": "Egg Fried Rice",
+    "category": "Rice",
+    "price": 89,
+    "dietary": "contains_egg",
+    "tags": [
+      "filling",
+      "comfort",
+      "egg",
+      "rice"
+    ],
+    "estimatedPreparationTime": 15,
+    "availability": true,
+    "spiceLevel": "medium",
+    "fillingLevel": "heavy",
+    "foodType": "rice"
+  },
+  {
+    "id": "anna-veg-thali",
+    "shop": "Anna's Restaurant & Catering",
+    "name": "Veg Thali",
+    "category": "Thali",
+    "price": 99,
+    "dietary": "vegetarian",
+    "tags": [
+      "filling",
+      "wholesome",
+      "traditional",
+      "thali"
+    ],
+    "estimatedPreparationTime": 15,
+    "availability": true,
+    "spiceLevel": "medium",
+    "fillingLevel": "heavy",
+    "foodType": "thali"
+  },
+  {
+    "id": "anna-paneer-thali",
+    "shop": "Anna's Restaurant & Catering",
+    "name": "Paneer Thali",
+    "category": "Thali",
+    "price": 109,
+    "dietary": "vegetarian",
+    "tags": [
+      "filling",
+      "wholesome",
+      "paneer",
+      "thali"
+    ],
+    "estimatedPreparationTime": 15,
+    "availability": true,
+    "spiceLevel": "medium",
+    "fillingLevel": "heavy",
+    "foodType": "thali"
+  },
+  {
+    "id": "anna-egg-thali",
+    "shop": "Anna's Restaurant & Catering",
+    "name": "Egg Thali",
+    "category": "Thali",
+    "price": 119,
+    "dietary": "contains_egg",
+    "tags": [
+      "filling",
+      "wholesome",
+      "egg",
+      "thali"
+    ],
+    "estimatedPreparationTime": 15,
+    "availability": true,
+    "spiceLevel": "medium",
+    "fillingLevel": "heavy",
+    "foodType": "thali"
+  },
+  {
+    "id": "anna-chicken-thali",
+    "shop": "Anna's Restaurant & Catering",
+    "name": "Chicken Thali",
+    "category": "Thali",
+    "price": 149,
+    "dietary": "non_vegetarian",
+    "tags": [
+      "filling",
+      "wholesome",
+      "chicken",
+      "thali"
+    ],
+    "estimatedPreparationTime": 20,
+    "availability": true,
+    "spiceLevel": "medium",
+    "fillingLevel": "heavy",
+    "foodType": "thali"
+  },
+  {
+    "id": "anna-fish-thali",
+    "shop": "Anna's Restaurant & Catering",
+    "name": "Fish Thali",
+    "category": "Thali",
+    "price": 129,
+    "dietary": "non_vegetarian",
+    "tags": [
+      "filling",
+      "wholesome",
+      "fish",
+      "thali"
+    ],
+    "estimatedPreparationTime": 20,
+    "availability": true,
+    "spiceLevel": "medium",
+    "fillingLevel": "heavy",
+    "foodType": "thali"
+  },
+  {
+    "id": "anna-mix-veg-biriyani",
+    "shop": "Anna's Restaurant & Catering",
+    "name": "Mix Veg Biriyani",
+    "category": "Biryani",
+    "price": 119,
+    "dietary": "vegetarian",
+    "tags": [
+      "filling",
+      "aromatic",
+      "rice"
+    ],
+    "estimatedPreparationTime": 15,
+    "availability": true,
+    "spiceLevel": "medium",
+    "fillingLevel": "heavy",
+    "foodType": "rice"
+  },
+  {
+    "id": "anna-paneer-biriyani",
+    "shop": "Anna's Restaurant & Catering",
+    "name": "Paneer Biriyani",
+    "category": "Biryani",
+    "price": 99,
+    "dietary": "vegetarian",
+    "tags": [
+      "filling",
+      "aromatic",
+      "paneer",
+      "rice"
+    ],
+    "estimatedPreparationTime": 15,
+    "availability": true,
+    "spiceLevel": "medium",
+    "fillingLevel": "heavy",
+    "foodType": "rice"
+  },
+  {
+    "id": "anna-mushroom-biriyani",
+    "shop": "Anna's Restaurant & Catering",
+    "name": "Mushroom Biriyani",
+    "category": "Biryani",
+    "price": 99,
+    "dietary": "vegetarian",
+    "tags": [
+      "filling",
+      "aromatic",
+      "mushroom",
+      "rice"
+    ],
+    "estimatedPreparationTime": 15,
+    "availability": true,
+    "spiceLevel": "medium",
+    "fillingLevel": "heavy",
+    "foodType": "rice"
+  },
+  {
+    "id": "anna-chicken-kasa",
+    "shop": "Anna's Restaurant & Catering",
+    "name": "Chicken Kasa",
+    "category": "Chicken",
+    "price": 99,
+    "portionOptions": [
+      {
+        "portion": "half",
+        "price": 99
+      },
+      {
+        "portion": "full",
+        "price": 189
+      }
+    ],
+    "dietary": "non_vegetarian",
+    "tags": [
+      "spicy",
+      "chicken",
+      "gravy",
+      "filling",
+      "comfort"
+    ],
+    "estimatedPreparationTime": 15,
+    "availability": true,
+    "spiceLevel": "spicy",
+    "fillingLevel": "heavy",
+    "foodType": "chicken"
+  },
+  {
+    "id": "anna-kadhai-chicken",
+    "shop": "Anna's Restaurant & Catering",
+    "name": "Kadhai Chicken",
+    "category": "Chicken",
+    "price": 99,
+    "portionOptions": [
+      {
+        "portion": "half",
+        "price": 99
+      },
+      {
+        "portion": "full",
+        "price": 189
+      }
+    ],
+    "dietary": "non_vegetarian",
+    "tags": [
+      "spicy",
+      "chicken",
+      "gravy",
+      "aromatic"
+    ],
+    "estimatedPreparationTime": 15,
+    "availability": true,
+    "spiceLevel": "spicy",
+    "fillingLevel": "heavy",
+    "foodType": "chicken"
+  },
+  {
+    "id": "anna-chicken-hyderabadi",
+    "shop": "Anna's Restaurant & Catering",
+    "name": "Chicken Hyderabadi",
+    "category": "Chicken",
+    "price": 109,
+    "portionOptions": [
+      {
+        "portion": "half",
+        "price": 109
+      },
+      {
+        "portion": "full",
+        "price": 199
+      }
+    ],
+    "dietary": "non_vegetarian",
+    "tags": [
+      "spicy",
+      "chicken",
+      "rich",
+      "gravy"
+    ],
+    "estimatedPreparationTime": 20,
+    "availability": true,
+    "spiceLevel": "spicy",
+    "fillingLevel": "heavy",
+    "foodType": "chicken"
+  },
+  {
+    "id": "anna-tandoori-chicken",
+    "shop": "Anna's Restaurant & Catering",
+    "name": "Tandoori Chicken",
+    "category": "Chicken",
+    "price": 119,
+    "portionOptions": [
+      {
+        "portion": "half",
+        "price": 119
+      },
+      {
+        "portion": "full",
+        "price": 199
+      }
+    ],
+    "dietary": "non_vegetarian",
+    "tags": [
+      "smoky",
+      "chicken",
+      "spicy",
+      "starter"
+    ],
+    "estimatedPreparationTime": 20,
+    "availability": true,
+    "spiceLevel": "spicy",
+    "fillingLevel": "medium",
+    "foodType": "chicken"
+  },
+  {
+    "id": "anna-chicken-tikka",
+    "shop": "Anna's Restaurant & Catering",
+    "name": "Chicken Tikka",
+    "category": "Chicken",
+    "price": 119,
+    "portionOptions": [
+      {
+        "portion": "half",
+        "price": 119
+      },
+      {
+        "portion": "full",
+        "price": 169
+      }
+    ],
+    "dietary": "non_vegetarian",
+    "tags": [
+      "smoky",
+      "chicken",
+      "spicy",
+      "starter"
+    ],
+    "estimatedPreparationTime": 20,
+    "availability": false,
+    "spiceLevel": "spicy",
+    "fillingLevel": "medium",
+    "foodType": "chicken"
+  },
+  {
+    "id": "anna-chicken-lollipop",
+    "shop": "Anna's Restaurant & Catering",
+    "name": "Chicken Lollipop",
+    "category": "Chicken",
+    "price": 119,
+    "portionOptions": [
+      {
+        "portion": "half",
+        "price": 119
+      },
+      {
+        "portion": "full",
+        "price": 199
+      }
+    ],
+    "dietary": "non_vegetarian",
+    "tags": [
+      "crispy",
+      "spicy",
+      "chicken",
+      "snack",
+      "starter"
+    ],
+    "estimatedPreparationTime": 15,
+    "availability": true,
+    "spiceLevel": "spicy",
+    "fillingLevel": "medium",
+    "foodType": "chicken"
+  },
+  {
+    "id": "anna-chilli-chicken",
+    "shop": "Anna's Restaurant & Catering",
+    "name": "Chilli Chicken",
+    "category": "Chicken",
+    "price": 109,
+    "portionOptions": [
+      {
+        "portion": "half",
+        "price": 109
+      },
+      {
+        "portion": "full",
+        "price": 189
+      }
+    ],
+    "dietary": "non_vegetarian",
+    "tags": [
+      "spicy",
+      "chicken",
+      "indo-chinese",
+      "starter"
+    ],
+    "estimatedPreparationTime": 15,
+    "availability": true,
+    "spiceLevel": "spicy",
+    "fillingLevel": "medium",
+    "foodType": "chicken"
+  },
+  {
+    "id": "anna-chicken-manchurian",
+    "shop": "Anna's Restaurant & Catering",
+    "name": "Chicken Manchurian",
+    "category": "Chicken",
+    "price": 119,
+    "portionOptions": [
+      {
+        "portion": "half",
+        "price": 119
+      },
+      {
+        "portion": "full",
+        "price": 189
+      }
+    ],
+    "dietary": "non_vegetarian",
+    "tags": [
+      "savory",
+      "chicken",
+      "indo-chinese",
+      "gravy"
+    ],
+    "estimatedPreparationTime": 15,
+    "availability": true,
+    "spiceLevel": "medium",
+    "fillingLevel": "medium",
+    "foodType": "chicken"
+  },
+  {
+    "id": "anna-chicken-65",
+    "shop": "Anna's Restaurant & Catering",
+    "name": "Chicken 65",
+    "category": "Chicken",
+    "price": 189,
+    "dietary": "non_vegetarian",
+    "tags": [
+      "crispy",
+      "spicy",
+      "chicken",
+      "starter"
+    ],
+    "estimatedPreparationTime": 15,
+    "availability": true,
+    "spiceLevel": "spicy",
+    "fillingLevel": "medium",
+    "foodType": "chicken"
+  },
+  {
+    "id": "anna-chilli-paneer",
+    "shop": "Anna's Restaurant & Catering",
+    "name": "Chilli Paneer",
+    "category": "Paneer",
+    "price": 99,
+    "portionOptions": [
+      {
+        "portion": "half",
+        "price": 99
+      },
+      {
+        "portion": "full",
+        "price": 149
+      }
+    ],
+    "dietary": "vegetarian",
+    "tags": [
+      "spicy",
+      "paneer",
+      "indo-chinese",
+      "starter"
+    ],
+    "estimatedPreparationTime": 15,
+    "availability": true,
+    "spiceLevel": "spicy",
+    "fillingLevel": "medium",
+    "foodType": "paneer"
+  },
+  {
+    "id": "anna-cold-coffee",
+    "shop": "Anna's Restaurant & Catering",
+    "name": "Cold Coffee",
+    "category": "Beverages",
+    "price": 99,
+    "dietary": "vegetarian",
+    "tags": [
+      "sweet",
+      "refreshing",
+      "cold",
+      "drink",
+      "light"
+    ],
+    "estimatedPreparationTime": 5,
+    "availability": true,
+    "spiceLevel": "mild",
+    "fillingLevel": "light",
+    "foodType": "beverage"
+  },
+  {
+    "id": "anna-coffee",
+    "shop": "Anna's Restaurant & Catering",
+    "name": "Coffee",
+    "category": "Beverages",
+    "price": 79,
+    "dietary": "vegetarian",
+    "tags": [
+      "warm",
+      "energetic",
+      "drink",
+      "light"
+    ],
+    "estimatedPreparationTime": 5,
+    "availability": true,
+    "spiceLevel": "mild",
+    "fillingLevel": "light",
+    "foodType": "beverage"
+  },
+  {
+    "id": "anna-cold-drinks",
+    "shop": "Anna's Restaurant & Catering",
+    "name": "Cold Drinks",
+    "category": "Beverages",
+    "price": 25,
+    "dietary": "vegetarian",
+    "tags": [
+      "refreshing",
+      "cold",
+      "drink",
+      "light"
+    ],
+    "estimatedPreparationTime": 2,
+    "availability": true,
+    "spiceLevel": "mild",
+    "fillingLevel": "light",
+    "foodType": "beverage"
+  },
+  {
+    "id": "mughlai-paneer-fried-rice",
+    "shop": "Mughlai Affair's",
+    "name": "Paneer Fried Rice",
+    "category": "Rice",
+    "price": 90,
+    "dietary": "vegetarian",
+    "tags": [
+      "filling",
+      "comfort",
+      "paneer",
+      "rice"
+    ],
+    "estimatedPreparationTime": 15,
+    "availability": true,
+    "spiceLevel": "medium",
+    "fillingLevel": "heavy",
+    "foodType": "rice"
+  },
+  {
+    "id": "mughlai-egg-chicken-rice",
+    "shop": "Mughlai Affair's",
+    "name": "Egg Chicken Rice",
+    "category": "Rice",
+    "price": 95,
+    "dietary": "non_vegetarian",
+    "tags": [
+      "filling",
+      "chicken",
+      "egg",
+      "protein",
+      "rice"
+    ],
+    "estimatedPreparationTime": 15,
+    "availability": true,
+    "spiceLevel": "medium",
+    "fillingLevel": "heavy",
+    "foodType": "rice"
+  },
+  {
+    "id": "mughlai-mushroom-fried-rice",
+    "shop": "Mughlai Affair's",
+    "name": "Mushroom Fried Rice",
+    "category": "Rice",
+    "price": 105,
+    "dietary": "vegetarian",
+    "tags": [
+      "filling",
+      "mushroom",
+      "rice"
+    ],
+    "estimatedPreparationTime": 15,
+    "availability": true,
+    "spiceLevel": "medium",
+    "fillingLevel": "heavy",
+    "foodType": "rice"
+  },
+  {
+    "id": "mughlai-schezwan-paneer-fried-rice",
+    "shop": "Mughlai Affair's",
+    "name": "Schezwan Paneer Fried Rice",
+    "category": "Rice",
+    "price": 105,
+    "dietary": "vegetarian",
+    "tags": [
+      "spicy",
+      "filling",
+      "paneer",
+      "rice"
+    ],
+    "estimatedPreparationTime": 15,
+    "availability": true,
+    "spiceLevel": "spicy",
+    "fillingLevel": "heavy",
+    "foodType": "rice"
+  },
+  {
+    "id": "mughlai-schezwan-egg-chicken-fried-rice",
+    "shop": "Mughlai Affair's",
+    "name": "Schezwan Egg Chicken Fried Rice",
+    "category": "Rice",
+    "price": 110,
+    "dietary": "non_vegetarian",
+    "tags": [
+      "spicy",
+      "filling",
+      "chicken",
+      "egg",
+      "rice"
+    ],
+    "estimatedPreparationTime": 15,
+    "availability": true,
+    "spiceLevel": "spicy",
+    "fillingLevel": "heavy",
+    "foodType": "rice"
+  },
+  {
+    "id": "mughlai-special-mix-veg-fried-rice",
+    "shop": "Mughlai Affair's",
+    "name": "Special Mix Veg Fried Rice",
+    "category": "Rice",
+    "price": 125,
+    "dietary": "vegetarian",
+    "tags": [
+      "healthy",
+      "wholesome",
+      "rice"
+    ],
+    "estimatedPreparationTime": 15,
+    "availability": true,
+    "spiceLevel": "medium",
+    "fillingLevel": "heavy",
+    "foodType": "rice"
+  },
+  {
+    "id": "mughlai-special-mix-non-veg-fried-rice",
+    "shop": "Mughlai Affair's",
+    "name": "Special Mix Non-Veg Fried Rice",
+    "category": "Rice",
+    "price": 150,
+    "dietary": "non_vegetarian",
+    "tags": [
+      "filling",
+      "chicken",
+      "meat",
+      "rice"
+    ],
+    "estimatedPreparationTime": 20,
+    "availability": true,
+    "spiceLevel": "medium",
+    "fillingLevel": "heavy",
+    "foodType": "rice"
+  },
+  {
+    "id": "mughlai-veg-manchurian",
+    "shop": "Mughlai Affair's",
+    "name": "Veg Manchurian",
+    "category": "Starters & Gravies",
+    "price": 80,
+    "dietary": "vegetarian",
+    "tags": [
+      "savory",
+      "indo-chinese",
+      "snack"
+    ],
+    "estimatedPreparationTime": 15,
+    "availability": true,
+    "spiceLevel": "medium",
+    "fillingLevel": "medium",
+    "foodType": "starter"
+  },
+  {
+    "id": "mughlai-chilly-veg-manchurian",
+    "shop": "Mughlai Affair's",
+    "name": "Chilly Veg Manchurian",
+    "category": "Starters & Gravies",
+    "price": 100,
+    "dietary": "vegetarian",
+    "tags": [
+      "spicy",
+      "indo-chinese"
+    ],
+    "estimatedPreparationTime": 15,
+    "availability": true,
+    "spiceLevel": "spicy",
+    "fillingLevel": "medium",
+    "foodType": "starter"
+  },
+  {
+    "id": "mughlai-chilly-paneer",
+    "shop": "Mughlai Affair's",
+    "name": "Chilly Paneer",
+    "category": "Starters & Gravies",
+    "price": 100,
+    "dietary": "vegetarian",
+    "tags": [
+      "spicy",
+      "paneer",
+      "indo-chinese"
+    ],
+    "estimatedPreparationTime": 15,
+    "availability": true,
+    "spiceLevel": "spicy",
+    "fillingLevel": "medium",
+    "foodType": "paneer"
+  },
+  {
+    "id": "mughlai-paneer-manchurian",
+    "shop": "Mughlai Affair's",
+    "name": "Paneer Manchurian",
+    "category": "Starters & Gravies",
+    "price": 100,
+    "dietary": "vegetarian",
+    "tags": [
+      "savory",
+      "paneer",
+      "indo-chinese"
+    ],
+    "estimatedPreparationTime": 15,
+    "availability": true,
+    "spiceLevel": "medium",
+    "fillingLevel": "medium",
+    "foodType": "paneer"
+  },
+  {
+    "id": "mughlai-hot-garlic-paneer",
+    "shop": "Mughlai Affair's",
+    "name": "Hot Garlic Paneer",
+    "category": "Starters & Gravies",
+    "price": 120,
+    "dietary": "vegetarian",
+    "tags": [
+      "spicy",
+      "garlic",
+      "paneer"
+    ],
+    "estimatedPreparationTime": 15,
+    "availability": true,
+    "spiceLevel": "spicy",
+    "fillingLevel": "medium",
+    "foodType": "paneer"
+  },
+  {
+    "id": "mughlai-schezwan-paneer",
+    "shop": "Mughlai Affair's",
+    "name": "Schezwan Paneer",
+    "category": "Starters & Gravies",
+    "price": 120,
+    "dietary": "vegetarian",
+    "tags": [
+      "spicy",
+      "paneer"
+    ],
+    "estimatedPreparationTime": 15,
+    "availability": true,
+    "spiceLevel": "spicy",
+    "fillingLevel": "medium",
+    "foodType": "paneer"
+  },
+  {
+    "id": "mughlai-paneer-masala",
+    "shop": "Mughlai Affair's",
+    "name": "Paneer Masala",
+    "category": "Starters & Gravies",
+    "price": 100,
+    "dietary": "vegetarian",
+    "tags": [
+      "gravy",
+      "paneer",
+      "comfort"
+    ],
+    "estimatedPreparationTime": 15,
+    "availability": true,
+    "spiceLevel": "medium",
+    "fillingLevel": "medium",
+    "foodType": "paneer"
+  },
+  {
+    "id": "mughlai-paneer-dopyaza",
+    "shop": "Mughlai Affair's",
+    "name": "Paneer Dopyaza",
+    "category": "Starters & Gravies",
+    "price": 100,
+    "dietary": "vegetarian",
+    "tags": [
+      "gravy",
+      "paneer",
+      "onion"
+    ],
+    "estimatedPreparationTime": 15,
+    "availability": true,
+    "spiceLevel": "medium",
+    "fillingLevel": "medium",
+    "foodType": "paneer"
+  },
+  {
+    "id": "mughlai-paneer-punjabi",
+    "shop": "Mughlai Affair's",
+    "name": "Paneer Punjabi",
+    "category": "Starters & Gravies",
+    "price": 110,
+    "dietary": "vegetarian",
+    "tags": [
+      "rich",
+      "gravy",
+      "paneer"
+    ],
+    "estimatedPreparationTime": 15,
+    "availability": true,
+    "spiceLevel": "medium",
+    "fillingLevel": "heavy",
+    "foodType": "paneer"
+  },
+  {
+    "id": "mughlai-paneer-butter-masala",
+    "shop": "Mughlai Affair's",
+    "name": "Paneer Butter Masala",
+    "category": "Starters & Gravies",
+    "price": 120,
+    "dietary": "vegetarian",
+    "tags": [
+      "rich",
+      "butter",
+      "paneer",
+      "comfort"
+    ],
+    "estimatedPreparationTime": 15,
+    "availability": true,
+    "spiceLevel": "mild",
+    "fillingLevel": "heavy",
+    "foodType": "paneer"
+  },
+  {
+    "id": "mughlai-kadai-paneer",
+    "shop": "Mughlai Affair's",
+    "name": "Kadai Paneer",
+    "category": "Starters & Gravies",
+    "price": 120,
+    "dietary": "vegetarian",
+    "tags": [
+      "spicy",
+      "paneer",
+      "aromatic"
+    ],
+    "estimatedPreparationTime": 15,
+    "availability": true,
+    "spiceLevel": "spicy",
+    "fillingLevel": "heavy",
+    "foodType": "paneer"
+  },
+  {
+    "id": "mughlai-paneer-hyderabadi",
+    "shop": "Mughlai Affair's",
+    "name": "Paneer Hyderabadi",
+    "category": "Starters & Gravies",
+    "price": 120,
+    "dietary": "vegetarian",
+    "tags": [
+      "rich",
+      "spicy",
+      "paneer"
+    ],
+    "estimatedPreparationTime": 15,
+    "availability": true,
+    "spiceLevel": "spicy",
+    "fillingLevel": "heavy",
+    "foodType": "paneer"
+  },
+  {
+    "id": "mughlai-chilly-mushroom",
+    "shop": "Mughlai Affair's",
+    "name": "Chilly Mushroom",
+    "category": "Starters & Gravies",
+    "price": 110,
+    "dietary": "vegetarian",
+    "tags": [
+      "spicy",
+      "mushroom"
+    ],
+    "estimatedPreparationTime": 15,
+    "availability": true,
+    "spiceLevel": "spicy",
+    "fillingLevel": "medium",
+    "foodType": "mushroom"
+  },
+  {
+    "id": "mughlai-mushroom-manchurian",
+    "shop": "Mughlai Affair's",
+    "name": "Mushroom Manchurian",
+    "category": "Starters & Gravies",
+    "price": 110,
+    "dietary": "vegetarian",
+    "tags": [
+      "savory",
+      "mushroom"
+    ],
+    "estimatedPreparationTime": 15,
+    "availability": true,
+    "spiceLevel": "medium",
+    "fillingLevel": "medium",
+    "foodType": "mushroom"
+  },
+  {
+    "id": "mughlai-mushroom-masala",
+    "shop": "Mughlai Affair's",
+    "name": "Mushroom Masala",
+    "category": "Starters & Gravies",
+    "price": 120,
+    "dietary": "vegetarian",
+    "tags": [
+      "gravy",
+      "mushroom"
+    ],
+    "estimatedPreparationTime": 15,
+    "availability": true,
+    "spiceLevel": "medium",
+    "fillingLevel": "medium",
+    "foodType": "mushroom"
+  },
+  {
+    "id": "mughlai-mushroom-dopyaza",
+    "shop": "Mughlai Affair's",
+    "name": "Mushroom Dopyaza",
+    "category": "Starters & Gravies",
+    "price": 130,
+    "dietary": "vegetarian",
+    "tags": [
+      "gravy",
+      "mushroom",
+      "onion"
+    ],
+    "estimatedPreparationTime": 15,
+    "availability": true,
+    "spiceLevel": "medium",
+    "fillingLevel": "medium",
+    "foodType": "mushroom"
+  },
+  {
+    "id": "mughlai-mushroom-hydrabadi",
+    "shop": "Mughlai Affair's",
+    "name": "Mushroom Hydrabadi",
+    "category": "Starters & Gravies",
+    "price": 150,
+    "dietary": "vegetarian",
+    "tags": [
+      "rich",
+      "spicy",
+      "mushroom"
+    ],
+    "estimatedPreparationTime": 15,
+    "availability": true,
+    "spiceLevel": "spicy",
+    "fillingLevel": "heavy",
+    "foodType": "mushroom"
+  },
+  {
+    "id": "mughlai-kadai-mushroom",
+    "shop": "Mughlai Affair's",
+    "name": "Kadai Mushroom",
+    "category": "Starters & Gravies",
+    "price": 130,
+    "dietary": "vegetarian",
+    "tags": [
+      "spicy",
+      "mushroom",
+      "aromatic"
+    ],
+    "estimatedPreparationTime": 15,
+    "availability": true,
+    "spiceLevel": "spicy",
+    "fillingLevel": "heavy",
+    "foodType": "mushroom"
+  },
+  {
+    "id": "mughlai-chilly-chicken",
+    "shop": "Mughlai Affair's",
+    "name": "Chilly Chicken",
+    "category": "Chicken",
+    "price": 100,
+    "dietary": "non_vegetarian",
+    "tags": [
+      "spicy",
+      "chicken",
+      "indo-chinese",
+      "starter"
+    ],
+    "estimatedPreparationTime": 15,
+    "availability": true,
+    "spiceLevel": "spicy",
+    "fillingLevel": "medium",
+    "foodType": "chicken"
+  },
+  {
+    "id": "mughlai-chicken-manchurian",
+    "shop": "Mughlai Affair's",
+    "name": "Chicken Manchurian",
+    "category": "Chicken",
+    "price": 100,
+    "dietary": "non_vegetarian",
+    "tags": [
+      "savory",
+      "chicken",
+      "indo-chinese"
+    ],
+    "estimatedPreparationTime": 15,
+    "availability": true,
+    "spiceLevel": "medium",
+    "fillingLevel": "medium",
+    "foodType": "chicken"
+  },
+  {
+    "id": "mughlai-garlic-chicken",
+    "shop": "Mughlai Affair's",
+    "name": "Garlic Chicken",
+    "category": "Chicken",
+    "price": 120,
+    "dietary": "non_vegetarian",
+    "tags": [
+      "garlic",
+      "savory",
+      "chicken"
+    ],
+    "estimatedPreparationTime": 15,
+    "availability": true,
+    "spiceLevel": "medium",
+    "fillingLevel": "medium",
+    "foodType": "chicken"
+  },
+  {
+    "id": "mughlai-hot-garlic-chicken",
+    "shop": "Mughlai Affair's",
+    "name": "Hot Garlic Chicken",
+    "category": "Chicken",
+    "price": 120,
+    "dietary": "non_vegetarian",
+    "tags": [
+      "spicy",
+      "garlic",
+      "chicken"
+    ],
+    "estimatedPreparationTime": 15,
+    "availability": true,
+    "spiceLevel": "spicy",
+    "fillingLevel": "medium",
+    "foodType": "chicken"
+  },
+  {
+    "id": "mughlai-schezwan-chicken",
+    "shop": "Mughlai Affair's",
+    "name": "Schezwan Chicken",
+    "category": "Chicken",
+    "price": 130,
+    "dietary": "non_vegetarian",
+    "tags": [
+      "spicy",
+      "chicken"
+    ],
+    "estimatedPreparationTime": 15,
+    "availability": true,
+    "spiceLevel": "spicy",
+    "fillingLevel": "medium",
+    "foodType": "chicken"
+  },
+  {
+    "id": "mughlai-chicken-masala",
+    "shop": "Mughlai Affair's",
+    "name": "Chicken Masala",
+    "category": "Chicken",
+    "price": 100,
+    "dietary": "non_vegetarian",
+    "tags": [
+      "gravy",
+      "chicken",
+      "comfort"
+    ],
+    "estimatedPreparationTime": 15,
+    "availability": true,
+    "spiceLevel": "medium",
+    "fillingLevel": "heavy",
+    "foodType": "chicken"
+  },
+  {
+    "id": "mughlai-chicken-dopyaza",
+    "shop": "Mughlai Affair's",
+    "name": "Chicken Dopyaza",
+    "category": "Chicken",
+    "price": 100,
+    "dietary": "non_vegetarian",
+    "tags": [
+      "gravy",
+      "chicken",
+      "onion"
+    ],
+    "estimatedPreparationTime": 15,
+    "availability": true,
+    "spiceLevel": "medium",
+    "fillingLevel": "heavy",
+    "foodType": "chicken"
+  },
+  {
+    "id": "mughlai-punjabi-chicken",
+    "shop": "Mughlai Affair's",
+    "name": "Punjabi Chicken",
+    "category": "Chicken",
+    "price": 110,
+    "dietary": "non_vegetarian",
+    "tags": [
+      "rich",
+      "gravy",
+      "chicken"
+    ],
+    "estimatedPreparationTime": 15,
+    "availability": true,
+    "spiceLevel": "medium",
+    "fillingLevel": "heavy",
+    "foodType": "chicken"
+  },
+  {
+    "id": "mughlai-chicken-kolhapuri",
+    "shop": "Mughlai Affair's",
+    "name": "Chicken Kolhapuri",
+    "category": "Chicken",
+    "price": 120,
+    "dietary": "non_vegetarian",
+    "tags": [
+      "extra-spicy",
+      "spicy",
+      "chicken"
+    ],
+    "estimatedPreparationTime": 15,
+    "availability": true,
+    "spiceLevel": "spicy",
+    "fillingLevel": "heavy",
+    "foodType": "chicken"
+  },
+  {
+    "id": "mughlai-kadai-chicken",
+    "shop": "Mughlai Affair's",
+    "name": "Kadai Chicken",
+    "category": "Chicken",
+    "price": 120,
+    "dietary": "non_vegetarian",
+    "tags": [
+      "spicy",
+      "aromatic",
+      "chicken"
+    ],
+    "estimatedPreparationTime": 15,
+    "availability": true,
+    "spiceLevel": "spicy",
+    "fillingLevel": "heavy",
+    "foodType": "chicken"
+  },
+  {
+    "id": "mughlai-butter-chicken-masala",
+    "shop": "Mughlai Affair's",
+    "name": "Butter Chicken Masala",
+    "category": "Chicken",
+    "price": 120,
+    "dietary": "non_vegetarian",
+    "tags": [
+      "rich",
+      "butter",
+      "comfort",
+      "chicken"
+    ],
+    "estimatedPreparationTime": 20,
+    "availability": true,
+    "spiceLevel": "mild",
+    "fillingLevel": "heavy",
+    "foodType": "chicken"
+  },
+  {
+    "id": "mughlai-mughlai-chicken-masala",
+    "shop": "Mughlai Affair's",
+    "name": "Mughlai Chicken Masala",
+    "category": "Chicken",
+    "price": 150,
+    "dietary": "non_vegetarian",
+    "tags": [
+      "rich",
+      "special",
+      "chicken"
+    ],
+    "estimatedPreparationTime": 20,
+    "availability": true,
+    "spiceLevel": "medium",
+    "fillingLevel": "heavy",
+    "foodType": "chicken"
+  },
+  {
+    "id": "mughlai-chilly-prawn",
+    "shop": "Mughlai Affair's",
+    "name": "Chilly Prawn",
+    "category": "Prawn",
+    "price": 150,
+    "dietary": "non_vegetarian",
+    "tags": [
+      "spicy",
+      "seafood",
+      "prawn"
+    ],
+    "estimatedPreparationTime": 20,
+    "availability": true,
+    "spiceLevel": "spicy",
+    "fillingLevel": "medium",
+    "foodType": "prawn"
+  },
+  {
+    "id": "mughlai-prawn-manchurian",
+    "shop": "Mughlai Affair's",
+    "name": "Prawn Manchurian",
+    "category": "Prawn",
+    "price": 150,
+    "dietary": "non_vegetarian",
+    "tags": [
+      "savory",
+      "seafood",
+      "prawn"
+    ],
+    "estimatedPreparationTime": 20,
+    "availability": true,
+    "spiceLevel": "medium",
+    "fillingLevel": "medium",
+    "foodType": "prawn"
+  },
+  {
+    "id": "mughlai-prawn-masala",
+    "shop": "Mughlai Affair's",
+    "name": "Prawn Masala",
+    "category": "Prawn",
+    "price": 140,
+    "dietary": "non_vegetarian",
+    "tags": [
+      "gravy",
+      "seafood",
+      "prawn"
+    ],
+    "estimatedPreparationTime": 20,
+    "availability": true,
+    "spiceLevel": "medium",
+    "fillingLevel": "heavy",
+    "foodType": "prawn"
+  },
+  {
+    "id": "mughlai-kadai-prawn",
+    "shop": "Mughlai Affair's",
+    "name": "Kadai Prawn",
+    "category": "Prawn",
+    "price": 150,
+    "dietary": "non_vegetarian",
+    "tags": [
+      "spicy",
+      "seafood",
+      "prawn"
+    ],
+    "estimatedPreparationTime": 20,
+    "availability": true,
+    "spiceLevel": "spicy",
+    "fillingLevel": "heavy",
+    "foodType": "prawn"
+  },
+  {
+    "id": "mughlai-prawn-dopyaza",
+    "shop": "Mughlai Affair's",
+    "name": "Prawn Dopyaza",
+    "category": "Prawn",
+    "price": 150,
+    "dietary": "non_vegetarian",
+    "tags": [
+      "gravy",
+      "seafood",
+      "prawn",
+      "onion"
+    ],
+    "estimatedPreparationTime": 20,
+    "availability": true,
+    "spiceLevel": "medium",
+    "fillingLevel": "heavy",
+    "foodType": "prawn"
+  },
+  {
+    "id": "hp_dosa_1",
+    "name": "Plain Dosa",
+    "category": "Dosa",
+    "price": 50,
+    "dietary": "vegetarian",
+    "tags": [
+      "dosa",
+      "south_indian",
+      "crispy",
+      "light"
+    ],
+    "spiceLevel": "mild",
+    "fillingLevel": "light",
+    "foodType": "dosa",
+    "estimatedPreparationTime": 8,
+    "shop": "HALKA PHULKA",
+    "availability": true
+  },
+  {
+    "id": "hp_dosa_2",
+    "name": "Plain Onion Dosa",
+    "category": "Dosa",
+    "price": 60,
+    "dietary": "vegetarian",
+    "tags": [
+      "dosa",
+      "onion",
+      "south_indian"
+    ],
+    "spiceLevel": "mild",
+    "fillingLevel": "medium",
+    "foodType": "dosa",
+    "estimatedPreparationTime": 8,
+    "shop": "HALKA PHULKA",
+    "availability": true
+  },
+  {
+    "id": "hp_dosa_3",
+    "name": "Butter Onion Dosa",
+    "category": "Dosa",
+    "price": 70,
+    "dietary": "vegetarian",
+    "tags": [
+      "dosa",
+      "butter",
+      "onion",
+      "south_indian"
+    ],
+    "spiceLevel": "mild",
+    "fillingLevel": "medium",
+    "foodType": "dosa",
+    "estimatedPreparationTime": 8,
+    "shop": "HALKA PHULKA",
+    "availability": true
+  },
+  {
+    "id": "hp_dosa_4",
+    "name": "Masala Dosa",
+    "category": "Dosa",
+    "price": 60,
+    "dietary": "vegetarian",
+    "tags": [
+      "dosa",
+      "masala",
+      "potato",
+      "popular",
+      "south_indian"
+    ],
+    "spiceLevel": "medium",
+    "fillingLevel": "medium",
+    "foodType": "dosa",
+    "estimatedPreparationTime": 10,
+    "shop": "HALKA PHULKA",
+    "availability": true
+  },
+  {
+    "id": "hp_dosa_5",
+    "name": "Onion Masala Dosa",
+    "category": "Dosa",
+    "price": 70,
+    "dietary": "vegetarian",
+    "tags": [
+      "dosa",
+      "onion",
+      "masala"
+    ],
+    "spiceLevel": "medium",
+    "fillingLevel": "medium",
+    "foodType": "dosa",
+    "estimatedPreparationTime": 10,
+    "shop": "HALKA PHULKA",
+    "availability": true
+  },
+  {
+    "id": "hp_dosa_6",
+    "name": "Paneer Masala Dosa",
+    "category": "Dosa",
+    "price": 80,
+    "dietary": "vegetarian",
+    "tags": [
+      "dosa",
+      "paneer",
+      "masala",
+      "protein"
+    ],
+    "spiceLevel": "medium",
+    "fillingLevel": "heavy",
+    "foodType": "dosa",
+    "estimatedPreparationTime": 10,
+    "shop": "HALKA PHULKA",
+    "availability": true
+  },
+  {
+    "id": "hp_dosa_7",
+    "name": "Butter Masala Dosa",
+    "category": "Dosa",
+    "price": 70,
+    "dietary": "vegetarian",
+    "tags": [
+      "dosa",
+      "butter",
+      "masala"
+    ],
+    "spiceLevel": "medium",
+    "fillingLevel": "medium",
+    "foodType": "dosa",
+    "estimatedPreparationTime": 10,
+    "shop": "HALKA PHULKA",
+    "availability": true
+  },
+  {
+    "id": "hp_dosa_8",
+    "name": "Cheese Masala Dosa",
+    "category": "Dosa",
+    "price": 80,
+    "dietary": "vegetarian",
+    "tags": [
+      "dosa",
+      "cheese",
+      "masala"
+    ],
+    "spiceLevel": "medium",
+    "fillingLevel": "heavy",
+    "foodType": "dosa",
+    "estimatedPreparationTime": 10,
+    "shop": "HALKA PHULKA",
+    "availability": true
+  },
+  {
+    "id": "hp_dosa_9",
+    "name": "Butter Onion Masala Dosa",
+    "category": "Dosa",
+    "price": 80,
+    "dietary": "vegetarian",
+    "tags": [
+      "dosa",
+      "butter",
+      "onion",
+      "masala"
+    ],
+    "spiceLevel": "medium",
+    "fillingLevel": "heavy",
+    "foodType": "dosa",
+    "estimatedPreparationTime": 10,
+    "shop": "HALKA PHULKA",
+    "availability": true
+  },
+  {
+    "id": "hp_dosa_10",
+    "name": "Cheese Onion Masala Dosa",
+    "category": "Dosa",
+    "price": 90,
+    "dietary": "vegetarian",
+    "tags": [
+      "dosa",
+      "cheese",
+      "onion",
+      "masala"
+    ],
+    "spiceLevel": "medium",
+    "fillingLevel": "heavy",
+    "foodType": "dosa",
+    "estimatedPreparationTime": 10,
+    "shop": "HALKA PHULKA",
+    "availability": true
+  },
+  {
+    "id": "hp_dosa_11",
+    "name": "Butter Cheese Masala Dosa",
+    "category": "Dosa",
+    "price": 90,
+    "dietary": "vegetarian",
+    "tags": [
+      "dosa",
+      "butter",
+      "cheese",
+      "masala"
+    ],
+    "spiceLevel": "medium",
+    "fillingLevel": "heavy",
+    "foodType": "dosa",
+    "estimatedPreparationTime": 10,
+    "shop": "HALKA PHULKA",
+    "availability": true
+  },
+  {
+    "id": "hp_dosa_12",
+    "name": "Onion Butter Cheese Masala Dosa",
+    "category": "Dosa",
+    "price": 100,
+    "dietary": "vegetarian",
+    "tags": [
+      "dosa",
+      "cheese",
+      "butter",
+      "special"
+    ],
+    "spiceLevel": "medium",
+    "fillingLevel": "heavy",
+    "foodType": "dosa",
+    "estimatedPreparationTime": 10,
+    "shop": "HALKA PHULKA",
+    "availability": true
+  },
+  {
+    "id": "hp_dosa_13",
+    "name": "Spl Masala Dosa",
+    "category": "Dosa",
+    "price": 90,
+    "dietary": "vegetarian",
+    "tags": [
+      "dosa",
+      "special",
+      "chef_special"
+    ],
+    "spiceLevel": "medium",
+    "fillingLevel": "heavy",
+    "foodType": "dosa",
+    "estimatedPreparationTime": 12,
+    "shop": "HALKA PHULKA",
+    "availability": true
+  },
+  {
+    "id": "hp_dosa_14",
+    "name": "Butter paper Masala Dosa",
+    "category": "Dosa",
+    "price": 80,
+    "dietary": "vegetarian",
+    "tags": [
+      "dosa",
+      "butter",
+      "paper_dosa",
+      "crispy"
+    ],
+    "spiceLevel": "medium",
+    "fillingLevel": "medium",
+    "foodType": "dosa",
+    "estimatedPreparationTime": 10,
+    "shop": "HALKA PHULKA",
+    "availability": true
+  },
+  {
+    "id": "hp_utt_1",
+    "name": "Vegetable Uttapam",
+    "category": "Uttapam",
+    "price": 60,
+    "dietary": "vegetarian",
+    "tags": [
+      "uttapam",
+      "vegetable",
+      "healthy",
+      "south_indian"
+    ],
+    "spiceLevel": "mild",
+    "fillingLevel": "medium",
+    "foodType": "dosa",
+    "estimatedPreparationTime": 10,
+    "shop": "HALKA PHULKA",
+    "availability": true
+  },
+  {
+    "id": "hp_utt_2",
+    "name": "Onion Uttapam",
+    "category": "Uttapam",
+    "price": 50,
+    "dietary": "vegetarian",
+    "tags": [
+      "uttapam",
+      "onion"
+    ],
+    "spiceLevel": "mild",
+    "fillingLevel": "medium",
+    "foodType": "dosa",
+    "estimatedPreparationTime": 10,
+    "shop": "HALKA PHULKA",
+    "availability": true
+  },
+  {
+    "id": "hp_utt_3",
+    "name": "Tomato Uttapam",
+    "category": "Uttapam",
+    "price": 60,
+    "dietary": "vegetarian",
+    "tags": [
+      "uttapam",
+      "tomato"
+    ],
+    "spiceLevel": "mild",
+    "fillingLevel": "medium",
+    "foodType": "dosa",
+    "estimatedPreparationTime": 10,
+    "shop": "HALKA PHULKA",
+    "availability": true
+  },
+  {
+    "id": "hp_utt_4",
+    "name": "Coconut Uttapam",
+    "category": "Uttapam",
+    "price": 60,
+    "dietary": "vegetarian",
+    "tags": [
+      "uttapam",
+      "coconut"
+    ],
+    "spiceLevel": "mild",
+    "fillingLevel": "medium",
+    "foodType": "dosa",
+    "estimatedPreparationTime": 10,
+    "shop": "HALKA PHULKA",
+    "availability": true
+  },
+  {
+    "id": "hp_bf_1",
+    "name": "Upama",
+    "category": "Breakfast",
+    "price": 40,
+    "dietary": "vegetarian",
+    "tags": [
+      "upma",
+      "breakfast",
+      "quick",
+      "light",
+      "healthy"
+    ],
+    "spiceLevel": "mild",
+    "fillingLevel": "light",
+    "foodType": "breakfast",
+    "estimatedPreparationTime": 5,
+    "shop": "HALKA PHULKA",
+    "availability": true
+  },
+  {
+    "id": "hp_bf_2",
+    "name": "Idli",
+    "category": "Breakfast",
+    "price": 40,
+    "dietary": "vegetarian",
+    "tags": [
+      "idli",
+      "breakfast",
+      "steamed",
+      "healthy",
+      "quick"
+    ],
+    "spiceLevel": "mild",
+    "fillingLevel": "light",
+    "foodType": "breakfast",
+    "estimatedPreparationTime": 4,
+    "shop": "HALKA PHULKA",
+    "availability": true
+  },
+  {
+    "id": "hp_bf_3",
+    "name": "Vada",
+    "category": "Breakfast",
+    "price": 40,
+    "dietary": "vegetarian",
+    "tags": [
+      "vada",
+      "crispy",
+      "breakfast",
+      "south_indian"
+    ],
+    "spiceLevel": "medium",
+    "fillingLevel": "medium",
+    "foodType": "breakfast",
+    "estimatedPreparationTime": 5,
+    "shop": "HALKA PHULKA",
+    "availability": true
+  },
+  {
+    "id": "hp_bf_4",
+    "name": "Aluchop",
+    "category": "Breakfast",
+    "price": 40,
+    "dietary": "vegetarian",
+    "tags": [
+      "aluchop",
+      "snack",
+      "potato",
+      "crispy"
+    ],
+    "spiceLevel": "medium",
+    "fillingLevel": "medium",
+    "foodType": "starter",
+    "estimatedPreparationTime": 5,
+    "shop": "HALKA PHULKA",
+    "availability": true
+  },
+  {
+    "id": "hp_bf_5",
+    "name": "Samosa",
+    "category": "Breakfast",
+    "price": 40,
+    "dietary": "vegetarian",
+    "tags": [
+      "samosa",
+      "snack",
+      "crispy",
+      "potato"
+    ],
+    "spiceLevel": "medium",
+    "fillingLevel": "medium",
+    "foodType": "starter",
+    "estimatedPreparationTime": 5,
+    "shop": "HALKA PHULKA",
+    "availability": true
+  },
+  {
+    "id": "hp_bf_6",
+    "name": "Puri",
+    "category": "Breakfast",
+    "price": 40,
+    "dietary": "vegetarian",
+    "tags": [
+      "puri",
+      "breakfast",
+      "puri_sabzi",
+      "filling"
+    ],
+    "spiceLevel": "medium",
+    "fillingLevel": "medium",
+    "foodType": "breakfast",
+    "estimatedPreparationTime": 8,
+    "shop": "HALKA PHULKA",
+    "availability": true
+  },
+  {
+    "id": "hp_bf_7",
+    "name": "Aludum Dahiwada",
+    "category": "Breakfast",
+    "price": 40,
+    "dietary": "vegetarian",
+    "tags": [
+      "dahiwada",
+      "aloodum",
+      "chaat",
+      "street_food"
+    ],
+    "spiceLevel": "medium",
+    "fillingLevel": "medium",
+    "foodType": "starter",
+    "estimatedPreparationTime": 5,
+    "shop": "HALKA PHULKA",
+    "availability": true
+  },
+  {
+    "id": "hp_rooti_1",
+    "name": "Rooti 2pc + Mixveg + Dahi + Pickle",
+    "category": "Rooti Savji",
+    "price": 60,
+    "dietary": "vegetarian",
+    "tags": [
+      "roti",
+      "mixveg",
+      "thali",
+      "filling",
+      "healthy",
+      "lunch"
+    ],
+    "spiceLevel": "mild",
+    "fillingLevel": "heavy",
+    "foodType": "thali",
+    "estimatedPreparationTime": 8,
+    "shop": "HALKA PHULKA",
+    "availability": true
+  },
+  {
+    "id": "hp_rooti_2",
+    "name": "Rooti 2pc + Paneer B.Masala + Dahi + Pickle",
+    "category": "Rooti Savji",
+    "price": 60,
+    "dietary": "vegetarian",
+    "tags": [
+      "roti",
+      "paneer",
+      "butter_masala",
+      "filling",
+      "popular",
+      "lunch"
+    ],
+    "spiceLevel": "medium",
+    "fillingLevel": "heavy",
+    "foodType": "thali",
+    "estimatedPreparationTime": 8,
+    "shop": "HALKA PHULKA",
+    "availability": true
+  },
+  {
+    "id": "hp_rooti_3",
+    "name": "Rooti 2pc + Mashroom Masala + Dahi + Pickle",
+    "category": "Rooti Savji",
+    "price": 60,
+    "dietary": "vegetarian",
+    "tags": [
+      "roti",
+      "mushroom",
+      "curry",
+      "filling",
+      "lunch"
+    ],
+    "spiceLevel": "medium",
+    "fillingLevel": "heavy",
+    "foodType": "thali",
+    "estimatedPreparationTime": 8,
+    "shop": "HALKA PHULKA",
+    "availability": true
+  },
+  {
+    "id": "hp_rooti_4",
+    "name": "Rooti 2pc + Chili Paneer + Dahi + Pickle",
+    "category": "Rooti Savji",
+    "price": 60,
+    "dietary": "vegetarian",
+    "tags": [
+      "roti",
+      "chilli_paneer",
+      "spicy",
+      "filling",
+      "lunch"
+    ],
+    "spiceLevel": "spicy",
+    "fillingLevel": "heavy",
+    "foodType": "thali",
+    "estimatedPreparationTime": 8,
+    "shop": "HALKA PHULKA",
+    "availability": true
+  },
+  {
+    "id": "hp_rooti_5",
+    "name": "Rooti 2pc + Chili Mashroom + Dahi + Pickle",
+    "category": "Rooti Savji",
+    "price": 60,
+    "dietary": "vegetarian",
+    "tags": [
+      "roti",
+      "chilli_mushroom",
+      "spicy",
+      "filling",
+      "lunch"
+    ],
+    "spiceLevel": "spicy",
+    "fillingLevel": "heavy",
+    "foodType": "thali",
+    "estimatedPreparationTime": 8,
+    "shop": "HALKA PHULKA",
+    "availability": true
+  },
+  {
+    "id": "hp_rooti_6",
+    "name": "Rooti 2pc + Chana Masala + Dahi + Pickle",
+    "category": "Rooti Savji",
+    "price": 60,
+    "dietary": "vegetarian",
+    "tags": [
+      "roti",
+      "chana_masala",
+      "protein",
+      "filling",
+      "lunch"
+    ],
+    "spiceLevel": "medium",
+    "fillingLevel": "heavy",
+    "foodType": "thali",
+    "estimatedPreparationTime": 8,
+    "shop": "HALKA PHULKA",
+    "availability": true
+  },
+  {
+    "id": "hp_rooti_7",
+    "name": "Extra Rooti",
+    "category": "Rooti Savji",
+    "price": 10,
+    "dietary": "vegetarian",
+    "tags": [
+      "extra",
+      "roti",
+      "bread"
+    ],
+    "spiceLevel": "mild",
+    "fillingLevel": "light",
+    "foodType": "bread",
+    "estimatedPreparationTime": 3,
+    "shop": "HALKA PHULKA",
+    "availability": true
+  },
+  {
+    "id": "hp_par_sav_1",
+    "name": "Paratha 2pc + Mixveg + Dahi + Pickle",
+    "category": "Paratha Savji",
+    "price": 70,
+    "dietary": "vegetarian",
+    "tags": [
+      "paratha",
+      "mixveg",
+      "meal",
+      "filling",
+      "lunch"
+    ],
+    "spiceLevel": "mild",
+    "fillingLevel": "heavy",
+    "foodType": "thali",
+    "estimatedPreparationTime": 10,
+    "shop": "HALKA PHULKA",
+    "availability": true
+  },
+  {
+    "id": "hp_par_sav_2",
+    "name": "Paratha 2pc + Paneer B.Masala + Dahi + Pickle",
+    "category": "Paratha Savji",
+    "price": 70,
+    "dietary": "vegetarian",
+    "tags": [
+      "paratha",
+      "paneer",
+      "butter_masala",
+      "filling",
+      "lunch"
+    ],
+    "spiceLevel": "medium",
+    "fillingLevel": "heavy",
+    "foodType": "thali",
+    "estimatedPreparationTime": 10,
+    "shop": "HALKA PHULKA",
+    "availability": true
+  },
+  {
+    "id": "hp_par_sav_3",
+    "name": "Paratha 2pc + Mashroom Masala + Dahi + Pickle",
+    "category": "Paratha Savji",
+    "price": 70,
+    "dietary": "vegetarian",
+    "tags": [
+      "paratha",
+      "mushroom",
+      "meal",
+      "filling",
+      "lunch"
+    ],
+    "spiceLevel": "medium",
+    "fillingLevel": "heavy",
+    "foodType": "thali",
+    "estimatedPreparationTime": 10,
+    "shop": "HALKA PHULKA",
+    "availability": true
+  },
+  {
+    "id": "hp_par_sav_4",
+    "name": "Paratha 2pc + Chili Paneer + Dahi + Pickle",
+    "category": "Paratha Savji",
+    "price": 70,
+    "dietary": "vegetarian",
+    "tags": [
+      "paratha",
+      "chilli_paneer",
+      "spicy",
+      "filling",
+      "lunch"
+    ],
+    "spiceLevel": "spicy",
+    "fillingLevel": "heavy",
+    "foodType": "thali",
+    "estimatedPreparationTime": 10,
+    "shop": "HALKA PHULKA",
+    "availability": true
+  },
+  {
+    "id": "hp_par_sav_5",
+    "name": "Paratha 2pc + Chili Mashroom + Dahi + Pickle",
+    "category": "Paratha Savji",
+    "price": 70,
+    "dietary": "vegetarian",
+    "tags": [
+      "paratha",
+      "chilli_mushroom",
+      "spicy",
+      "filling",
+      "lunch"
+    ],
+    "spiceLevel": "spicy",
+    "fillingLevel": "heavy",
+    "foodType": "thali",
+    "estimatedPreparationTime": 10,
+    "shop": "HALKA PHULKA",
+    "availability": true
+  },
+  {
+    "id": "hp_par_sav_6",
+    "name": "Paratha 2pc + Chana Masala + Dahi + Pickle",
+    "category": "Paratha Savji",
+    "price": 70,
+    "dietary": "vegetarian",
+    "tags": [
+      "paratha",
+      "chana_masala",
+      "filling",
+      "lunch"
+    ],
+    "spiceLevel": "medium",
+    "fillingLevel": "heavy",
+    "foodType": "thali",
+    "estimatedPreparationTime": 10,
+    "shop": "HALKA PHULKA",
+    "availability": true
+  },
+  {
+    "id": "hp_par_sav_7",
+    "name": "Extra Paratha",
+    "category": "Paratha Savji",
+    "price": 15,
+    "dietary": "vegetarian",
+    "tags": [
+      "extra",
+      "paratha",
+      "bread"
+    ],
+    "spiceLevel": "mild",
+    "fillingLevel": "light",
+    "foodType": "bread",
+    "estimatedPreparationTime": 4,
+    "shop": "HALKA PHULKA",
+    "availability": true
+  },
+  {
+    "id": "hp_vp_1",
+    "name": "Plain Vada Pav",
+    "category": "Vada Pav",
+    "price": 30,
+    "dietary": "vegetarian",
+    "tags": [
+      "vada_pav",
+      "mumbai",
+      "snack",
+      "budget",
+      "street_food"
+    ],
+    "spiceLevel": "medium",
+    "fillingLevel": "medium",
+    "foodType": "starter",
+    "estimatedPreparationTime": 4,
+    "shop": "HALKA PHULKA",
+    "availability": true
+  },
+  {
+    "id": "hp_vp_2",
+    "name": "Classic Vada Pav",
+    "category": "Vada Pav",
+    "price": 35,
+    "dietary": "vegetarian",
+    "tags": [
+      "vada_pav",
+      "classic",
+      "snack",
+      "budget"
+    ],
+    "spiceLevel": "medium",
+    "fillingLevel": "medium",
+    "foodType": "starter",
+    "estimatedPreparationTime": 4,
+    "shop": "HALKA PHULKA",
+    "availability": true
+  },
+  {
+    "id": "hp_vp_3",
+    "name": "Butter Vada Pav",
+    "category": "Vada Pav",
+    "price": 40,
+    "dietary": "vegetarian",
+    "tags": [
+      "vada_pav",
+      "butter",
+      "snack"
+    ],
+    "spiceLevel": "medium",
+    "fillingLevel": "medium",
+    "foodType": "starter",
+    "estimatedPreparationTime": 5,
+    "shop": "HALKA PHULKA",
+    "availability": true
+  },
+  {
+    "id": "hp_vp_4",
+    "name": "Cheese Vada Pav",
+    "category": "Vada Pav",
+    "price": 50,
+    "dietary": "vegetarian",
+    "tags": [
+      "vada_pav",
+      "cheese",
+      "snack"
+    ],
+    "spiceLevel": "mild",
+    "fillingLevel": "heavy",
+    "foodType": "starter",
+    "estimatedPreparationTime": 5,
+    "shop": "HALKA PHULKA",
+    "availability": true
+  },
+  {
+    "id": "hp_vp_5",
+    "name": "Schezwan Vada Pav",
+    "category": "Vada Pav",
+    "price": 45,
+    "dietary": "vegetarian",
+    "tags": [
+      "vada_pav",
+      "schezwan",
+      "spicy"
+    ],
+    "spiceLevel": "spicy",
+    "fillingLevel": "medium",
+    "foodType": "starter",
+    "estimatedPreparationTime": 5,
+    "shop": "HALKA PHULKA",
+    "availability": true
+  },
+  {
+    "id": "hp_cb_1",
+    "name": "Chhole Bhature",
+    "category": "Chhole Bhature",
+    "price": 60,
+    "dietary": "vegetarian",
+    "tags": [
+      "chhole_bhature",
+      "punjabi",
+      "filling",
+      "popular",
+      "heavy"
+    ],
+    "spiceLevel": "medium",
+    "fillingLevel": "heavy",
+    "foodType": "thali",
+    "estimatedPreparationTime": 10,
+    "shop": "HALKA PHULKA",
+    "availability": true
+  },
+  {
+    "id": "hp_cb_2",
+    "name": "Extra Chhole",
+    "category": "Chhole Bhature",
+    "price": 30,
+    "dietary": "vegetarian",
+    "tags": [
+      "extra",
+      "chhole"
+    ],
+    "spiceLevel": "medium",
+    "fillingLevel": "medium",
+    "foodType": "gravy",
+    "estimatedPreparationTime": 3,
+    "shop": "HALKA PHULKA",
+    "availability": true
+  },
+  {
+    "id": "hp_cb_3",
+    "name": "Extra Bhature",
+    "category": "Chhole Bhature",
+    "price": 20,
+    "dietary": "vegetarian",
+    "tags": [
+      "extra",
+      "bhature"
+    ],
+    "spiceLevel": "mild",
+    "fillingLevel": "medium",
+    "foodType": "bread",
+    "estimatedPreparationTime": 5,
+    "shop": "HALKA PHULKA",
+    "availability": true
+  },
+  {
+    "id": "hp_par_1",
+    "name": "Alu Paratha",
+    "category": "Paratha",
+    "price": 50,
+    "dietary": "vegetarian",
+    "tags": [
+      "paratha",
+      "aloo",
+      "breakfast",
+      "filling"
+    ],
+    "spiceLevel": "medium",
+    "fillingLevel": "heavy",
+    "foodType": "starter",
+    "estimatedPreparationTime": 10,
+    "shop": "HALKA PHULKA",
+    "availability": true
+  },
+  {
+    "id": "hp_par_2",
+    "name": "Paneer Paratha",
+    "category": "Paratha",
+    "price": 60,
+    "dietary": "vegetarian",
+    "tags": [
+      "paratha",
+      "paneer",
+      "protein",
+      "filling"
+    ],
+    "spiceLevel": "medium",
+    "fillingLevel": "heavy",
+    "foodType": "starter",
+    "estimatedPreparationTime": 10,
+    "shop": "HALKA PHULKA",
+    "availability": true
+  },
+  {
+    "id": "hp_par_3",
+    "name": "Butter Alu Paratha",
+    "category": "Paratha",
+    "price": 60,
+    "dietary": "vegetarian",
+    "tags": [
+      "paratha",
+      "aloo",
+      "butter"
+    ],
+    "spiceLevel": "medium",
+    "fillingLevel": "heavy",
+    "foodType": "starter",
+    "estimatedPreparationTime": 10,
+    "shop": "HALKA PHULKA",
+    "availability": true
+  },
+  {
+    "id": "hp_par_4",
+    "name": "Butter Paneer Paratha",
+    "category": "Paratha",
+    "price": 70,
+    "dietary": "vegetarian",
+    "tags": [
+      "paratha",
+      "paneer",
+      "butter"
+    ],
+    "spiceLevel": "medium",
+    "fillingLevel": "heavy",
+    "foodType": "starter",
+    "estimatedPreparationTime": 10,
+    "shop": "HALKA PHULKA",
+    "availability": true
+  },
+  {
+    "id": "hp_par_5",
+    "name": "Spl Paneer Paratha",
+    "category": "Paratha",
+    "price": 80,
+    "dietary": "vegetarian",
+    "tags": [
+      "paratha",
+      "paneer",
+      "special"
+    ],
+    "spiceLevel": "medium",
+    "fillingLevel": "heavy",
+    "foodType": "starter",
+    "estimatedPreparationTime": 12,
+    "shop": "HALKA PHULKA",
+    "availability": true
+  },
+  {
+    "id": "hp_par_6",
+    "name": "Crispy Paneer",
+    "category": "Paratha",
+    "price": 90,
+    "dietary": "vegetarian",
+    "tags": [
+      "paneer",
+      "starter",
+      "crispy",
+      "snack"
+    ],
+    "spiceLevel": "medium",
+    "fillingLevel": "medium",
+    "foodType": "paneer",
+    "estimatedPreparationTime": 10,
+    "shop": "HALKA PHULKA",
+    "availability": true
+  },
+  {
+    "id": "hp_bev_1",
+    "name": "Masala Coldrinks",
+    "category": "Beverages",
+    "price": 30,
+    "dietary": "vegetarian",
+    "tags": [
+      "beverage",
+      "cold_drinks",
+      "masala",
+      "refreshing"
+    ],
+    "spiceLevel": "mild",
+    "fillingLevel": "light",
+    "foodType": "beverage",
+    "estimatedPreparationTime": 2,
+    "shop": "HALKA PHULKA",
+    "availability": true
+  },
+  {
+    "id": "hp_chat_1",
+    "name": "Papdi Chat",
+    "category": "Chat",
+    "price": 40,
+    "dietary": "vegetarian",
+    "tags": [
+      "chaat",
+      "papdi",
+      "tangy",
+      "street_food"
+    ],
+    "spiceLevel": "medium",
+    "fillingLevel": "light",
+    "foodType": "starter",
+    "estimatedPreparationTime": 5,
+    "shop": "HALKA PHULKA",
+    "availability": true
+  },
+  {
+    "id": "hp_chat_2",
+    "name": "Samosa Chat",
+    "category": "Chat",
+    "price": 40,
+    "dietary": "vegetarian",
+    "tags": [
+      "chaat",
+      "samosa",
+      "popular",
+      "street_food"
+    ],
+    "spiceLevel": "medium",
+    "fillingLevel": "medium",
+    "foodType": "starter",
+    "estimatedPreparationTime": 5,
+    "shop": "HALKA PHULKA",
+    "availability": true
+  },
+  {
+    "id": "hp_chat_3",
+    "name": "Alu Tika Chat",
+    "category": "Chat",
+    "price": 40,
+    "dietary": "vegetarian",
+    "tags": [
+      "chaat",
+      "aloo_tikki",
+      "tangy"
+    ],
+    "spiceLevel": "medium",
+    "fillingLevel": "medium",
+    "foodType": "starter",
+    "estimatedPreparationTime": 5,
+    "shop": "HALKA PHULKA",
+    "availability": true
+  },
+  {
+    "id": "hp_chat_4",
+    "name": "Cutlet Chat",
+    "category": "Chat",
+    "price": 40,
+    "dietary": "vegetarian",
+    "tags": [
+      "chaat",
+      "cutlet"
+    ],
+    "spiceLevel": "medium",
+    "fillingLevel": "medium",
+    "foodType": "starter",
+    "estimatedPreparationTime": 5,
+    "shop": "HALKA PHULKA",
+    "availability": true
+  },
+  {
+    "id": "hp_chat_5",
+    "name": "Mix Masla Chat",
+    "category": "Chat",
+    "price": 40,
+    "dietary": "vegetarian",
+    "tags": [
+      "chaat",
+      "masala"
+    ],
+    "spiceLevel": "medium",
+    "fillingLevel": "medium",
+    "foodType": "starter",
+    "estimatedPreparationTime": 5,
+    "shop": "HALKA PHULKA",
+    "availability": true
+  },
+  {
+    "id": "hp_chat_6",
+    "name": "Pani Puri",
+    "category": "Chat",
+    "price": 30,
+    "dietary": "vegetarian",
+    "tags": [
+      "pani_puri",
+      "golgappa",
+      "puchka",
+      "street_food",
+      "tangy"
+    ],
+    "spiceLevel": "spicy",
+    "fillingLevel": "light",
+    "foodType": "starter",
+    "estimatedPreparationTime": 4,
+    "shop": "HALKA PHULKA",
+    "availability": true
+  },
+  {
+    "id": "hp_chat_7",
+    "name": "Dahi Gupchup",
+    "category": "Chat",
+    "price": 40,
+    "dietary": "vegetarian",
+    "tags": [
+      "chaat",
+      "dahi",
+      "gupchup",
+      "cooling",
+      "street_food"
+    ],
+    "spiceLevel": "mild",
+    "fillingLevel": "light",
+    "foodType": "starter",
+    "estimatedPreparationTime": 5,
+    "shop": "HALKA PHULKA",
+    "availability": true
+  },
+  {
+    "id": "hp_chat_8",
+    "name": "Spl Masala Gupchup",
+    "category": "Chat",
+    "price": 40,
+    "dietary": "vegetarian",
+    "tags": [
+      "chaat",
+      "masala",
+      "gupchup",
+      "spicy"
+    ],
+    "spiceLevel": "spicy",
+    "fillingLevel": "light",
+    "foodType": "starter",
+    "estimatedPreparationTime": 5,
+    "shop": "HALKA PHULKA",
+    "availability": true
+  },
+  {
+    "id": "hp_chat_9",
+    "name": "Khata Meetha Dahiwada",
+    "category": "Chat",
+    "price": 30,
+    "dietary": "vegetarian",
+    "tags": [
+      "dahiwada",
+      "sweet",
+      "tangy",
+      "cooling"
+    ],
+    "spiceLevel": "mild",
+    "fillingLevel": "light",
+    "foodType": "starter",
+    "estimatedPreparationTime": 5,
+    "shop": "HALKA PHULKA",
+    "availability": true
+  },
+  {
+    "id": "hp_pb_1",
+    "name": "Plain Pav Bhaji",
+    "category": "Pav Bhaji",
+    "price": 50,
+    "dietary": "vegetarian",
+    "tags": [
+      "pav_bhaji",
+      "butter",
+      "mumbai",
+      "popular"
+    ],
+    "spiceLevel": "medium",
+    "fillingLevel": "medium",
+    "foodType": "starter",
+    "estimatedPreparationTime": 8,
+    "shop": "HALKA PHULKA",
+    "availability": true
+  },
+  {
+    "id": "hp_pb_2",
+    "name": "Butter Pav Bhaji",
+    "category": "Pav Bhaji",
+    "price": 60,
+    "dietary": "vegetarian",
+    "tags": [
+      "pav_bhaji",
+      "extra_butter",
+      "rich"
+    ],
+    "spiceLevel": "medium",
+    "fillingLevel": "heavy",
+    "foodType": "starter",
+    "estimatedPreparationTime": 8,
+    "shop": "HALKA PHULKA",
+    "availability": true
+  },
+  {
+    "id": "hp_pb_3",
+    "name": "Cheese Pav Bhaji",
+    "category": "Pav Bhaji",
+    "price": 70,
+    "dietary": "vegetarian",
+    "tags": [
+      "pav_bhaji",
+      "cheese"
+    ],
+    "spiceLevel": "medium",
+    "fillingLevel": "heavy",
+    "foodType": "starter",
+    "estimatedPreparationTime": 8,
+    "shop": "HALKA PHULKA",
+    "availability": true
+  },
+  {
+    "id": "hp_pb_4",
+    "name": "Cheese Butter Pav Bhaji",
+    "category": "Pav Bhaji",
+    "price": 80,
+    "dietary": "vegetarian",
+    "tags": [
+      "pav_bhaji",
+      "cheese",
+      "butter",
+      "filling"
+    ],
+    "spiceLevel": "medium",
+    "fillingLevel": "heavy",
+    "foodType": "starter",
+    "estimatedPreparationTime": 8,
+    "shop": "HALKA PHULKA",
+    "availability": true
+  },
+  {
+    "id": "hp_pb_5",
+    "name": "Masala Pav Bhaji",
+    "category": "Pav Bhaji",
+    "price": 70,
+    "dietary": "vegetarian",
+    "tags": [
+      "pav_bhaji",
+      "masala",
+      "spicy"
+    ],
+    "spiceLevel": "spicy",
+    "fillingLevel": "heavy",
+    "foodType": "starter",
+    "estimatedPreparationTime": 8,
+    "shop": "HALKA PHULKA",
+    "availability": true
+  },
+  {
+    "id": "hp_pb_6",
+    "name": "Extra Pav",
+    "category": "Pav Bhaji",
+    "price": 20,
+    "dietary": "vegetarian",
+    "tags": [
+      "extra",
+      "pav"
+    ],
+    "spiceLevel": "mild",
+    "fillingLevel": "light",
+    "foodType": "bread",
+    "estimatedPreparationTime": 2,
+    "shop": "HALKA PHULKA",
+    "availability": true
+  },
+  {
+    "id": "hp_pb_7",
+    "name": "Extra Bhaji",
+    "category": "Pav Bhaji",
+    "price": 20,
+    "dietary": "vegetarian",
+    "tags": [
+      "extra",
+      "bhaji"
+    ],
+    "spiceLevel": "medium",
+    "fillingLevel": "light",
+    "foodType": "gravy",
+    "estimatedPreparationTime": 2,
+    "shop": "HALKA PHULKA",
+    "availability": true
+  },
+  {
+    "id": "mp_mg_1",
+    "name": "Original Masala Maggi",
+    "category": "Noodles",
+    "price": 55,
+    "dietary": "vegetarian",
+    "tags": [
+      "maggi",
+      "noodles",
+      "classic",
+      "comfort_food"
+    ],
+    "spiceLevel": "mild",
+    "fillingLevel": "medium",
+    "foodType": "noodles",
+    "estimatedPreparationTime": 6,
+    "shop": "MAGGIE POINT",
+    "availability": true
+  },
+  {
+    "id": "mp_mg_2",
+    "name": "Atta Masala Maggi",
+    "category": "Noodles",
+    "price": 60,
+    "dietary": "vegetarian",
+    "tags": [
+      "maggi",
+      "atta",
+      "healthy",
+      "noodles"
+    ],
+    "spiceLevel": "mild",
+    "fillingLevel": "medium",
+    "foodType": "noodles",
+    "estimatedPreparationTime": 6,
+    "shop": "MAGGIE POINT",
+    "availability": true
+  },
+  {
+    "id": "mp_mg_3",
+    "name": "Garden Fresh Maggi",
+    "category": "Noodles",
+    "price": 65,
+    "dietary": "vegetarian",
+    "tags": [
+      "maggi",
+      "vegetables",
+      "fresh",
+      "noodles"
+    ],
+    "spiceLevel": "mild",
+    "fillingLevel": "medium",
+    "foodType": "noodles",
+    "estimatedPreparationTime": 7,
+    "shop": "MAGGIE POINT",
+    "availability": true
+  },
+  {
+    "id": "mp_mg_4",
+    "name": "Butter Garlic Maggi",
+    "category": "Noodles",
+    "price": 70,
+    "dietary": "vegetarian",
+    "tags": [
+      "maggi",
+      "butter",
+      "garlic",
+      "aromatic"
+    ],
+    "spiceLevel": "medium",
+    "fillingLevel": "medium",
+    "foodType": "noodles",
+    "estimatedPreparationTime": 7,
+    "shop": "MAGGIE POINT",
+    "availability": true
+  },
+  {
+    "id": "mp_mg_5",
+    "name": "Chilli Garlic Maggi",
+    "category": "Noodles",
+    "price": 75,
+    "dietary": "vegetarian",
+    "tags": [
+      "maggi",
+      "chilli",
+      "garlic",
+      "spicy"
+    ],
+    "spiceLevel": "spicy",
+    "fillingLevel": "medium",
+    "foodType": "noodles",
+    "estimatedPreparationTime": 7,
+    "shop": "MAGGIE POINT",
+    "availability": true
+  },
+  {
+    "id": "mp_mg_6",
+    "name": "Periperi Maggi",
+    "category": "Noodles",
+    "price": 80,
+    "dietary": "vegetarian",
+    "tags": [
+      "maggi",
+      "peri_peri",
+      "spicy",
+      "zesty"
+    ],
+    "spiceLevel": "spicy",
+    "fillingLevel": "medium",
+    "foodType": "noodles",
+    "estimatedPreparationTime": 7,
+    "shop": "MAGGIE POINT",
+    "availability": true
+  },
+  {
+    "id": "mp_mg_7",
+    "name": "Barbeque Maggi",
+    "category": "Noodles",
+    "price": 80,
+    "dietary": "vegetarian",
+    "tags": [
+      "maggi",
+      "bbq",
+      "smoky"
+    ],
+    "spiceLevel": "medium",
+    "fillingLevel": "medium",
+    "foodType": "noodles",
+    "estimatedPreparationTime": 7,
+    "shop": "MAGGIE POINT",
+    "availability": true
+  },
+  {
+    "id": "mp_mg_8",
+    "name": "Shillong Szechuan Maggi",
+    "category": "Noodles",
+    "price": 80,
+    "dietary": "vegetarian",
+    "tags": [
+      "maggi",
+      "schezwan",
+      "spicy",
+      "northeast_flavor"
+    ],
+    "spiceLevel": "spicy",
+    "fillingLevel": "medium",
+    "foodType": "noodles",
+    "estimatedPreparationTime": 7,
+    "shop": "MAGGIE POINT",
+    "availability": true
+  },
+  {
+    "id": "mp_mg_9",
+    "name": "Hostel Wali Maggi",
+    "category": "Noodles",
+    "price": 80,
+    "dietary": "vegetarian",
+    "tags": [
+      "maggi",
+      "hostel",
+      "nostalgic",
+      "comfort_food"
+    ],
+    "spiceLevel": "medium",
+    "fillingLevel": "medium",
+    "foodType": "noodles",
+    "estimatedPreparationTime": 7,
+    "shop": "MAGGIE POINT",
+    "availability": true
+  },
+  {
+    "id": "mp_mg_10",
+    "name": "Italiano Maggi",
+    "category": "Noodles",
+    "price": 90,
+    "dietary": "vegetarian",
+    "tags": [
+      "maggi",
+      "herbs",
+      "cheese",
+      "italian"
+    ],
+    "spiceLevel": "mild",
+    "fillingLevel": "heavy",
+    "foodType": "noodles",
+    "estimatedPreparationTime": 8,
+    "shop": "MAGGIE POINT",
+    "availability": true
+  },
+  {
+    "id": "mp_mg_11",
+    "name": "Kolkata Special Maggi",
+    "category": "Noodles",
+    "price": 90,
+    "dietary": "vegetarian",
+    "tags": [
+      "maggi",
+      "kolkata_special",
+      "spicy",
+      "mustard"
+    ],
+    "spiceLevel": "spicy",
+    "fillingLevel": "medium",
+    "foodType": "noodles",
+    "estimatedPreparationTime": 8,
+    "shop": "MAGGIE POINT",
+    "availability": true
+  },
+  {
+    "id": "mp_mg_12",
+    "name": "Hyderabadi Maggi",
+    "category": "Noodles",
+    "price": 90,
+    "dietary": "vegetarian",
+    "tags": [
+      "maggi",
+      "hyderabadi",
+      "spicy",
+      "biryani_masala"
+    ],
+    "spiceLevel": "spicy",
+    "fillingLevel": "medium",
+    "foodType": "noodles",
+    "estimatedPreparationTime": 8,
+    "shop": "MAGGIE POINT",
+    "availability": true
+  },
+  {
+    "id": "mp_mg_13",
+    "name": "Patiala Tandoori Maggi",
+    "category": "Noodles",
+    "price": 90,
+    "dietary": "vegetarian",
+    "tags": [
+      "maggi",
+      "tandoori",
+      "punjabi",
+      "smoky"
+    ],
+    "spiceLevel": "spicy",
+    "fillingLevel": "medium",
+    "foodType": "noodles",
+    "estimatedPreparationTime": 8,
+    "shop": "MAGGIE POINT",
+    "availability": true
+  },
+  {
+    "id": "mp_mg_14",
+    "name": "Korean BBQ Noodles",
+    "category": "Noodles",
+    "price": 110,
+    "dietary": "vegetarian",
+    "tags": [
+      "noodles",
+      "korean",
+      "bbq",
+      "ramen_style",
+      "trendy"
+    ],
+    "spiceLevel": "spicy",
+    "fillingLevel": "heavy",
+    "foodType": "noodles",
+    "estimatedPreparationTime": 8,
+    "shop": "MAGGIE POINT",
+    "availability": true
+  },
+  {
+    "id": "mp_paz_1",
+    "name": "Cheese Oregano Pazzta",
+    "category": "Pazzta",
+    "price": 80,
+    "dietary": "vegetarian",
+    "tags": [
+      "pasta",
+      "cheese",
+      "oregano",
+      "creamy"
+    ],
+    "spiceLevel": "mild",
+    "fillingLevel": "medium",
+    "foodType": "noodles",
+    "estimatedPreparationTime": 8,
+    "shop": "MAGGIE POINT",
+    "availability": true
+  },
+  {
+    "id": "mp_paz_2",
+    "name": "Tomato Pazzta",
+    "category": "Pazzta",
+    "price": 80,
+    "dietary": "vegetarian",
+    "tags": [
+      "pasta",
+      "tomato",
+      "tangy",
+      "red_sauce"
+    ],
+    "spiceLevel": "mild",
+    "fillingLevel": "medium",
+    "foodType": "noodles",
+    "estimatedPreparationTime": 8,
+    "shop": "MAGGIE POINT",
+    "availability": true
+  },
+  {
+    "id": "mp_paz_3",
+    "name": "Mushroom Pazzta",
+    "category": "Pazzta",
+    "price": 80,
+    "dietary": "vegetarian",
+    "tags": [
+      "pasta",
+      "mushroom",
+      "creamy"
+    ],
+    "spiceLevel": "mild",
+    "fillingLevel": "medium",
+    "foodType": "noodles",
+    "estimatedPreparationTime": 8,
+    "shop": "MAGGIE POINT",
+    "availability": true
+  },
+  {
+    "id": "mp_paz_4",
+    "name": "Masala-AE-Magic Pazzta",
+    "category": "Pazzta",
+    "price": 80,
+    "dietary": "vegetarian",
+    "tags": [
+      "pasta",
+      "masala_magic",
+      "indian_fusion"
+    ],
+    "spiceLevel": "medium",
+    "fillingLevel": "medium",
+    "foodType": "noodles",
+    "estimatedPreparationTime": 8,
+    "shop": "MAGGIE POINT",
+    "availability": true
+  },
+  {
+    "id": "mp_rb_1",
+    "name": "WOK Rice",
+    "category": "Rice Bowl",
+    "price": 100,
+    "dietary": "vegetarian",
+    "tags": [
+      "rice",
+      "wok",
+      "stir_fry",
+      "filling"
+    ],
+    "spiceLevel": "medium",
+    "fillingLevel": "heavy",
+    "foodType": "rice",
+    "estimatedPreparationTime": 10,
+    "shop": "MAGGIE POINT",
+    "availability": true
+  },
+  {
+    "id": "mp_rb_2",
+    "name": "Chilli Garlic Rice",
+    "category": "Rice Bowl",
+    "price": 100,
+    "dietary": "vegetarian",
+    "tags": [
+      "rice",
+      "chilli_garlic",
+      "spicy",
+      "filling"
+    ],
+    "spiceLevel": "spicy",
+    "fillingLevel": "heavy",
+    "foodType": "rice",
+    "estimatedPreparationTime": 10,
+    "shop": "MAGGIE POINT",
+    "availability": true
+  },
+  {
+    "id": "mp_sc_1",
+    "name": "Chilli Garlic Sweet Corn",
+    "category": "Sweet Corn",
+    "price": 80,
+    "dietary": "vegetarian",
+    "tags": [
+      "sweet_corn",
+      "healthy",
+      "snack",
+      "chilli_garlic"
+    ],
+    "spiceLevel": "spicy",
+    "fillingLevel": "light",
+    "foodType": "starter",
+    "estimatedPreparationTime": 5,
+    "shop": "MAGGIE POINT",
+    "availability": true
+  },
+  {
+    "id": "mp_sc_2",
+    "name": "Masala-AE-Magic Sweet Corn",
+    "category": "Sweet Corn",
+    "price": 80,
+    "dietary": "vegetarian",
+    "tags": [
+      "sweet_corn",
+      "masala",
+      "healthy",
+      "snack"
+    ],
+    "spiceLevel": "medium",
+    "fillingLevel": "light",
+    "foodType": "starter",
+    "estimatedPreparationTime": 5,
+    "shop": "MAGGIE POINT",
+    "availability": true
+  },
+  {
+    "id": "mp_bev_1",
+    "name": "Lemon Tea",
+    "category": "Hot Beverages",
+    "price": 25,
+    "dietary": "vegetarian",
+    "tags": [
+      "tea",
+      "lemon",
+      "beverage",
+      "budget",
+      "refreshing"
+    ],
+    "spiceLevel": "mild",
+    "fillingLevel": "light",
+    "foodType": "beverage",
+    "estimatedPreparationTime": 3,
+    "shop": "MAGGIE POINT",
+    "availability": true
+  },
+  {
+    "id": "mp_bev_2",
+    "name": "Black Tea",
+    "category": "Hot Beverages",
+    "price": 25,
+    "dietary": "vegetarian",
+    "tags": [
+      "tea",
+      "black_tea",
+      "beverage",
+      "light"
+    ],
+    "spiceLevel": "mild",
+    "fillingLevel": "light",
+    "foodType": "beverage",
+    "estimatedPreparationTime": 3,
+    "shop": "MAGGIE POINT",
+    "availability": true
+  },
+  {
+    "id": "mp_bev_3",
+    "name": "Cardamom Tea",
+    "category": "Hot Beverages",
+    "price": 30,
+    "dietary": "vegetarian",
+    "tags": [
+      "tea",
+      "elaichi",
+      "milk_tea",
+      "beverage"
+    ],
+    "spiceLevel": "mild",
+    "fillingLevel": "light",
+    "foodType": "beverage",
+    "estimatedPreparationTime": 4,
+    "shop": "MAGGIE POINT",
+    "availability": true
+  },
+  {
+    "id": "mp_bev_4",
+    "name": "Masala Tea",
+    "category": "Hot Beverages",
+    "price": 30,
+    "dietary": "vegetarian",
+    "tags": [
+      "tea",
+      "masala_chai",
+      "beverage",
+      "spiced"
+    ],
+    "spiceLevel": "medium",
+    "fillingLevel": "light",
+    "foodType": "beverage",
+    "estimatedPreparationTime": 4,
+    "shop": "MAGGIE POINT",
+    "availability": true
+  },
+  {
+    "id": "mp_bev_5",
+    "name": "Espresso Black Coffee",
+    "category": "Hot Beverages",
+    "price": 30,
+    "dietary": "vegetarian",
+    "tags": [
+      "coffee",
+      "espresso",
+      "black_coffee",
+      "caffeine"
+    ],
+    "spiceLevel": "mild",
+    "fillingLevel": "light",
+    "foodType": "beverage",
+    "estimatedPreparationTime": 3,
+    "shop": "MAGGIE POINT",
+    "availability": true
+  },
+  {
+    "id": "mp_bev_6",
+    "name": "Nescafe Regular Coffee",
+    "category": "Hot Beverages",
+    "price": 30,
+    "dietary": "vegetarian",
+    "tags": [
+      "coffee",
+      "nescafe",
+      "hot_coffee",
+      "beverage"
+    ],
+    "spiceLevel": "mild",
+    "fillingLevel": "light",
+    "foodType": "beverage",
+    "estimatedPreparationTime": 4,
+    "shop": "MAGGIE POINT",
+    "availability": true
+  },
+  {
+    "id": "mp_bev_7",
+    "name": "Cappuccino",
+    "category": "Hot Beverages",
+    "price": 50,
+    "dietary": "vegetarian",
+    "tags": [
+      "coffee",
+      "cappuccino",
+      "frothy",
+      "beverage"
+    ],
+    "spiceLevel": "mild",
+    "fillingLevel": "light",
+    "foodType": "beverage",
+    "estimatedPreparationTime": 5,
+    "shop": "MAGGIE POINT",
+    "availability": true
+  },
+  {
+    "id": "mp_bev_8",
+    "name": "Café Latte",
+    "category": "Hot Beverages",
+    "price": 50,
+    "dietary": "vegetarian",
+    "tags": [
+      "coffee",
+      "latte",
+      "smooth",
+      "beverage"
+    ],
+    "spiceLevel": "mild",
+    "fillingLevel": "light",
+    "foodType": "beverage",
+    "estimatedPreparationTime": 5,
+    "shop": "MAGGIE POINT",
+    "availability": true
+  },
+  {
+    "id": "mp_bev_9",
+    "name": "Hot Chocolate",
+    "category": "Hot Beverages",
+    "price": 50,
+    "dietary": "vegetarian",
+    "tags": [
+      "hot_chocolate",
+      "sweet",
+      "comfort_food",
+      "beverage"
+    ],
+    "spiceLevel": "mild",
+    "fillingLevel": "medium",
+    "foodType": "beverage",
+    "estimatedPreparationTime": 5,
+    "shop": "MAGGIE POINT",
+    "availability": true
+  },
+  {
+    "id": "mp_bev_10",
+    "name": "Café Mocha",
+    "category": "Hot Beverages",
+    "price": 60,
+    "dietary": "vegetarian",
+    "tags": [
+      "coffee",
+      "mocha",
+      "chocolate_coffee"
+    ],
+    "spiceLevel": "mild",
+    "fillingLevel": "medium",
+    "foodType": "beverage",
+    "estimatedPreparationTime": 5,
+    "shop": "MAGGIE POINT",
+    "availability": true
+  },
+  {
+    "id": "mp_bev_11",
+    "name": "Irish Cappuccino",
+    "category": "Hot Beverages",
+    "price": 60,
+    "dietary": "vegetarian",
+    "tags": [
+      "coffee",
+      "irish",
+      "specialty"
+    ],
+    "spiceLevel": "mild",
+    "fillingLevel": "light",
+    "foodType": "beverage",
+    "estimatedPreparationTime": 5,
+    "shop": "MAGGIE POINT",
+    "availability": true
+  },
+  {
+    "id": "mp_bev_12",
+    "name": "Hazelnut Cappuccino",
+    "category": "Hot Beverages",
+    "price": 60,
+    "dietary": "vegetarian",
+    "tags": [
+      "coffee",
+      "hazelnut",
+      "flavored"
+    ],
+    "spiceLevel": "mild",
+    "fillingLevel": "light",
+    "foodType": "beverage",
+    "estimatedPreparationTime": 5,
+    "shop": "MAGGIE POINT",
+    "availability": true
+  },
+  {
+    "id": "mp_bev_13",
+    "name": "Caramel Cappuccino",
+    "category": "Hot Beverages",
+    "price": 60,
+    "dietary": "vegetarian",
+    "tags": [
+      "coffee",
+      "caramel",
+      "sweet"
+    ],
+    "spiceLevel": "mild",
+    "fillingLevel": "light",
+    "foodType": "beverage",
+    "estimatedPreparationTime": 5,
+    "shop": "MAGGIE POINT",
+    "availability": true
+  },
+  {
+    "id": "mp_soup_1",
+    "name": "Tomato Soup",
+    "category": "Soup",
+    "price": 80,
+    "dietary": "vegetarian",
+    "tags": [
+      "soup",
+      "tomato",
+      "warm",
+      "comfort_food"
+    ],
+    "spiceLevel": "mild",
+    "fillingLevel": "light",
+    "foodType": "starter",
+    "estimatedPreparationTime": 6,
+    "shop": "MAGGIE POINT",
+    "availability": true
+  },
+  {
+    "id": "mp_soup_2",
+    "name": "Manchow Soup",
+    "category": "Soup",
+    "price": 80,
+    "dietary": "vegetarian",
+    "tags": [
+      "soup",
+      "manchow",
+      "crispy_noodles",
+      "spicy"
+    ],
+    "spiceLevel": "spicy",
+    "fillingLevel": "light",
+    "foodType": "starter",
+    "estimatedPreparationTime": 6,
+    "shop": "MAGGIE POINT",
+    "availability": true
+  },
+  {
+    "id": "mp_cbev_1",
+    "name": "Lemon Ice Tea",
+    "category": "Cold Beverages",
+    "price": 60,
+    "dietary": "vegetarian",
+    "tags": [
+      "iced_tea",
+      "lemon",
+      "cold",
+      "refreshing"
+    ],
+    "spiceLevel": "mild",
+    "fillingLevel": "light",
+    "foodType": "beverage",
+    "estimatedPreparationTime": 4,
+    "shop": "MAGGIE POINT",
+    "availability": true
+  },
+  {
+    "id": "mp_cbev_2",
+    "name": "Masala Ice Tea",
+    "category": "Cold Beverages",
+    "price": 65,
+    "dietary": "vegetarian",
+    "tags": [
+      "iced_tea",
+      "masala",
+      "chilled"
+    ],
+    "spiceLevel": "medium",
+    "fillingLevel": "light",
+    "foodType": "beverage",
+    "estimatedPreparationTime": 4,
+    "shop": "MAGGIE POINT",
+    "availability": true
+  },
+  {
+    "id": "mp_cbev_3",
+    "name": "Peach Ice Tea",
+    "category": "Cold Beverages",
+    "price": 75,
+    "dietary": "vegetarian",
+    "tags": [
+      "iced_tea",
+      "peach",
+      "fruity",
+      "refreshing"
+    ],
+    "spiceLevel": "mild",
+    "fillingLevel": "light",
+    "foodType": "beverage",
+    "estimatedPreparationTime": 4,
+    "shop": "MAGGIE POINT",
+    "availability": true
+  },
+  {
+    "id": "mp_cbev_4",
+    "name": "Frappe Mocha",
+    "category": "Cold Beverages",
+    "price": 75,
+    "dietary": "vegetarian",
+    "tags": [
+      "frappe",
+      "mocha",
+      "cold_coffee",
+      "chocolate"
+    ],
+    "spiceLevel": "mild",
+    "fillingLevel": "medium",
+    "foodType": "beverage",
+    "estimatedPreparationTime": 5,
+    "shop": "MAGGIE POINT",
+    "availability": true
+  },
+  {
+    "id": "mp_cbev_5",
+    "name": "Cold Chocolate",
+    "category": "Cold Beverages",
+    "price": 75,
+    "dietary": "vegetarian",
+    "tags": [
+      "cold_chocolate",
+      "chocolate",
+      "sweet",
+      "beverage"
+    ],
+    "spiceLevel": "mild",
+    "fillingLevel": "medium",
+    "foodType": "beverage",
+    "estimatedPreparationTime": 5,
+    "shop": "MAGGIE POINT",
+    "availability": true
+  },
+  {
+    "id": "mp_cbev_6",
+    "name": "Café Frappe (Cold Coffee)",
+    "category": "Cold Beverages",
+    "price": 80,
+    "dietary": "vegetarian",
+    "tags": [
+      "cold_coffee",
+      "frappe",
+      "popular",
+      "chilled"
+    ],
+    "spiceLevel": "mild",
+    "fillingLevel": "medium",
+    "foodType": "beverage",
+    "estimatedPreparationTime": 5,
+    "shop": "MAGGIE POINT",
+    "availability": true
+  },
+  {
+    "id": "mp_cbev_7",
+    "name": "Irish Frappe",
+    "category": "Cold Beverages",
+    "price": 85,
+    "dietary": "vegetarian",
+    "tags": [
+      "frappe",
+      "irish",
+      "chilled"
+    ],
+    "spiceLevel": "mild",
+    "fillingLevel": "medium",
+    "foodType": "beverage",
+    "estimatedPreparationTime": 5,
+    "shop": "MAGGIE POINT",
+    "availability": true
+  },
+  {
+    "id": "mp_cbev_8",
+    "name": "Caramel Frappe",
+    "category": "Cold Beverages",
+    "price": 85,
+    "dietary": "vegetarian",
+    "tags": [
+      "frappe",
+      "caramel",
+      "sweet"
+    ],
+    "spiceLevel": "mild",
+    "fillingLevel": "medium",
+    "foodType": "beverage",
+    "estimatedPreparationTime": 5,
+    "shop": "MAGGIE POINT",
+    "availability": true
+  },
+  {
+    "id": "mp_cbev_9",
+    "name": "Hazelnut Frappe",
+    "category": "Cold Beverages",
+    "price": 85,
+    "dietary": "vegetarian",
+    "tags": [
+      "frappe",
+      "hazelnut",
+      "chilled"
+    ],
+    "spiceLevel": "mild",
+    "fillingLevel": "medium",
+    "foodType": "beverage",
+    "estimatedPreparationTime": 5,
+    "shop": "MAGGIE POINT",
+    "availability": true
+  },
+  {
+    "id": "mp_cbev_10",
+    "name": "Kit Kat Frappe",
+    "category": "Cold Beverages",
+    "price": 100,
+    "dietary": "vegetarian",
+    "tags": [
+      "frappe",
+      "kitkat",
+      "premium",
+      "dessert_beverage"
+    ],
+    "spiceLevel": "mild",
+    "fillingLevel": "heavy",
+    "foodType": "beverage",
+    "estimatedPreparationTime": 6,
+    "shop": "MAGGIE POINT",
+    "availability": true
+  },
+  {
+    "id": "mp_cbev_11",
+    "name": "Munch Nuts Frappe",
+    "category": "Cold Beverages",
+    "price": 100,
+    "dietary": "vegetarian",
+    "tags": [
+      "frappe",
+      "munch_nuts",
+      "crunchy",
+      "sweet"
+    ],
+    "spiceLevel": "mild",
+    "fillingLevel": "heavy",
+    "foodType": "beverage",
+    "estimatedPreparationTime": 6,
+    "shop": "MAGGIE POINT",
+    "availability": true
+  },
+  {
+    "id": "ff_nvb_1",
+    "name": "Crispy Chicken Burger",
+    "category": "Non-Veg Burgers",
+    "price": 109,
+    "dietary": "non_vegetarian",
+    "tags": [
+      "burger",
+      "chicken",
+      "crispy",
+      "fast_food"
+    ],
+    "spiceLevel": "medium",
+    "fillingLevel": "heavy",
+    "foodType": "chicken",
+    "estimatedPreparationTime": 10,
+    "shop": "4TH FLOOR",
+    "availability": true
+  },
+  {
+    "id": "ff_nvb_2",
+    "name": "Tandoori Chicken Burger",
+    "category": "Non-Veg Burgers",
+    "price": 119,
+    "dietary": "non_vegetarian",
+    "tags": [
+      "burger",
+      "chicken",
+      "tandoori",
+      "spicy"
+    ],
+    "spiceLevel": "spicy",
+    "fillingLevel": "heavy",
+    "foodType": "chicken",
+    "estimatedPreparationTime": 10,
+    "shop": "4TH FLOOR",
+    "availability": true
+  },
+  {
+    "id": "ff_nvb_3",
+    "name": "Peri Peri Chicken Burger",
+    "category": "Non-Veg Burgers",
+    "price": 109,
+    "dietary": "non_vegetarian",
+    "tags": [
+      "burger",
+      "chicken",
+      "peri_peri",
+      "spicy"
+    ],
+    "spiceLevel": "spicy",
+    "fillingLevel": "heavy",
+    "foodType": "chicken",
+    "estimatedPreparationTime": 10,
+    "shop": "4TH FLOOR",
+    "availability": true
+  },
+  {
+    "id": "ff_nvb_4",
+    "name": "Bbq Grill Chicken Burger",
+    "category": "Non-Veg Burgers",
+    "price": 139,
+    "dietary": "non_vegetarian",
+    "tags": [
+      "burger",
+      "chicken",
+      "bbq",
+      "smoky"
+    ],
+    "spiceLevel": "medium",
+    "fillingLevel": "heavy",
+    "foodType": "chicken",
+    "estimatedPreparationTime": 12,
+    "shop": "4TH FLOOR",
+    "availability": true
+  },
+  {
+    "id": "ff_nvb_5",
+    "name": "Doubledown Burger",
+    "category": "Non-Veg Burgers",
+    "price": 169,
+    "dietary": "non_vegetarian",
+    "tags": [
+      "burger",
+      "double_patty",
+      "heavy",
+      "party",
+      "filling"
+    ],
+    "spiceLevel": "spicy",
+    "fillingLevel": "heavy",
+    "foodType": "chicken",
+    "estimatedPreparationTime": 15,
+    "shop": "4TH FLOOR",
+    "availability": true
+  },
+  {
+    "id": "ff_vb_1",
+    "name": "Crispy Paneer Burger",
+    "category": "Veg Burgers",
+    "price": 119,
+    "dietary": "vegetarian",
+    "tags": [
+      "burger",
+      "paneer",
+      "crispy",
+      "vegetarian"
+    ],
+    "spiceLevel": "medium",
+    "fillingLevel": "heavy",
+    "foodType": "paneer",
+    "estimatedPreparationTime": 10,
+    "shop": "4TH FLOOR",
+    "availability": true
+  },
+  {
+    "id": "ff_vb_2",
+    "name": "Veg Deluxe Burger",
+    "category": "Veg Burgers",
+    "price": 109,
+    "dietary": "vegetarian",
+    "tags": [
+      "burger",
+      "deluxe",
+      "veggie"
+    ],
+    "spiceLevel": "mild",
+    "fillingLevel": "medium",
+    "foodType": "starter",
+    "estimatedPreparationTime": 10,
+    "shop": "4TH FLOOR",
+    "availability": true
+  },
+  {
+    "id": "ff_vb_3",
+    "name": "Tandoori Paneer Burger",
+    "category": "Veg Burgers",
+    "price": 119,
+    "dietary": "vegetarian",
+    "tags": [
+      "burger",
+      "paneer",
+      "tandoori",
+      "spicy"
+    ],
+    "spiceLevel": "spicy",
+    "fillingLevel": "heavy",
+    "foodType": "paneer",
+    "estimatedPreparationTime": 10,
+    "shop": "4TH FLOOR",
+    "availability": true
+  },
+  {
+    "id": "ff_vb_4",
+    "name": "Aloo Tikki Burger",
+    "category": "Veg Burgers",
+    "price": 89,
+    "dietary": "vegetarian",
+    "tags": [
+      "burger",
+      "aloo_tikki",
+      "budget",
+      "snack"
+    ],
+    "spiceLevel": "medium",
+    "fillingLevel": "medium",
+    "foodType": "starter",
+    "estimatedPreparationTime": 8,
+    "shop": "4TH FLOOR",
+    "availability": true
+  },
+  {
+    "id": "ff_vb_5",
+    "name": "Crispy Mushroom Burger",
+    "category": "Veg Burgers",
+    "price": 99,
+    "dietary": "vegetarian",
+    "tags": [
+      "burger",
+      "mushroom",
+      "crispy"
+    ],
+    "spiceLevel": "medium",
+    "fillingLevel": "medium",
+    "foodType": "starter",
+    "estimatedPreparationTime": 10,
+    "shop": "4TH FLOOR",
+    "availability": true
+  },
+  {
+    "id": "ff_vb_6",
+    "name": "Veg Finger Burger",
+    "category": "Veg Burgers",
+    "price": 89,
+    "dietary": "vegetarian",
+    "tags": [
+      "burger",
+      "veg_finger",
+      "crispy"
+    ],
+    "spiceLevel": "medium",
+    "fillingLevel": "medium",
+    "foodType": "starter",
+    "estimatedPreparationTime": 8,
+    "shop": "4TH FLOOR",
+    "availability": true
+  },
+  {
+    "id": "ff_vb_7",
+    "name": "Farm Fresh Burger (Paneer With Mushroom)",
+    "category": "Veg Burgers",
+    "price": 109,
+    "dietary": "vegetarian",
+    "tags": [
+      "burger",
+      "farm_fresh",
+      "paneer",
+      "mushroom"
+    ],
+    "spiceLevel": "medium",
+    "fillingLevel": "heavy",
+    "foodType": "paneer",
+    "estimatedPreparationTime": 10,
+    "shop": "4TH FLOOR",
+    "availability": true
+  },
+  {
+    "id": "ff_nvw_1",
+    "name": "Crispy Chicken Wrap",
+    "category": "Non-Veg Wraps",
+    "price": 119,
+    "dietary": "non_vegetarian",
+    "tags": [
+      "wrap",
+      "chicken",
+      "crispy",
+      "roll"
+    ],
+    "spiceLevel": "medium",
+    "fillingLevel": "medium",
+    "foodType": "chicken",
+    "estimatedPreparationTime": 10,
+    "shop": "4TH FLOOR",
+    "availability": true
+  },
+  {
+    "id": "ff_nvw_2",
+    "name": "Peri Peri Chicken Wrap",
+    "category": "Non-Veg Wraps",
+    "price": 119,
+    "dietary": "non_vegetarian",
+    "tags": [
+      "wrap",
+      "chicken",
+      "peri_peri",
+      "spicy"
+    ],
+    "spiceLevel": "spicy",
+    "fillingLevel": "medium",
+    "foodType": "chicken",
+    "estimatedPreparationTime": 10,
+    "shop": "4TH FLOOR",
+    "availability": true
+  },
+  {
+    "id": "ff_nvw_3",
+    "name": "Tandoori Chicken Wrap",
+    "category": "Non-Veg Wraps",
+    "price": 129,
+    "dietary": "non_vegetarian",
+    "tags": [
+      "wrap",
+      "chicken",
+      "tandoori"
+    ],
+    "spiceLevel": "spicy",
+    "fillingLevel": "heavy",
+    "foodType": "chicken",
+    "estimatedPreparationTime": 10,
+    "shop": "4TH FLOOR",
+    "availability": true
+  },
+  {
+    "id": "ff_vw_1",
+    "name": "Crispy Paneer Wrap",
+    "category": "Veg Wraps",
+    "price": 109,
+    "dietary": "vegetarian",
+    "tags": [
+      "wrap",
+      "paneer",
+      "crispy",
+      "vegetarian"
+    ],
+    "spiceLevel": "medium",
+    "fillingLevel": "medium",
+    "foodType": "paneer",
+    "estimatedPreparationTime": 10,
+    "shop": "4TH FLOOR",
+    "availability": true
+  },
+  {
+    "id": "ff_vw_2",
+    "name": "Crispy Mushroom Wrap",
+    "category": "Veg Wraps",
+    "price": 99,
+    "dietary": "vegetarian",
+    "tags": [
+      "wrap",
+      "mushroom",
+      "crispy"
+    ],
+    "spiceLevel": "medium",
+    "fillingLevel": "medium",
+    "foodType": "starter",
+    "estimatedPreparationTime": 10,
+    "shop": "4TH FLOOR",
+    "availability": true
+  },
+  {
+    "id": "ff_vw_3",
+    "name": "Crispy Veg Wrap",
+    "category": "Veg Wraps",
+    "price": 99,
+    "dietary": "vegetarian",
+    "tags": [
+      "wrap",
+      "crispy",
+      "veggie"
+    ],
+    "spiceLevel": "mild",
+    "fillingLevel": "medium",
+    "foodType": "starter",
+    "estimatedPreparationTime": 10,
+    "shop": "4TH FLOOR",
+    "availability": true
+  },
+  {
+    "id": "ff_vw_4",
+    "name": "Aloo Tikki Wrap",
+    "category": "Veg Wraps",
+    "price": 99,
+    "dietary": "vegetarian",
+    "tags": [
+      "wrap",
+      "aloo_tikki",
+      "budget"
+    ],
+    "spiceLevel": "medium",
+    "fillingLevel": "medium",
+    "foodType": "starter",
+    "estimatedPreparationTime": 8,
+    "shop": "4TH FLOOR",
+    "availability": true
+  },
+  {
+    "id": "ff_vw_5",
+    "name": "Tandoori Paneer Wrap",
+    "category": "Veg Wraps",
+    "price": 119,
+    "dietary": "vegetarian",
+    "tags": [
+      "wrap",
+      "paneer",
+      "tandoori"
+    ],
+    "spiceLevel": "spicy",
+    "fillingLevel": "heavy",
+    "foodType": "paneer",
+    "estimatedPreparationTime": 10,
+    "shop": "4TH FLOOR",
+    "availability": true
+  },
+  {
+    "id": "ff_vw_6",
+    "name": "Farm Fresh Wrap (Paneer With Mushroom)",
+    "category": "Veg Wraps",
+    "price": 119,
+    "dietary": "vegetarian",
+    "tags": [
+      "wrap",
+      "farm_fresh",
+      "paneer",
+      "mushroom"
+    ],
+    "spiceLevel": "medium",
+    "fillingLevel": "heavy",
+    "foodType": "paneer",
+    "estimatedPreparationTime": 10,
+    "shop": "4TH FLOOR",
+    "availability": true
+  },
+  {
+    "id": "ff_nvl_1",
+    "name": "Crispy Chicken Longer",
+    "category": "Non-Veg Longer",
+    "price": 129,
+    "dietary": "non_vegetarian",
+    "tags": [
+      "longer",
+      "sub",
+      "chicken",
+      "crispy"
+    ],
+    "spiceLevel": "medium",
+    "fillingLevel": "heavy",
+    "foodType": "chicken",
+    "estimatedPreparationTime": 10,
+    "shop": "4TH FLOOR",
+    "availability": true
+  },
+  {
+    "id": "ff_nvl_2",
+    "name": "Peri Peri Chicken Longer",
+    "category": "Non-Veg Longer",
+    "price": 129,
+    "dietary": "non_vegetarian",
+    "tags": [
+      "longer",
+      "sub",
+      "chicken",
+      "peri_peri"
+    ],
+    "spiceLevel": "spicy",
+    "fillingLevel": "heavy",
+    "foodType": "chicken",
+    "estimatedPreparationTime": 10,
+    "shop": "4TH FLOOR",
+    "availability": true
+  },
+  {
+    "id": "ff_nvl_3",
+    "name": "Tandoori Chicken Longer",
+    "category": "Non-Veg Longer",
+    "price": 129,
+    "dietary": "non_vegetarian",
+    "tags": [
+      "longer",
+      "sub",
+      "chicken",
+      "tandoori"
+    ],
+    "spiceLevel": "spicy",
+    "fillingLevel": "heavy",
+    "foodType": "chicken",
+    "estimatedPreparationTime": 10,
+    "shop": "4TH FLOOR",
+    "availability": true
+  },
+  {
+    "id": "ff_vl_1",
+    "name": "Crispy Paneer Longer",
+    "category": "Veg Longer",
+    "price": 129,
+    "dietary": "vegetarian",
+    "tags": [
+      "longer",
+      "sub",
+      "paneer",
+      "crispy"
+    ],
+    "spiceLevel": "medium",
+    "fillingLevel": "heavy",
+    "foodType": "paneer",
+    "estimatedPreparationTime": 10,
+    "shop": "4TH FLOOR",
+    "availability": true
+  },
+  {
+    "id": "ff_vl_2",
+    "name": "Veg Deluxe Chilli Cheese Longer",
+    "category": "Veg Longer",
+    "price": 139,
+    "dietary": "vegetarian",
+    "tags": [
+      "longer",
+      "sub",
+      "cheese",
+      "spicy"
+    ],
+    "spiceLevel": "spicy",
+    "fillingLevel": "heavy",
+    "foodType": "starter",
+    "estimatedPreparationTime": 10,
+    "shop": "4TH FLOOR",
+    "availability": true
+  },
+  {
+    "id": "ff_vl_3",
+    "name": "Tandoori Paneer Longer",
+    "category": "Veg Longer",
+    "price": 129,
+    "dietary": "vegetarian",
+    "tags": [
+      "longer",
+      "sub",
+      "paneer",
+      "tandoori"
+    ],
+    "spiceLevel": "spicy",
+    "fillingLevel": "heavy",
+    "foodType": "paneer",
+    "estimatedPreparationTime": 10,
+    "shop": "4TH FLOOR",
+    "availability": true
+  },
+  {
+    "id": "ff_vl_4",
+    "name": "Farm Fresh Longer",
+    "category": "Veg Longer",
+    "price": 129,
+    "dietary": "vegetarian",
+    "tags": [
+      "longer",
+      "sub",
+      "veggie",
+      "farm_fresh"
+    ],
+    "spiceLevel": "medium",
+    "fillingLevel": "heavy",
+    "foodType": "starter",
+    "estimatedPreparationTime": 10,
+    "shop": "4TH FLOOR",
+    "availability": true
+  },
+  {
+    "id": "ff_nvs_1",
+    "name": "Chicken Sandwich",
+    "category": "Non-Veg Sandwich",
+    "price": 79,
+    "dietary": "non_vegetarian",
+    "tags": [
+      "sandwich",
+      "chicken",
+      "snack"
+    ],
+    "spiceLevel": "medium",
+    "fillingLevel": "medium",
+    "foodType": "chicken",
+    "estimatedPreparationTime": 8,
+    "shop": "4TH FLOOR",
+    "availability": true
+  },
+  {
+    "id": "ff_nvs_2",
+    "name": "Chicken Cheese Sandwich",
+    "category": "Non-Veg Sandwich",
+    "price": 99,
+    "dietary": "non_vegetarian",
+    "tags": [
+      "sandwich",
+      "chicken",
+      "cheese",
+      "filling"
+    ],
+    "spiceLevel": "medium",
+    "fillingLevel": "heavy",
+    "foodType": "chicken",
+    "estimatedPreparationTime": 8,
+    "shop": "4TH FLOOR",
+    "availability": true
+  },
+  {
+    "id": "ff_vs_1",
+    "name": "Paneer Sandwich",
+    "category": "Veg Sandwich",
+    "price": 79,
+    "dietary": "vegetarian",
+    "tags": [
+      "sandwich",
+      "paneer",
+      "vegetarian"
+    ],
+    "spiceLevel": "medium",
+    "fillingLevel": "medium",
+    "foodType": "paneer",
+    "estimatedPreparationTime": 8,
+    "shop": "4TH FLOOR",
+    "availability": true
+  },
+  {
+    "id": "ff_vs_2",
+    "name": "Paneer Cheese Sandwich",
+    "category": "Veg Sandwich",
+    "price": 99,
+    "dietary": "vegetarian",
+    "tags": [
+      "sandwich",
+      "paneer",
+      "cheese"
+    ],
+    "spiceLevel": "medium",
+    "fillingLevel": "heavy",
+    "foodType": "paneer",
+    "estimatedPreparationTime": 8,
+    "shop": "4TH FLOOR",
+    "availability": true
+  },
+  {
+    "id": "ff_vs_3",
+    "name": "Mushroom Sandwich",
+    "category": "Veg Sandwich",
+    "price": 79,
+    "dietary": "vegetarian",
+    "tags": [
+      "sandwich",
+      "mushroom"
+    ],
+    "spiceLevel": "medium",
+    "fillingLevel": "medium",
+    "foodType": "starter",
+    "estimatedPreparationTime": 8,
+    "shop": "4TH FLOOR",
+    "availability": true
+  },
+  {
+    "id": "ff_vs_4",
+    "name": "Veg Corn Sandwich",
+    "category": "Veg Sandwich",
+    "price": 69,
+    "dietary": "vegetarian",
+    "tags": [
+      "sandwich",
+      "corn",
+      "budget",
+      "snack"
+    ],
+    "spiceLevel": "mild",
+    "fillingLevel": "medium",
+    "foodType": "starter",
+    "estimatedPreparationTime": 8,
+    "shop": "4TH FLOOR",
+    "availability": true
+  },
+  {
+    "id": "ff_hcc_1",
+    "name": "Chicken Wings Big Size (4pc)",
+    "category": "Hot & Crispy Chicken",
+    "price": 109,
+    "dietary": "non_vegetarian",
+    "tags": [
+      "crispy_chicken",
+      "wings",
+      "chicken",
+      "party"
+    ],
+    "spiceLevel": "medium",
+    "fillingLevel": "heavy",
+    "foodType": "chicken",
+    "estimatedPreparationTime": 12,
+    "shop": "4TH FLOOR",
+    "availability": true
+  },
+  {
+    "id": "ff_hcc_2",
+    "name": "Chicken Wings Small Size (5pc)",
+    "category": "Hot & Crispy Chicken",
+    "price": 99,
+    "dietary": "non_vegetarian",
+    "tags": [
+      "crispy_chicken",
+      "wings",
+      "budget"
+    ],
+    "spiceLevel": "medium",
+    "fillingLevel": "medium",
+    "foodType": "chicken",
+    "estimatedPreparationTime": 10,
+    "shop": "4TH FLOOR",
+    "availability": true
+  },
+  {
+    "id": "ff_hcc_3",
+    "name": "Boneless Strips (5pc)",
+    "category": "Hot & Crispy Chicken",
+    "price": 89,
+    "dietary": "non_vegetarian",
+    "tags": [
+      "crispy_chicken",
+      "strips",
+      "boneless",
+      "popular"
+    ],
+    "spiceLevel": "medium",
+    "fillingLevel": "medium",
+    "foodType": "chicken",
+    "estimatedPreparationTime": 10,
+    "shop": "4TH FLOOR",
+    "availability": true
+  },
+  {
+    "id": "ff_hcc_4",
+    "name": "Chicken Popcorn (15pc)",
+    "category": "Hot & Crispy Chicken",
+    "price": 99,
+    "dietary": "non_vegetarian",
+    "tags": [
+      "crispy_chicken",
+      "popcorn",
+      "snack"
+    ],
+    "spiceLevel": "medium",
+    "fillingLevel": "medium",
+    "foodType": "chicken",
+    "estimatedPreparationTime": 8,
+    "shop": "4TH FLOOR",
+    "availability": true
+  },
+  {
+    "id": "ff_hcc_5",
+    "name": "Chicken Popcorn (25pc)",
+    "category": "Hot & Crispy Chicken",
+    "price": 159,
+    "dietary": "non_vegetarian",
+    "tags": [
+      "crispy_chicken",
+      "popcorn",
+      "party",
+      "sharing"
+    ],
+    "spiceLevel": "medium",
+    "fillingLevel": "heavy",
+    "foodType": "chicken",
+    "estimatedPreparationTime": 10,
+    "shop": "4TH FLOOR",
+    "availability": true
+  },
+  {
+    "id": "ff_hcc_6",
+    "name": "Drumstick (1pc)",
+    "category": "Hot & Crispy Chicken",
+    "price": 79,
+    "dietary": "non_vegetarian",
+    "tags": [
+      "crispy_chicken",
+      "drumstick",
+      "snack"
+    ],
+    "spiceLevel": "medium",
+    "fillingLevel": "medium",
+    "foodType": "chicken",
+    "estimatedPreparationTime": 10,
+    "shop": "4TH FLOOR",
+    "availability": true
+  },
+  {
+    "id": "ff_hcc_7",
+    "name": "Drumstick (2pc)",
+    "category": "Hot & Crispy Chicken",
+    "price": 140,
+    "dietary": "non_vegetarian",
+    "tags": [
+      "crispy_chicken",
+      "drumstick",
+      "meal"
+    ],
+    "spiceLevel": "medium",
+    "fillingLevel": "heavy",
+    "foodType": "chicken",
+    "estimatedPreparationTime": 12,
+    "shop": "4TH FLOOR",
+    "availability": true
+  },
+  {
+    "id": "ff_hcv_1",
+    "name": "Crispy Paneer Strips (4pc)",
+    "category": "Hot & Crispy Veg",
+    "price": 99,
+    "dietary": "vegetarian",
+    "tags": [
+      "crispy_veg",
+      "paneer",
+      "strips",
+      "snack"
+    ],
+    "spiceLevel": "medium",
+    "fillingLevel": "medium",
+    "foodType": "paneer",
+    "estimatedPreparationTime": 8,
+    "shop": "4TH FLOOR",
+    "availability": true
+  },
+  {
+    "id": "ff_hcv_2",
+    "name": "Potato Bites (15pc)",
+    "category": "Hot & Crispy Veg",
+    "price": 99,
+    "dietary": "vegetarian",
+    "tags": [
+      "crispy_veg",
+      "potato",
+      "bites",
+      "snack"
+    ],
+    "spiceLevel": "mild",
+    "fillingLevel": "medium",
+    "foodType": "starter",
+    "estimatedPreparationTime": 7,
+    "shop": "4TH FLOOR",
+    "availability": true
+  },
+  {
+    "id": "ff_hcv_3",
+    "name": "French Fries",
+    "category": "Hot & Crispy Veg",
+    "price": 79,
+    "dietary": "vegetarian",
+    "tags": [
+      "fries",
+      "crispy",
+      "snack",
+      "classic"
+    ],
+    "spiceLevel": "mild",
+    "fillingLevel": "medium",
+    "foodType": "starter",
+    "estimatedPreparationTime": 6,
+    "shop": "4TH FLOOR",
+    "availability": true
+  },
+  {
+    "id": "ff_hcv_4",
+    "name": "Peri Peri Fries",
+    "category": "Hot & Crispy Veg",
+    "price": 99,
+    "dietary": "vegetarian",
+    "tags": [
+      "fries",
+      "peri_peri",
+      "spicy",
+      "popular"
+    ],
+    "spiceLevel": "spicy",
+    "fillingLevel": "medium",
+    "foodType": "starter",
+    "estimatedPreparationTime": 6,
+    "shop": "4TH FLOOR",
+    "availability": true
+  },
+  {
+    "id": "ff_hcv_5",
+    "name": "Crispy Veggie Finger (4pc)",
+    "category": "Hot & Crispy Veg",
+    "price": 99,
+    "dietary": "vegetarian",
+    "tags": [
+      "crispy_veg",
+      "veggie_finger",
+      "snack"
+    ],
+    "spiceLevel": "mild",
+    "fillingLevel": "medium",
+    "foodType": "starter",
+    "estimatedPreparationTime": 8,
+    "shop": "4TH FLOOR",
+    "availability": true
+  },
+  {
+    "id": "iter_juice_pineapple",
+    "name": "Pineapple",
+    "category": "Juices & Shakes",
+    "price": 80,
+    "dietary": "vegetarian",
+    "tags": [
+      "juice",
+      "fresh",
+      "healthy",
+      "fruit",
+      "pineapple",
+      "beverage",
+      "chilled"
+    ],
+    "spiceLevel": "mild",
+    "fillingLevel": "light",
+    "foodType": "beverage",
+    "estimatedPreparationTime": 5,
+    "shop": "Iter Juice Centre",
+    "availability": true
+  },
+  {
+    "id": "iter_juice_grapes",
+    "name": "Grapes",
+    "category": "Juices & Shakes",
+    "price": 40,
+    "dietary": "vegetarian",
+    "tags": [
+      "juice",
+      "fresh",
+      "healthy",
+      "fruit",
+      "grapes",
+      "beverage",
+      "chilled"
+    ],
+    "spiceLevel": "mild",
+    "fillingLevel": "light",
+    "foodType": "beverage",
+    "estimatedPreparationTime": 5,
+    "shop": "Iter Juice Centre",
+    "availability": true
+  },
+  {
+    "id": "iter_juice_orange",
+    "name": "Orange",
+    "category": "Juices & Shakes",
+    "price": 35,
+    "dietary": "vegetarian",
+    "tags": [
+      "juice",
+      "fresh",
+      "healthy",
+      "fruit",
+      "orange",
+      "citrus",
+      "beverage",
+      "vitamin_c"
+    ],
+    "spiceLevel": "mild",
+    "fillingLevel": "light",
+    "foodType": "beverage",
+    "estimatedPreparationTime": 5,
+    "shop": "Iter Juice Centre",
+    "availability": true
+  },
+  {
+    "id": "iter_juice_mousambi",
+    "name": "Mousambi",
+    "category": "Juices & Shakes",
+    "price": 35,
+    "dietary": "vegetarian",
+    "tags": [
+      "juice",
+      "fresh",
+      "healthy",
+      "fruit",
+      "mousambi",
+      "sweet_lime",
+      "beverage",
+      "refreshing"
+    ],
+    "spiceLevel": "mild",
+    "fillingLevel": "light",
+    "foodType": "beverage",
+    "estimatedPreparationTime": 5,
+    "shop": "Iter Juice Centre",
+    "availability": true
+  },
+  {
+    "id": "iter_juice_apple",
+    "name": "Apple",
+    "category": "Juices & Shakes",
+    "price": 80,
+    "dietary": "vegetarian",
+    "tags": [
+      "juice",
+      "fresh",
+      "healthy",
+      "fruit",
+      "apple",
+      "beverage"
+    ],
+    "spiceLevel": "mild",
+    "fillingLevel": "light",
+    "foodType": "beverage",
+    "estimatedPreparationTime": 5,
+    "shop": "Iter Juice Centre",
+    "availability": true
+  },
+  {
+    "id": "iter_juice_mix",
+    "name": "Mix",
+    "category": "Juices & Shakes",
+    "price": 35,
+    "dietary": "vegetarian",
+    "tags": [
+      "juice",
+      "fresh",
+      "healthy",
+      "fruit",
+      "mix_fruit",
+      "mixed",
+      "beverage",
+      "popular"
+    ],
+    "spiceLevel": "mild",
+    "fillingLevel": "light",
+    "foodType": "beverage",
+    "estimatedPreparationTime": 5,
+    "shop": "Iter Juice Centre",
+    "availability": true
+  },
+  {
+    "id": "iter_shake_pineapple",
+    "name": "Pineapple Shake",
+    "category": "Juices & Shakes",
+    "price": 40,
+    "dietary": "vegetarian",
+    "tags": [
+      "shake",
+      "milkshake",
+      "pineapple",
+      "sweet",
+      "beverage",
+      "chilled"
+    ],
+    "spiceLevel": "mild",
+    "fillingLevel": "medium",
+    "foodType": "beverage",
+    "estimatedPreparationTime": 5,
+    "shop": "Iter Juice Centre",
+    "availability": true
+  },
+  {
+    "id": "iter_shake_apple",
+    "name": "Apple Shake",
+    "category": "Juices & Shakes",
+    "price": 40,
+    "dietary": "vegetarian",
+    "tags": [
+      "shake",
+      "milkshake",
+      "apple",
+      "sweet",
+      "beverage"
+    ],
+    "spiceLevel": "mild",
+    "fillingLevel": "medium",
+    "foodType": "beverage",
+    "estimatedPreparationTime": 5,
+    "shop": "Iter Juice Centre",
+    "availability": true
+  },
+  {
+    "id": "iter_shake_litchi",
+    "name": "Litchi Shake",
+    "category": "Juices & Shakes",
+    "price": 40,
+    "dietary": "vegetarian",
+    "tags": [
+      "shake",
+      "milkshake",
+      "litchi",
+      "lychee",
+      "sweet",
+      "beverage"
+    ],
+    "spiceLevel": "mild",
+    "fillingLevel": "medium",
+    "foodType": "beverage",
+    "estimatedPreparationTime": 5,
+    "shop": "Iter Juice Centre",
+    "availability": true
+  },
+  {
+    "id": "iter_shake_rose",
+    "name": "Rose Shake",
+    "category": "Juices & Shakes",
+    "price": 40,
+    "dietary": "vegetarian",
+    "tags": [
+      "shake",
+      "milkshake",
+      "rose",
+      "fragrant",
+      "sweet",
+      "beverage"
+    ],
+    "spiceLevel": "mild",
+    "fillingLevel": "medium",
+    "foodType": "beverage",
+    "estimatedPreparationTime": 5,
+    "shop": "Iter Juice Centre",
+    "availability": true
+  },
+  {
+    "id": "iter_shake_badam",
+    "name": "Badam Shake",
+    "category": "Juices & Shakes",
+    "price": 35,
+    "dietary": "vegetarian",
+    "tags": [
+      "shake",
+      "milkshake",
+      "badam",
+      "almond",
+      "healthy",
+      "rich",
+      "beverage"
+    ],
+    "spiceLevel": "mild",
+    "fillingLevel": "medium",
+    "foodType": "beverage",
+    "estimatedPreparationTime": 5,
+    "shop": "Iter Juice Centre",
+    "availability": true
+  },
+  {
+    "id": "iter_shake_cold_coffee",
+    "name": "Cold Coffee Shake",
+    "category": "Juices & Shakes",
+    "price": 40,
+    "dietary": "vegetarian",
+    "tags": [
+      "shake",
+      "coffee",
+      "cold_coffee",
+      "caffeine",
+      "chilled",
+      "beverage"
+    ],
+    "spiceLevel": "mild",
+    "fillingLevel": "medium",
+    "foodType": "beverage",
+    "estimatedPreparationTime": 5,
+    "shop": "Iter Juice Centre",
+    "availability": true
+  },
+  {
+    "id": "iter_shake_butter_scotch",
+    "name": "Butter Scotch Shake",
+    "category": "Juices & Shakes",
+    "price": 40,
+    "dietary": "vegetarian",
+    "tags": [
+      "shake",
+      "butterscotch",
+      "sweet",
+      "rich",
+      "beverage"
+    ],
+    "spiceLevel": "mild",
+    "fillingLevel": "medium",
+    "foodType": "beverage",
+    "estimatedPreparationTime": 5,
+    "shop": "Iter Juice Centre",
+    "availability": true
+  },
+  {
+    "id": "iter_shake_mango",
+    "name": "Mango Shake",
+    "category": "Juices & Shakes",
+    "price": 40,
+    "dietary": "vegetarian",
+    "tags": [
+      "shake",
+      "mango",
+      "sweet",
+      "summer",
+      "popular",
+      "beverage"
+    ],
+    "spiceLevel": "mild",
+    "fillingLevel": "medium",
+    "foodType": "beverage",
+    "estimatedPreparationTime": 5,
+    "shop": "Iter Juice Centre",
+    "availability": true
+  },
+  {
+    "id": "iter_shake_oreo",
+    "name": "Oreo Shake",
+    "category": "Juices & Shakes",
+    "price": 50,
+    "dietary": "vegetarian",
+    "tags": [
+      "shake",
+      "oreo",
+      "chocolate",
+      "cookies",
+      "sweet",
+      "beverage"
+    ],
+    "spiceLevel": "mild",
+    "fillingLevel": "medium",
+    "foodType": "beverage",
+    "estimatedPreparationTime": 6,
+    "shop": "Iter Juice Centre",
+    "availability": true
+  },
+  {
+    "id": "iter_shake_banana_oreo",
+    "name": "Banana Oreo Shake",
+    "category": "Juices & Shakes",
+    "price": 45,
+    "dietary": "vegetarian",
+    "tags": [
+      "shake",
+      "banana",
+      "oreo",
+      "filling",
+      "sweet",
+      "beverage"
+    ],
+    "spiceLevel": "mild",
+    "fillingLevel": "medium",
+    "foodType": "beverage",
+    "estimatedPreparationTime": 6,
+    "shop": "Iter Juice Centre",
+    "availability": true
+  },
+  {
+    "id": "iter_shake_chocolate_banana",
+    "name": "Chocolate Banana Shake",
+    "category": "Juices & Shakes",
+    "price": 45,
+    "dietary": "vegetarian",
+    "tags": [
+      "shake",
+      "chocolate",
+      "banana",
+      "rich",
+      "sweet",
+      "beverage"
+    ],
+    "spiceLevel": "mild",
+    "fillingLevel": "medium",
+    "foodType": "beverage",
+    "estimatedPreparationTime": 6,
+    "shop": "Iter Juice Centre",
+    "availability": true
+  },
+  {
+    "id": "iter_shake_choc_butter_scotch",
+    "name": "Chocolate Butter Scotch Shake",
+    "category": "Juices & Shakes",
+    "price": 45,
+    "dietary": "vegetarian",
+    "tags": [
+      "shake",
+      "chocolate",
+      "butterscotch",
+      "sweet",
+      "beverage"
+    ],
+    "spiceLevel": "mild",
+    "fillingLevel": "medium",
+    "foodType": "beverage",
+    "estimatedPreparationTime": 6,
+    "shop": "Iter Juice Centre",
+    "availability": true
+  },
+  {
+    "id": "iter_shake_chocolate_coffee",
+    "name": "Chocolate Coffee Shake",
+    "category": "Juices & Shakes",
+    "price": 45,
+    "dietary": "vegetarian",
+    "tags": [
+      "shake",
+      "chocolate",
+      "coffee",
+      "mocha",
+      "chilled",
+      "beverage"
+    ],
+    "spiceLevel": "mild",
+    "fillingLevel": "medium",
+    "foodType": "beverage",
+    "estimatedPreparationTime": 6,
+    "shop": "Iter Juice Centre",
+    "availability": true
+  },
+  {
+    "id": "iter_shake_apple_banana",
+    "name": "Apple Banana Shake",
+    "category": "Juices & Shakes",
+    "price": 45,
+    "dietary": "vegetarian",
+    "tags": [
+      "shake",
+      "apple",
+      "banana",
+      "fruit_shake",
+      "healthy",
+      "beverage"
+    ],
+    "spiceLevel": "mild",
+    "fillingLevel": "medium",
+    "foodType": "beverage",
+    "estimatedPreparationTime": 6,
+    "shop": "Iter Juice Centre",
+    "availability": true
+  },
+  {
+    "id": "iter_shake_oreo_coffee",
+    "name": "Oreo Coffee Shake",
+    "category": "Juices & Shakes",
+    "price": 40,
+    "dietary": "vegetarian",
+    "tags": [
+      "shake",
+      "oreo",
+      "coffee",
+      "caffeine",
+      "sweet",
+      "beverage"
+    ],
+    "spiceLevel": "mild",
+    "fillingLevel": "medium",
+    "foodType": "beverage",
+    "estimatedPreparationTime": 6,
+    "shop": "Iter Juice Centre",
+    "availability": true
+  },
+  {
+    "id": "iter_shake_oreo_butter_scotch",
+    "name": "Oreo Butter Scotch",
+    "category": "Juices & Shakes",
+    "price": 45,
+    "dietary": "vegetarian",
+    "tags": [
+      "shake",
+      "oreo",
+      "butterscotch",
+      "sweet",
+      "beverage"
+    ],
+    "spiceLevel": "mild",
+    "fillingLevel": "medium",
+    "foodType": "beverage",
+    "estimatedPreparationTime": 6,
+    "shop": "Iter Juice Centre",
+    "availability": true
+  },
+  {
+    "id": "iter_shake_banana",
+    "name": "Banana Shake",
+    "category": "Juices & Shakes",
+    "price": 40,
+    "dietary": "vegetarian",
+    "tags": [
+      "shake",
+      "banana",
+      "healthy",
+      "filling",
+      "energy",
+      "beverage"
+    ],
+    "spiceLevel": "mild",
+    "fillingLevel": "medium",
+    "foodType": "beverage",
+    "estimatedPreparationTime": 5,
+    "shop": "Iter Juice Centre",
+    "availability": true
+  },
+  {
+    "id": "iter_shake_chocolate",
+    "name": "Chocolate Shake",
+    "category": "Juices & Shakes",
+    "price": 40,
+    "dietary": "vegetarian",
+    "tags": [
+      "shake",
+      "chocolate",
+      "sweet",
+      "chilled",
+      "beverage"
+    ],
+    "spiceLevel": "mild",
+    "fillingLevel": "medium",
+    "foodType": "beverage",
+    "estimatedPreparationTime": 5,
+    "shop": "Iter Juice Centre",
+    "availability": true
+  },
+  {
+    "id": "iter_shake_oreo_chocolate",
+    "name": "Oreo Chocolate Shake",
+    "category": "Juices & Shakes",
+    "price": 45,
+    "dietary": "vegetarian",
+    "tags": [
+      "shake",
+      "oreo",
+      "chocolate",
+      "rich",
+      "sweet",
+      "beverage"
+    ],
+    "spiceLevel": "mild",
+    "fillingLevel": "medium",
+    "foodType": "beverage",
+    "estimatedPreparationTime": 6,
+    "shop": "Iter Juice Centre",
+    "availability": true
+  },
+  {
+    "id": "iter_shake_black_current",
+    "name": "Black Current Shake",
+    "category": "Juices & Shakes",
+    "price": 45,
+    "dietary": "vegetarian",
+    "tags": [
+      "shake",
+      "black_currant",
+      "berry",
+      "sweet",
+      "beverage"
+    ],
+    "spiceLevel": "mild",
+    "fillingLevel": "medium",
+    "foodType": "beverage",
+    "estimatedPreparationTime": 5,
+    "shop": "Iter Juice Centre",
+    "availability": true
+  },
+  {
+    "id": "iter_juice_watermelon",
+    "name": "Water Melon",
+    "category": "Juices & Shakes",
+    "price": 35,
+    "dietary": "vegetarian",
+    "tags": [
+      "juice",
+      "watermelon",
+      "fresh",
+      "hydrating",
+      "summer",
+      "beverage"
+    ],
+    "spiceLevel": "mild",
+    "fillingLevel": "light",
+    "foodType": "beverage",
+    "estimatedPreparationTime": 5,
+    "shop": "Iter Juice Centre",
+    "availability": true
+  },
+  {
+    "id": "iter_spl_strawberry_shake",
+    "name": "Special Strawberry Shake",
+    "category": "Special Shakes & Items",
+    "price": 55,
+    "dietary": "vegetarian",
+    "tags": [
+      "special",
+      "strawberry",
+      "shake",
+      "premium",
+      "rich",
+      "beverage"
+    ],
+    "spiceLevel": "mild",
+    "fillingLevel": "medium",
+    "foodType": "beverage",
+    "estimatedPreparationTime": 6,
+    "shop": "Iter Juice Centre",
+    "availability": true
+  },
+  {
+    "id": "iter_spl_badam_shake",
+    "name": "Special Badam Shake",
+    "category": "Special Shakes & Items",
+    "price": 55,
+    "dietary": "vegetarian",
+    "tags": [
+      "special",
+      "badam",
+      "shake",
+      "almond",
+      "rich",
+      "healthy",
+      "beverage"
+    ],
+    "spiceLevel": "mild",
+    "fillingLevel": "medium",
+    "foodType": "beverage",
+    "estimatedPreparationTime": 6,
+    "shop": "Iter Juice Centre",
+    "availability": true
+  },
+  {
+    "id": "iter_spl_cold_coffee_shake",
+    "name": "Special Cold Coffee Shake",
+    "category": "Special Shakes & Items",
+    "price": 55,
+    "dietary": "vegetarian",
+    "tags": [
+      "special",
+      "cold_coffee",
+      "shake",
+      "coffee",
+      "caffeine",
+      "rich",
+      "beverage"
+    ],
+    "spiceLevel": "mild",
+    "fillingLevel": "medium",
+    "foodType": "beverage",
+    "estimatedPreparationTime": 6,
+    "shop": "Iter Juice Centre",
+    "availability": true
+  },
+  {
+    "id": "iter_spl_oreo_shake",
+    "name": "Special Oreo Shake",
+    "category": "Special Shakes & Items",
+    "price": 60,
+    "dietary": "vegetarian",
+    "tags": [
+      "special",
+      "oreo",
+      "shake",
+      "chocolate",
+      "thick",
+      "beverage"
+    ],
+    "spiceLevel": "mild",
+    "fillingLevel": "medium",
+    "foodType": "beverage",
+    "estimatedPreparationTime": 7,
+    "shop": "Iter Juice Centre",
+    "availability": true
+  },
+  {
+    "id": "iter_spl_oreo_chocolate_shake",
+    "name": "Special Oreo Chocolate Shake",
+    "category": "Special Shakes & Items",
+    "price": 65,
+    "dietary": "vegetarian",
+    "tags": [
+      "special",
+      "oreo",
+      "chocolate",
+      "shake",
+      "thick",
+      "rich",
+      "beverage"
+    ],
+    "spiceLevel": "mild",
+    "fillingLevel": "medium",
+    "foodType": "beverage",
+    "estimatedPreparationTime": 7,
+    "shop": "Iter Juice Centre",
+    "availability": true
+  },
+  {
+    "id": "iter_spl_oreo_butter_scotch_shake",
+    "name": "Special Oreo Butter Scotch Shake",
+    "category": "Special Shakes & Items",
+    "price": 65,
+    "dietary": "vegetarian",
+    "tags": [
+      "special",
+      "oreo",
+      "butterscotch",
+      "shake",
+      "rich",
+      "beverage"
+    ],
+    "spiceLevel": "mild",
+    "fillingLevel": "medium",
+    "foodType": "beverage",
+    "estimatedPreparationTime": 7,
+    "shop": "Iter Juice Centre",
+    "availability": true
+  },
+  {
+    "id": "iter_spl_chocolate_coffee_shake",
+    "name": "Special Chocolate Coffee Shake",
+    "category": "Special Shakes & Items",
+    "price": 60,
+    "dietary": "vegetarian",
+    "tags": [
+      "special",
+      "chocolate",
+      "coffee",
+      "shake",
+      "mocha",
+      "beverage"
+    ],
+    "spiceLevel": "mild",
+    "fillingLevel": "medium",
+    "foodType": "beverage",
+    "estimatedPreparationTime": 7,
+    "shop": "Iter Juice Centre",
+    "availability": true
+  },
+  {
+    "id": "iter_spl_choc_butter_scotch_shake",
+    "name": "Special Chocolate Butter Scotch Shake",
+    "category": "Special Shakes & Items",
+    "price": 65,
+    "dietary": "vegetarian",
+    "tags": [
+      "special",
+      "chocolate",
+      "butterscotch",
+      "shake",
+      "rich",
+      "beverage"
+    ],
+    "spiceLevel": "mild",
+    "fillingLevel": "medium",
+    "foodType": "beverage",
+    "estimatedPreparationTime": 7,
+    "shop": "Iter Juice Centre",
+    "availability": true
+  },
+  {
+    "id": "iter_rasmalai",
+    "name": "Rasmalai",
+    "category": "Special Shakes & Items",
+    "price": 60,
+    "dietary": "vegetarian",
+    "tags": [
+      "rasmalai",
+      "dessert",
+      "sweet",
+      "traditional",
+      "chilled",
+      "beverage"
+    ],
+    "spiceLevel": "mild",
+    "fillingLevel": "medium",
+    "foodType": "beverage",
+    "estimatedPreparationTime": 4,
+    "shop": "Iter Juice Centre",
+    "availability": true
+  },
+  {
+    "id": "iter_spl_cold_coffee",
+    "name": "Spl Cold Coffee",
+    "category": "Special Shakes & Items",
+    "price": 55,
+    "dietary": "vegetarian",
+    "tags": [
+      "special",
+      "cold_coffee",
+      "coffee",
+      "caffeine",
+      "chilled",
+      "beverage"
+    ],
+    "spiceLevel": "mild",
+    "fillingLevel": "medium",
+    "foodType": "beverage",
+    "estimatedPreparationTime": 5,
+    "shop": "Iter Juice Centre",
+    "availability": true
+  },
+  {
+    "id": "iter_spl_kitkat",
+    "name": "Spl Kitkat",
+    "category": "Special Shakes & Items",
+    "price": 80,
+    "dietary": "vegetarian",
+    "tags": [
+      "special",
+      "kitkat",
+      "chocolate",
+      "shake",
+      "crispy",
+      "rich",
+      "beverage"
+    ],
+    "spiceLevel": "mild",
+    "fillingLevel": "medium",
+    "foodType": "beverage",
+    "estimatedPreparationTime": 7,
+    "shop": "Iter Juice Centre",
+    "availability": true
+  },
+  {
+    "id": "iter_spl_lassi",
+    "name": "Spl Lassi",
+    "category": "Special Shakes & Items",
+    "price": 50,
+    "dietary": "vegetarian",
+    "tags": [
+      "special",
+      "lassi",
+      "yogurt",
+      "traditional",
+      "sweet",
+      "chilled",
+      "refreshing",
+      "beverage"
+    ],
+    "spiceLevel": "mild",
+    "fillingLevel": "medium",
+    "foodType": "beverage",
+    "estimatedPreparationTime": 5,
+    "shop": "Iter Juice Centre",
+    "availability": true
+  },
+  {
+    "id": "iter_fruit_salad",
+    "name": "Fruit Salad",
+    "category": "Special Shakes & Items",
+    "price": 50,
+    "dietary": "vegetarian",
+    "tags": [
+      "fruit_salad",
+      "fresh",
+      "healthy",
+      "fruits",
+      "diet",
+      "light",
+      "beverage"
+    ],
+    "spiceLevel": "mild",
+    "fillingLevel": "medium",
+    "foodType": "beverage",
+    "estimatedPreparationTime": 6,
+    "shop": "Iter Juice Centre",
+    "availability": true
+  }
+]
