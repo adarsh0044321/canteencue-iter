@@ -4,11 +4,11 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --port 3000",
     "build": "tsc -b && vite build",
     "test": "vitest run",
     "lint": "oxlint",
-    "preview": "vite preview",
+    "preview": "vite preview --port 3000",
     "deploy": "npm run build && wrangler deploy"
   },
   "dependencies": {

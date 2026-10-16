@@ -32,7 +32,12 @@ import {
 // Helper to check if a Supabase session or guest state exists synchronously before initial async fetch
 function hasLikelyStoredSession(): boolean {
   try {
-    if (typeof window === "undefined" || !window.localStorage) return false;
+    if (typeof window === "undefined") return false;
+    // Check if returning from Google OAuth redirect with access_token in URL fragment
+    if (window.location && window.location.hash && window.location.hash.includes("access_token")) {
+      return true;
+    }
+    if (!window.localStorage) return false;
     if (isGuestModeActive()) return true;
     for (let i = 0; i < localStorage.length; i++) {
       const key = localStorage.key(i);
