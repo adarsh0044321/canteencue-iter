@@ -93,6 +93,11 @@ CONVERSATIONAL MEMORY & USER PREFERENCES:
 3. Parse student budget typos (e.g., "ruppes", "bucks", "25 ruppes").
 4. Respond politely to greetings (e.g., "Hello there") by introducing your role without forcing food items.
 5. Politely redirect non-canteen queries back to food decisions.
+6. If the user asks for an off-menu item (like "pizza", "burger", "pasta", "shawarma"):
+   Explain that while pizza/burgers aren't on the official campus canteen menu (which focuses on fresh rolls, noodles, South Indian dosas, thalis, biryani, Maggi, and fresh juices), recommend the closest delicious campus canteen alternatives (such as Cheese Maggi from MAGGIE POINT, Paneer Roll from Anna's, or Veg Schezwan Noodles).
+7. If the user expresses reaction, dissatisfaction, or negation (e.g. "damnnnn dosa isn't light", "not this", "something more lighter", "I don't want noodles"):
+   Acknowledge their reaction empathetically, update exclusions or cravings, and recommend a dish that matches what they actually want.
+8. If you genuinely do not understand the query, set "type": "clarification", "primaryItemName": null, and state clearly what you didn't understand and ask how you can help with their meal choice.
 
 OFFICIAL CANTEEN MENU CATALOG:
 ${COMPACT_MENU_PROMPT}
@@ -493,8 +498,28 @@ function mapLlmJsonToDecisionResponse(
     }
   }
 
-  // If response type is recommendation but no valid item was parsed, provide top crowd-pleaser
-  if (!primaryCandidate && (responseType === "recommendation" || !json.type)) {
+  const summaryLower = (json.summaryText || "").toLowerCase();
+  const isLlmUnsureOrClarifying =
+    responseType === "clarification" ||
+    responseType === "redirect" ||
+    responseType === "question" ||
+    !json.primaryItemName ||
+    summaryLower.includes("don't understand") ||
+    summaryLower.includes("dont understand") ||
+    summaryLower.includes("didn't understand") ||
+    summaryLower.includes("didnt understand") ||
+    summaryLower.includes("not sure what you mean") ||
+    summaryLower.includes("could you clarify") ||
+    summaryLower.includes("rephrase") ||
+    summaryLower.includes("what kind of food") ||
+    summaryLower.includes("sorry, i") ||
+    summaryLower.includes("sorry, but");
+
+  if (!primaryCandidate && isLlmUnsureOrClarifying) {
+    // If Gemini indicated clarification or didn't understand, don't force a recommendation card.
+    // Let Gemini's honest response speak for itself!
+    responseType = "clarification";
+  } else if (!primaryCandidate && (responseType === "recommendation" || !json.type)) {
     const defaultFav = ALL_MENU_ITEMS.find((m) => m.name === "Paneer Roll") || ALL_MENU_ITEMS[0];
     primaryCandidate = {
       item: defaultFav,

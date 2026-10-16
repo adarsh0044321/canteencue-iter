@@ -6,6 +6,7 @@ export interface ParsedIntent {
     | "recommend"
     | "followup"
     | "specific_item"
+    | "off_menu_item"
     | "cheaper"
     | "why"
     | "why_not_comparison"
@@ -144,7 +145,12 @@ export function parseUserQuery(query: string, currentState: UserPreferenceState)
     .replace(/\bwaht\b/gi, "what")
     .replace(/\bwat\b/gi, "what")
     .replace(/\bsomethin\b/gi, "something")
+    .replace(/\bsomethinh\b/gi, "something")
+    .replace(/\bsomthing\b/gi, "something")
+    .replace(/\bsomthng\b/gi, "something")
+    .replace(/\bsmthg\b/gi, "something")
     .replace(/\bsmth\b/gi, "something")
+    .replace(/\blighter\b/gi, "light")
     .replace(/\bfeedme\b/gi, "feed me")
     .replace(/\bruppes\b/gi, "rupees")
     .replace(/\brupes\b/gi, "rupees")
@@ -575,7 +581,24 @@ export function parseUserQuery(query: string, currentState: UserPreferenceState)
     cravings.push("healthy");
   }
 
-  if (/\b(light|quick bite|snack)\b/i.test(text) && !isCompleteMealOrTummy) {
+  const isNegatingLight =
+    /\b(isn'?t|is\s+not|not|no|don'?t|dont)\s+(?:very\s+|super\s+|really\s+)?light\b/i.test(text) ||
+    text.includes("isn't light") ||
+    text.includes("is not light") ||
+    text.includes("not light");
+
+  if (isNegatingLight) {
+    if (text.includes("more light") || text.includes("something light") || text.includes("actually light") || text.includes("real light")) {
+      cravings.push("light");
+    }
+    if (text.includes("dosa")) {
+      const updatedExclusions = [...(extracted.exclusions || currentState.exclusions || [])];
+      if (!updatedExclusions.includes("dosa")) {
+        updatedExclusions.push("dosa");
+      }
+      extracted.exclusions = updatedExclusions;
+    }
+  } else if (/\b(light|quick bite|snack)\b/i.test(text) && !isCompleteMealOrTummy) {
     cravings.push("light");
   }
   if (/\b(crispy|crunchy)\b/i.test(text)) {
@@ -658,6 +681,28 @@ export function parseUserQuery(query: string, currentState: UserPreferenceState)
       },
       specificItemQuery: matchedItem.name,
       matchedMenuItem: matchedItem,
+    };
+  }
+
+  // Check for common off-menu student food requests (e.g. "pizza", "burger", "pasta", "shawarma", "momos", "sandwich")
+  const offMenuPatterns = [
+    { name: "Pizza", pattern: /\b(pizzas?|pizaa|piza)\b/i },
+    { name: "Burger", pattern: /\b(burgers?|burgir)\b/i },
+    { name: "Pasta", pattern: /\b(pastas?|macaroni|spaghetti)\b/i },
+    { name: "Shawarma", pattern: /\b(shawarmas?|shwarma)\b/i },
+    { name: "Momos", pattern: /\b(momos?|momo|dimsum)\b/i },
+    { name: "Sandwich", pattern: /\b(sandwich|sandwiches|sandwhich)\b/i },
+    { name: "French Fries", pattern: /\b(french\s+fries|fries|potato\s+wedges)\b/i },
+    { name: "Tacos", pattern: /\b(tacos?|quesadilla|burrito)\b/i },
+    { name: "Ice Cream", pattern: /\b(ice\s*cream|sundae|gelato)\b/i },
+  ];
+
+  const matchedOffMenu = offMenuPatterns.find((p) => p.pattern.test(text));
+  if (matchedOffMenu) {
+    return {
+      intentType: "off_menu_item",
+      extractedPreferences: extracted,
+      specificItemQuery: matchedOffMenu.name,
     };
   }
 

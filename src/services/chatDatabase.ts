@@ -166,16 +166,18 @@ export async function saveChatSession(session: ChatSession): Promise<void> {
   } catch {
     // Fallback to localStorage
     try {
-      const all = getAllSessionsFromLocalStorage();
-      const idx = all.findIndex((s) => s.id === normalized.id);
-      if (idx >= 0) {
-        all[idx] = normalized;
-      } else {
-        all.unshift(normalized);
+      if (typeof localStorage !== "undefined") {
+        const all = getAllSessionsFromLocalStorage();
+        const idx = all.findIndex((s) => s.id === normalized.id);
+        if (idx >= 0) {
+          all[idx] = normalized;
+        } else {
+          all.unshift(normalized);
+        }
+        // Retain strictly sessions from the last 7 days
+        const strictlyRetained = all.filter((s) => isSessionWithin7Days(s));
+        localStorage.setItem(LOCAL_STORAGE_SESSIONS_KEY, JSON.stringify(strictlyRetained.slice(0, 100)));
       }
-      // Retain strictly sessions from the last 7 days
-      const strictlyRetained = all.filter((s) => isSessionWithin7Days(s));
-      localStorage.setItem(LOCAL_STORAGE_SESSIONS_KEY, JSON.stringify(strictlyRetained.slice(0, 100)));
     } catch (e) {
       console.warn("Failed to save session to localStorage:", e);
     }
@@ -183,7 +185,9 @@ export async function saveChatSession(session: ChatSession): Promise<void> {
 
   // Also track current session ID
   try {
-    localStorage.setItem(CURRENT_SESSION_ID_KEY, normalized.id);
+    if (typeof localStorage !== "undefined") {
+      localStorage.setItem(CURRENT_SESSION_ID_KEY, normalized.id);
+    }
   } catch {}
 }
 

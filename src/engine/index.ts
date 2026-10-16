@@ -63,6 +63,63 @@ export function processUserDecision(
     };
   }
 
+  // 3.4 Handle Off-Menu Food Queries (e.g. "pizza", "burger", "pasta")
+  if (parsed.intentType === "off_menu_item") {
+    const dish = parsed.specificItemQuery || "That dish";
+    const allItems = getMenuItems();
+    const maggiItem = allItems.find((it) => it.shop === "MAGGIE POINT" && it.name.includes("Maggi")) || allItems.find((it) => it.name.includes("Maggi")) || allItems[0];
+    const paneerRoll = allItems.find((it) => it.name.toLowerCase() === "paneer roll") || allItems[1];
+    const noodles = allItems.find((it) => it.name.toLowerCase().includes("schezwan noodles")) || allItems[2];
+
+    const alts: AlternativeCandidate[] = [
+      {
+        item: paneerRoll,
+        selectedPrice: paneerRoll.portionOptions?.[0]?.price || paneerRoll.price,
+        reason: `${paneerRoll.name} from ${paneerRoll.shop} — crispy, savory student favorite`,
+        type: "other_shop",
+      },
+      {
+        item: noodles,
+        selectedPrice: noodles.portionOptions?.[0]?.price || noodles.price,
+        reason: `${noodles.name} from ${noodles.shop} — filling and satisfying comfort pick`,
+        type: "other_shop",
+      },
+    ];
+
+    const primaryPrice = maggiItem.portionOptions?.[0]?.price || maggiItem.price;
+
+    return {
+      response: {
+        type: "recommendation",
+        primaryItem: {
+          item: maggiItem,
+          selectedPrice: primaryPrice,
+          score: 95,
+          matchedReasons: [
+            `${dish} is not available on campus, but this is a top campus comfort favorite`,
+            `Prepared fresh at ${maggiItem.shop}`,
+            `Budget-friendly at ₹${primaryPrice}`,
+          ],
+        },
+        alternatives: alts,
+        summaryText: `${dish} isn't served at the campus canteens (our 6 outlets specialize in fresh rolls, noodles, South Indian dosas, thalis, biryani, Maggi, and fruit juices). Instead, I recommend ${maggiItem.name} from ${maggiItem.shop} for a delicious comfort meal!`,
+        whyFitsList: [
+          `${dish} is not served at campus canteens`,
+          `Recommended campus alternative: ${maggiItem.name}`,
+          `Priced at ₹${primaryPrice} at ${maggiItem.shop}`,
+        ],
+        suggestedFollowUps: [
+          `Tell me more about ${maggiItem.name}`,
+          "Show me MAGGIE POINT menu",
+          "Vegetarian food under ₹80",
+          "What rolls do you have?",
+        ],
+        activePreferences: currentState,
+      },
+      nextState: currentState,
+    };
+  }
+
   // 3.5 Handle Improper / Unrecognized Input (Prevent default forced recommendations)
   if (parsed.intentType === "improper_input") {
     return {

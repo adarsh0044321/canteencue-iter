@@ -88,6 +88,152 @@ export function isStandardTestStatement(query: string): boolean {
   return true;
 }
 
+/**
+ * Determines whether a query is related to campus food, canteen outlets, cravings,
+ * budgets, or an ongoing meal conversation.
+ * Used by the offline engine to act as a rate limiter / guardian and PREVENT
+ * non-food queries from being forwarded to the live LLM.
+ */
+export function isFoodRelatedQuery(query: string, history: ChatMessage[] = []): boolean {
+  const text = query.trim().toLowerCase();
+  if (!text) return false;
+
+  // Explicit non-food patterns (programming, homework, general trivia, politics, bot meta-prompts)
+  const nonFoodPatterns = [
+    /\b(code|coding|python|javascript|typescript|java|c\+\+|html|css|sql|github|git|bug|function|compile|regex|algorithm|script|api|endpoint|backend|frontend)\b/i,
+    /\b(math|maths|equation|derivative|integral|algebra|geometry|calculus|formula|physics|chemistry|biology|quantum|gravity|homework|assignment|exam\s+paper)\b/i,
+    /\b(prime\s+minister|president|parliament|election|politics|government|constitution|supreme\s+court)\b/i,
+    /\b(capital\s+of|population\s+of|weather\s+in|forecast|climate|earthquake|tsunami)\b/i,
+    /\b(who\s+won|score\s+of|cricket\s+match|football\s+match|world\s+cup|ipl|olympics)\b/i,
+    /\b(write\s+(?:me\s+)?(?:a\s+)?(?:poem|essay|story|song|script|letter|email)|tell\s+(?:me\s+)?(?:a\s+)?joke|sing\s+(?:a\s+)?song)\b/i,
+    /\b(who\s+is\s+(?:elon\s+musk|modi|trump|biden|messi|ronaldo|virat|dhoni))\b/i,
+    /\b(crypto|bitcoin|ethereum|stock\s+price|market\s+crash|investing)\b/i,
+  ];
+
+  const hasNonFoodPattern = nonFoodPatterns.some((pattern) => pattern.test(text));
+
+  // Comprehensive food, canteen, craving, and dining keywords
+  const foodKeywords = [
+    "food", "eat", "eating", "meal", "meals", "dish", "dishes", "snack", "snacks", "bite", "bites",
+    "breakfast", "lunch", "dinner", "brunch", "supper", "tiffin",
+    "hungry", "starving", "starve", "hunger", "appetite", "crave", "craving", "cravings",
+    "bhook", "bhuk", "khana", "nashta", "pet", "tummy", "stomach",
+    "canteen", "cafe", "cafeteria", "mess", "food court", "counter", "shop", "stall",
+    "anna", "annas", "anna's", "mughlai", "halka", "phulka", "halka phulka",
+    "maggie point", "maggi point", "4th floor", "fourth floor", "iter juice", "juice centre", "juice center",
+    "pizza", "pizzas", "burger", "burgers", "roll", "rolls", "wrap", "wraps", "frankie",
+    "noodle", "noodles", "maggi", "maggie", "pasta", "pastas", "macaroni", "sandwich", "sandwiches",
+    "dosa", "dosas", "idli", "idlis", "vada", "vadas", "uttapam", "sambar", "chutney",
+    "poori", "puri", "chole", "bhature", "kulcha", "paratha", "parathas", "roti", "rotis", "chapati", "naan",
+    "biryani", "biryany", "biriani", "pulao", "rice", "fried rice", "schezwan", "khichdi", "curd rice",
+    "thali", "curry", "gravy", "dal", "dal makhani", "paneer", "chicken", "egg", "eggs", "anda",
+    "mutton", "fish", "prawn", "prawns", "kebab", "tikka", "manchurian", "chilly", "chilli",
+    "momos", "momo", "samosa", "samosas", "chaat", "pakora", "pakoda", "cutlet", "fries", "french fries",
+    "shawarma", "tacos", "salad", "salads", "soup", "soups",
+    "drink", "drinks", "beverage", "beverages", "coffee", "coffe", "tea", "chai",
+    "frappe", "cappuccino", "latte", "espresso", "cold coffee", "shake", "shakes", "milkshake",
+    "juice", "juices", "smoothie", "smoothies", "lassi", "buttermilk", "chaas",
+    "soda", "sprite", "coke", "thums up", "pepsi", "fanta", "limca", "maaza", "water", "water bottle",
+    "sweet", "dessert", "desserts", "ice cream", "icecream", "cake", "pastry", "brownie",
+    "veg", "vegetarian", "non-veg", "nonveg", "non vegetarian", "vegan", "eggetarian",
+    "spicy", "sweet", "light", "lighter", "heavy", "filling", "crispy", "crunchy",
+    "cheesy", "creamy", "hot", "cold", "healthy", "diet", "clean food", "junk food",
+    "budget", "rupee", "rupees", "rs", "inr", "bucks", "paise", "cheap", "cheaper", "expensive", "cost", "price",
+    "under", "max", "below", "within",
+    "amul", "cadbury", "kitkat", "oreo", "bournvita", "horlicks",
+  ];
+
+  const hasFoodKeyword = foodKeywords.some((word) => {
+    if (word.length <= 4) {
+      const regex = new RegExp(`\\b${word}\\b`, "i");
+      return regex.test(text);
+    }
+    return text.includes(word);
+  });
+
+  if (hasNonFoodPattern && !hasFoodKeyword) {
+    return false;
+  }
+
+  if (hasFoodKeyword) {
+    return true;
+  }
+
+  // Greetings, help, or platform commands are allowed
+  if (
+    /^(hi|hello|hey|greetings|good morning|good afternoon|good evening|howdy)[\s!.,?\\/]*$/i.test(text) ||
+    /^(help|reset|clear|start over|new decision)[\s!.,?]*$/i.test(text) ||
+    /^(what can you do|how do you work|who are you)[\s!.,?]*$/i.test(text)
+  ) {
+    return true;
+  }
+
+  // Follow-ups in an ongoing conversation
+  if (
+    text.includes("why did you choose this") ||
+    text.includes("why choose") ||
+    text.includes("why this") ||
+    text.includes("anything better") ||
+    text.includes("something cheaper") ||
+    text.includes("other shop") ||
+    text.includes("tell me more") ||
+    /^(why|why this|why not|what else|anything else|something else|not this|tell me more|surprise me|pick one)[\s!.,?]*$/i.test(text)
+  ) {
+    return true;
+  }
+
+  // Short follow-up within existing chat
+  if (history.length > 0 && text.split(/\s+/).length <= 5 && !hasNonFoodPattern) {
+    return true;
+  }
+
+  return false;
+}
+
+/**
+ * Checks whether the offline deterministic engine caught the user's intent
+ * with high confidence.
+ */
+export function isOfflineEngineConfidentlyCatching(
+  cleanQuery: string,
+  offlineResult: { response: DecisionResponse; nextState: UserPreferenceState }
+): boolean {
+  const text = cleanQuery.toLowerCase();
+  const resp = offlineResult.response;
+
+  // 1. If the offline engine gave "I didn't quite catch that...", it definitely did not catch it!
+  if (resp.type === "clarification" && resp.summaryText.includes("didn't quite catch that")) {
+    return false;
+  }
+
+  // 2. Off-menu item requests (e.g. pizza, burger, pasta, shawarma, momos)
+  const isOffMenu = /\b(pizza|pizzas?|burger|burgers?|pasta|pastas?|shawarma|shawarmas?|momos?|sandwich|french\s+fries|tacos|ice\s*cream)\b/i.test(text);
+  if (isOffMenu) {
+    return false;
+  }
+
+  // 3. Conversational negation, hesitation, or dissatisfaction/complaint
+  // (e.g. "damnnnn dosa isn't light", "okay maybe somethinh more lighter", "not light", "not spicy", "too heavy")
+  const isConversationalHesitationOrNegation =
+    /\b(isn'?t|is\s+not|not|no|don'?t|dont|hate|dislike|too)\s+(light|spicy|heavy|filling|good|healthy|tasty|cheap)\b/i.test(text) ||
+    /\b(dam+n+|wth|wtf|nope|nah|not\s+this|something\s+else|maybe|somethinh|more\s+light|lighter)\b/i.test(text);
+  if (isConversationalHesitationOrNegation) {
+    return false;
+  }
+
+  // 4. Nuanced conversational student queries (> 6 words or complex emotional triggers)
+  if (!isStandardTestStatement(cleanQuery)) {
+    return false;
+  }
+
+  // 5. If the offline engine gave a no-match tradeoff (couldn't satisfy constraints)
+  if (resp.type === "no_match_tradeoff") {
+    return false;
+  }
+
+  return true;
+}
+
 export interface DecisionExecutionResult {
   response: DecisionResponse;
   nextState: UserPreferenceState;
@@ -100,23 +246,85 @@ export async function routeUserDecision(
   currentState: UserPreferenceState,
   lastPrimaryItem?: RecommendationCandidate
 ): Promise<DecisionExecutionResult> {
+  const cleanQuery = query.trim();
+  const isReset = /^(reset|clear|start over|new decision)$/i.test(cleanQuery);
+
+  // 1. Reset command -> handled instantly by offline engine
+  if (isReset) {
+    const offlineReset = processUserDecision(cleanQuery, currentState, lastPrimaryItem);
+    await persistDecisionHistory(cleanQuery, history, offlineReset);
+    return { ...offlineReset, source: "deterministic_engine" };
+  }
+
+  // 2. Non-Food Concern Check (Offline model acts as rate limiter & guardian)
+  // If the offline model knows the concern is NOT food related, it will NOT send it to Gemini!
+  const isFood = isFoodRelatedQuery(cleanQuery, history);
+  if (!isFood) {
+    const nonFoodResponse: DecisionResponse = {
+      type: "redirect",
+      summaryText:
+        "I am CanteenCue, your campus canteen food decision assistant. I can only help you with food recommendations, menus, cravings, dietary preferences, and budgets at the 6 campus canteens.",
+      whyFitsList: [
+        "Specialized Campus Focus: Dedicated strictly to campus food decisions and outlet recommendations",
+        "Campus Outlets: Anna's Restaurant, Mughlai Affair's, HALKA PHULKA, MAGGIE POINT, 4TH FLOOR, Iter Juice Centre",
+      ],
+      alternatives: [],
+      suggestedFollowUps: [
+        "I have ₹100",
+        "Something spicy and filling",
+        "Vegetarian food under ₹80",
+        "What can I get in 10 minutes?",
+      ],
+      activePreferences: currentState,
+    };
+    const nonFoodResult = { response: nonFoodResponse, nextState: currentState };
+    await persistDecisionHistory(cleanQuery, history, nonFoodResult);
+    return { ...nonFoodResult, source: "deterministic_engine" };
+  }
+
+  // 3. Evaluate query with the offline deterministic model first (acts as 0-token rate limiter)
+  const offlineResult = processUserDecision(cleanQuery, currentState, lastPrimaryItem);
+
+  // Check if an online AI model (Gemini or OpenAI) is configured
   const aiConfig = getStoredAiConfig();
   const hasLiveAiKey = aiConfig.provider !== "builtin" && !!aiConfig.apiKey.trim();
-  const isReset = /^(reset|clear|start over|new decision)$/i.test(query.trim());
+
+  // Check if offline model caught it with confidence
+  const isOfflineCatching = isOfflineEngineConfidentlyCatching(cleanQuery, offlineResult);
 
   let result: { response: DecisionResponse; nextState: UserPreferenceState };
   let source: "deterministic_engine" | "live_llm" = "deterministic_engine";
 
-  // When an AI provider (Gemini / OpenAI) is configured, route all conversational queries directly to the AI server!
-  if (hasLiveAiKey && !isReset) {
+  if (isOfflineCatching) {
+    // Offline model caught it! Instant 0-token response saves API rate limits
+    result = offlineResult;
+    source = "deterministic_engine";
+  } else if (hasLiveAiKey) {
+    // Offline model isn't catching it -> AUTO SWITCH to configured online AI model!
     source = "live_llm";
-    result = await processAiDecision(query, history, currentState, lastPrimaryItem);
+    try {
+      result = await processAiDecision(cleanQuery, history, currentState, lastPrimaryItem);
+    } catch (err) {
+      console.warn("Auto-switch to online AI failed, falling back to offline engine:", err);
+      result = offlineResult;
+      source = "deterministic_engine";
+    }
   } else {
-    // Built-in offline engine or exact reset command
-    result = processUserDecision(query, currentState, lastPrimaryItem);
+    // Online model is not configured (built-in mode) -> use the best offline response
+    result = offlineResult;
+    source = "deterministic_engine";
   }
 
-  // Persist session to local chat database (IndexedDB / localStorage)
+  await persistDecisionHistory(cleanQuery, history, result);
+
+  return { ...result, source };
+}
+
+async function persistDecisionHistory(
+  query: string,
+  history: ChatMessage[],
+  result: { response: DecisionResponse; nextState: UserPreferenceState }
+): Promise<void> {
   try {
     const sessionId = getCurrentSessionId() || `session_${Date.now()}`;
     const userMsg: ChatMessage = {
@@ -141,7 +349,6 @@ export async function routeUserDecision(
       preferenceState: result.nextState,
     });
 
-    // Update user profile database with discovered likes/dislikes
     if (result.nextState.craving && result.nextState.craving.length > 0) {
       await updateUserProfile({
         likes: result.nextState.craving,
@@ -153,6 +360,4 @@ export async function routeUserDecision(
   } catch (err) {
     console.warn("Failed to persist to chat database:", err);
   }
-
-  return { ...result, source };
 }
