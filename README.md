@@ -6,6 +6,7 @@ CanteenCue connects students with live canteen menus, balancing real-time cravin
 
 > **INPUT CRAVING & BUDGET → NLP PREFERENCE EXTRACTION → CONSTRAINT FILTERING → SMART COMBO PAIRING → DETERMINISTIC RANKING → ZERO-DOWNTIME DECISION**
 
+[![Live App](https://img.shields.io/badge/Live%20App-canteencue--iter.pages.dev-orange.svg)](https://canteencue-iter.pages.dev)
 [![Release](https://img.shields.io/badge/Release-v1.0-success.svg)](https://github.com/adarsh0044321/canteencue-iter)
 [![Platform](https://img.shields.io/badge/Platform-Web%20%7C%20React%2019%20%7C%20TypeScript-brightgreen.svg)](https://react.dev)
 [![Vite](https://img.shields.io/badge/Vite-8.3-646CFF.svg)](https://vitejs.dev)
