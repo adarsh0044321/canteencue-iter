@@ -37,6 +37,9 @@ describe("Hybrid Router & Auto-Switching to Online AI", () => {
       expect(isFoodRelatedQuery("why did you choose this")).toBe(true);
       expect(isFoodRelatedQuery("anything better")).toBe(true);
       expect(isFoodRelatedQuery("not this", [{ id: "1", sender: "user", timestamp: 1, text: "dosa" }])).toBe(true);
+      expect(isFoodRelatedQuery("nahh something else would be better")).toBe(true);
+      expect(isFoodRelatedQuery("give me something else")).toBe(true);
+      expect(isFoodRelatedQuery("what else do you have")).toBe(true);
     });
   });
 
@@ -172,6 +175,18 @@ describe("Hybrid Router & Auto-Switching to Online AI", () => {
       if (result.response.primaryItem) {
         expect(result.response.primaryItem.item.name.toLowerCase()).not.toContain("dosa");
       }
+    });
+
+    it("switches to alternative and explicitly references previous item on 'nahh something else would be better'", () => {
+      const initialDecision = processUserDecision("how about something from halka phulka");
+      expect(initialDecision.response.primaryItem).toBeDefined();
+      const lastPrimary = initialDecision.response.primaryItem!;
+
+      const switchResult = processUserDecision("nahh something else would be better", initialDecision.nextState, lastPrimary);
+      expect(switchResult.response.type).toBe("recommendation");
+      expect(switchResult.response.summaryText).toContain(`Skipping ${lastPrimary.item.name}`);
+      expect(switchResult.nextState.exclusions).toContain(lastPrimary.item.name);
+      expect(switchResult.response.primaryItem?.item.name).not.toBe(lastPrimary.item.name);
     });
   });
 });

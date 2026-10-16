@@ -325,30 +325,54 @@ async function callGeminiApi(
   // Keep last 8 messages (4 complete turns) to save tokens while keeping exact conversational context
   const contents: Array<{ role: "user" | "model"; parts: Array<{ text: string }> }> = [];
 
-  const recentHistory = history.slice(-8);
+  // Exclude trailing user message if it's already the current query
+  const filteredHistory = history.filter((msg, idx) => {
+    if (idx === history.length - 1 && msg.sender === "user" && msg.text?.trim() === query.trim()) {
+      return false;
+    }
+    return true;
+  });
+
+  const recentHistory = filteredHistory.slice(-8);
   for (const msg of recentHistory) {
     if (msg.sender === "user") {
-      contents.push({
-        role: "user",
-        parts: [{ text: msg.text || "" }],
-      });
+      const text = msg.text?.trim() || "";
+      if (!text) continue;
+      if (contents.length > 0 && contents[contents.length - 1].role === "user") {
+        contents[contents.length - 1].parts[0].text += `\n${text}`;
+      } else {
+        contents.push({
+          role: "user",
+          parts: [{ text }],
+        });
+      }
     } else {
       const summary = msg.decision?.summaryText || "";
       const itemDesc = msg.decision?.primaryItem
         ? `[Recommended: ${msg.decision.primaryItem.item.name} at ₹${msg.decision.primaryItem.selectedPrice}] `
         : "";
-      contents.push({
-        role: "model",
-        parts: [{ text: `${itemDesc}${summary}` }],
-      });
+      const replyText = `${itemDesc}${summary}`.trim();
+      if (!replyText) continue;
+      if (contents.length > 0 && contents[contents.length - 1].role === "model") {
+        contents[contents.length - 1].parts[0].text += `\n${replyText}`;
+      } else {
+        contents.push({
+          role: "model",
+          parts: [{ text: replyText }],
+        });
+      }
     }
   }
 
-  // Current user turn
-  contents.push({
-    role: "user",
-    parts: [{ text: query }],
-  });
+  // Current user turn - strictly ensures final role is user without consecutive user entries
+  if (contents.length > 0 && contents[contents.length - 1].role === "user") {
+    contents[contents.length - 1].parts[0].text += `\n${query}`;
+  } else {
+    contents.push({
+      role: "user",
+      parts: [{ text: query }],
+    });
+  }
 
   const payload = {
     system_instruction: {
@@ -414,20 +438,44 @@ async function callOpenAiApi(
     { role: "system", content: buildSystemInstruction() },
   ];
 
-  const recentHistory = history.slice(-8);
+  // Exclude trailing user message if it's already the current query
+  const filteredHistory = history.filter((msg, idx) => {
+    if (idx === history.length - 1 && msg.sender === "user" && msg.text?.trim() === query.trim()) {
+      return false;
+    }
+    return true;
+  });
+
+  const recentHistory = filteredHistory.slice(-8);
   for (const msg of recentHistory) {
     if (msg.sender === "user") {
-      messages.push({ role: "user", content: msg.text || "" });
+      const text = msg.text?.trim() || "";
+      if (!text) continue;
+      if (messages.length > 1 && messages[messages.length - 1].role === "user") {
+        messages[messages.length - 1].content += `\n${text}`;
+      } else {
+        messages.push({ role: "user", content: text });
+      }
     } else {
       const summary = msg.decision?.summaryText || "";
       const itemDesc = msg.decision?.primaryItem
         ? `[Recommended: ${msg.decision.primaryItem.item.name} at ₹${msg.decision.primaryItem.selectedPrice}] `
         : "";
-      messages.push({ role: "assistant", content: `${itemDesc}${summary}` });
+      const replyText = `${itemDesc}${summary}`.trim();
+      if (!replyText) continue;
+      if (messages.length > 1 && messages[messages.length - 1].role === "assistant") {
+        messages[messages.length - 1].content += `\n${replyText}`;
+      } else {
+        messages.push({ role: "assistant", content: replyText });
+      }
     }
   }
 
-  messages.push({ role: "user", content: query });
+  if (messages.length > 1 && messages[messages.length - 1].role === "user") {
+    messages[messages.length - 1].content += `\n${query}`;
+  } else {
+    messages.push({ role: "user", content: query });
+  }
 
   const res = await fetch(url, {
     method: "POST",

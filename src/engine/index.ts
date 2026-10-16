@@ -6,7 +6,7 @@ import {
 } from "../data/types";
 import { getMenuItems, getItemById } from "../data/menuService";
 import { parseUserQuery } from "./preferenceParser";
-import { filterCandidates } from "./constraintFilter";
+import { filterCandidates, EvaluatedPortionItem } from "./constraintFilter";
 import { rankCandidates } from "./recommender";
 import { generateExplanation } from "./explanationGenerator";
 import { mergePreferences, INITIAL_PREFERENCE_STATE } from "./conversationState";
@@ -277,6 +277,86 @@ export function processUserDecision(
       },
       nextState: currentState,
     };
+  }
+
+  // 5.1 Handle Alternative Switch Requests (e.g. "nahh something else would be better", "not this", "something else")
+  if (parsed.intentType === "switch_alternative") {
+    const allItems = getMenuItems();
+    const updatedExclusions = [...(currentState.exclusions || [])];
+    if (lastPrimaryItem?.item?.name && !updatedExclusions.includes(lastPrimaryItem.item.name)) {
+      updatedExclusions.push(lastPrimaryItem.item.name);
+    }
+
+    const stateWithExclusions: UserPreferenceState = {
+      ...currentState,
+      exclusions: updatedExclusions,
+      ...(parsed.extractedPreferences || {}),
+    };
+
+    const filterResult = filterCandidates(allItems, stateWithExclusions);
+    const candidatePool: EvaluatedPortionItem[] =
+      filterResult.passed.length > 0
+        ? filterResult.passed
+        : filterCandidates(allItems, { ...stateWithExclusions, budget: null, craving: [] }).passed;
+    const ranked = rankCandidates(candidatePool, stateWithExclusions);
+
+    const newPrimary: RecommendationCandidate | undefined =
+      ranked.primary ||
+      ranked.secondBestCandidate ||
+      (ranked.alternatives[0]
+        ? {
+            item: ranked.alternatives[0].item,
+            selectedPrice: ranked.alternatives[0].selectedPrice,
+            score: 80,
+            matchedReasons: [ranked.alternatives[0].reason],
+          }
+        : undefined);
+
+    if (newPrimary && lastPrimaryItem) {
+      const price = newPrimary.selectedPrice;
+      const prevName = lastPrimaryItem.item.name;
+      const newName = newPrimary.item.name;
+      const newShop = newPrimary.item.shop;
+
+      return {
+        response: {
+          type: "recommendation",
+          primaryItem: newPrimary,
+          summaryText: `Understood! Skipping ${prevName}. Instead, how about ${newName} from ${newShop} at ₹${price}? It fits your active preferences and gives you a delicious alternative.`,
+          whyFitsList: [
+            `Alternative to ${prevName}: Switched based on your request for something else`,
+            `Priced at ₹${price} at ${newShop}`,
+            `Preparation time: ~${newPrimary.item.estimatedPreparationTime || 10} minutes`,
+          ],
+          alternatives: ranked.alternatives.filter((a) => a.item.id !== newPrimary.item.id).slice(0, 2),
+          suggestedFollowUps: [
+            `Why did you choose ${newName}?`,
+            "Something cheaper",
+            "Anything from another shop?",
+            "Start a new decision",
+          ],
+          activePreferences: stateWithExclusions,
+        },
+        nextState: stateWithExclusions,
+      };
+    } else if (newPrimary) {
+      const price = newPrimary.selectedPrice;
+      return {
+        response: {
+          type: "recommendation",
+          primaryItem: newPrimary,
+          summaryText: `How about ${newPrimary.item.name} from ${newPrimary.item.shop} at ₹${price}? It's a top campus favorite that fits your preferences.`,
+          whyFitsList: [
+            `Top recommendation: ${newPrimary.item.name}`,
+            `Priced at ₹${price} from ${newPrimary.item.shop}`,
+          ],
+          alternatives: ranked.alternatives.slice(0, 2),
+          suggestedFollowUps: ["Something cheaper", "Vegetarian food", "What about chicken?"],
+          activePreferences: stateWithExclusions,
+        },
+        nextState: stateWithExclusions,
+      };
+    }
   }
 
   // 5.5 Handle contextual time constraint on active recommendation (e.g. "I only have 15 minutes")

@@ -12,6 +12,7 @@ export interface ParsedIntent {
     | "why_not_comparison"
     | "ask_online_model"
     | "anything_better"
+    | "switch_alternative"
     | "other_shop"
     | "unavailable_item"
     | "over_budget_item"
@@ -276,6 +277,20 @@ export function parseUserQuery(query: string, currentState: UserPreferenceState)
     return {
       intentType: "anything_better",
       extractedPreferences: {},
+    };
+  }
+
+  // Check for switching / alternative request (e.g. "nahh something else would be better", "not this", "something else")
+  const isSwitchAlternative =
+    /\b(something\s+else|anything\s+else|what\s+else|different\s+option|another\s+option|another\s+one|other\s+option|other\s+choice|not\s+this|not\s+that|skip\s+this|skip\s+it|switch|change\s+(?:this|item|dish)|something\s+different|anything\s+different)\b/i.test(text) ||
+    /\b(would\s+be\s+better|something\s+better|any\s+other\s+option)\b/i.test(text) ||
+    /\b(nah+|nope)\b/i.test(text) ||
+    /\b(don'?t\s+want\s+this|not\s+feeling\s+this|not\s+in\s+the\s+mood\s+for\s+this)\b/i.test(text);
+
+  if (isSwitchAlternative) {
+    return {
+      intentType: "switch_alternative",
+      extractedPreferences: extracted,
     };
   }
 

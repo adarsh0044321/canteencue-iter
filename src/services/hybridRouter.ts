@@ -168,22 +168,52 @@ export function isFoodRelatedQuery(query: string, history: ChatMessage[] = []): 
     return true;
   }
 
-  // Follow-ups in an ongoing conversation
+  // Follow-up, alternative, rejection, or preference adjustment cues
+  const followUpCues = [
+    "why did you choose this",
+    "why choose",
+    "why this",
+    "anything better",
+    "something better",
+    "something cheaper",
+    "cheaper",
+    "other shop",
+    "another shop",
+    "different shop",
+    "tell me more",
+    "something else",
+    "anything else",
+    "what else",
+    "something different",
+    "anything different",
+    "another option",
+    "other option",
+    "different option",
+    "not this",
+    "not that",
+    "don't want",
+    "dont want",
+    "would be better",
+    "surprise me",
+    "pick one",
+    "skip",
+    "instead",
+    "change",
+    "switch",
+  ];
+
+  if (followUpCues.some((cue) => text.includes(cue))) {
+    return true;
+  }
+
   if (
-    text.includes("why did you choose this") ||
-    text.includes("why choose") ||
-    text.includes("why this") ||
-    text.includes("anything better") ||
-    text.includes("something cheaper") ||
-    text.includes("other shop") ||
-    text.includes("tell me more") ||
-    /^(why|why this|why not|what else|anything else|something else|not this|tell me more|surprise me|pick one)[\s!.,?]*$/i.test(text)
+    /\b(nah+|nope|no\s+thanks|skip\s+(?:this|it)|other\s+(?:one|choice)|different\s+(?:one|dish)|better\s+option)\b/i.test(text)
   ) {
     return true;
   }
 
-  // Short follow-up within existing chat
-  if (history.length > 0 && text.split(/\s+/).length <= 5 && !hasNonFoodPattern) {
+  // Any message in an ongoing conversation without explicit non-food patterns is on-topic
+  if (history.length > 0 && !hasNonFoodPattern) {
     return true;
   }
 
@@ -216,7 +246,7 @@ export function isOfflineEngineConfidentlyCatching(
   // (e.g. "damnnnn dosa isn't light", "okay maybe somethinh more lighter", "not light", "not spicy", "too heavy")
   const isConversationalHesitationOrNegation =
     /\b(isn'?t|is\s+not|not|no|don'?t|dont|hate|dislike|too)\s+(light|spicy|heavy|filling|good|healthy|tasty|cheap)\b/i.test(text) ||
-    /\b(dam+n+|wth|wtf|nope|nah|not\s+this|something\s+else|maybe|somethinh|more\s+light|lighter)\b/i.test(text);
+    /\b(dam+n+|wth|wtf|nope|nah+|not\s+this|something\s+else|would\s+be\s+better|different\s+option|another\s+option|maybe|somethinh|more\s+light|lighter)\b/i.test(text);
   if (isConversationalHesitationOrNegation) {
     return false;
   }
@@ -340,12 +370,20 @@ async function persistDecisionHistory(
       decision: result.response,
     };
 
+    // Filter out trailing duplicate user message from history if already present
+    const baseHistory = history.filter((msg, idx) => {
+      if (idx === history.length - 1 && msg.sender === "user" && msg.text?.trim() === query.trim()) {
+        return false;
+      }
+      return true;
+    });
+
     await saveChatSession({
       id: sessionId,
-      title: history[0]?.text?.slice(0, 30) || query.slice(0, 30),
-      createdAt: history[0]?.timestamp || Date.now(),
+      title: baseHistory[0]?.text?.slice(0, 30) || query.slice(0, 30),
+      createdAt: baseHistory[0]?.timestamp || Date.now(),
       updatedAt: Date.now(),
-      messages: [...history, userMsg, asstMsg],
+      messages: [...baseHistory, userMsg, asstMsg],
       preferenceState: result.nextState,
     });
 

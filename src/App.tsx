@@ -344,7 +344,7 @@ export const App: React.FC = () => {
       const thinkingDelay = new Promise((resolve) => setTimeout(resolve, 850));
       const decisionPromise = routeUserDecision(
         userText,
-        nextHistory,
+        messages,
         preferenceState,
         lastPrimary
       );
