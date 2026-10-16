@@ -422,30 +422,52 @@ export const App: React.FC = () => {
   }, []);
 
 
-  // While determining session, show subtle ambient loader so LoginPage never flashes on refresh
+  // While determining session, show sleek branded loader matching initial HTML splash
   if (isAuthInitializing) {
     return (
       <div
         style={{
           position: "fixed",
           inset: 0,
-          background: "#080c0a",
+          backgroundColor: "#0b0f0d",
+          color: "#f8fafc",
           display: "flex",
+          flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
           zIndex: 9999,
+          fontFamily: "'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
         }}
       >
-        <div style={{ textAlign: "center" }}>
+        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "16px", textAlign: "center" }}>
           <img
             src="/logo.png"
-            alt="CanteenCue"
+            alt="CanteenCue Logo"
+            width={60}
+            height={60}
             style={{
-              width: "56px",
-              height: "56px",
-              opacity: 0.9,
+              width: "60px",
+              height: "60px",
+              objectFit: "contain",
+              animation: "canteencue-pulse 1.8s ease-in-out infinite",
+              filter: "drop-shadow(0 4px 16px rgba(20, 184, 166, 0.25))",
             }}
           />
+          <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+            <div
+              style={{
+                width: "14px",
+                height: "14px",
+                border: "2px solid rgba(45, 212, 191, 0.25)",
+                borderTopColor: "#2dd4bf",
+                borderRadius: "50%",
+                animation: "canteencue-spin 0.8s linear infinite",
+              }}
+            />
+            <span style={{ fontSize: "13px", color: "#94a3b8", fontWeight: 500, letterSpacing: "0.04em" }}>
+              Loading...
+            </span>
+          </div>
         </div>
       </div>
     );

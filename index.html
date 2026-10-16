@@ -128,18 +128,45 @@
       }
     </script>
   </head>
-  <body>
-    <!-- Fallback / Pre-rendered Semantic HTML for Crawlers & Fast Indexing before React mounts -->
+  <body style="margin: 0; padding: 0; background-color: #0b0f0d; color: #f8fafc; font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+    <!-- Branded dark loading state shown during initial bundle download and React mount -->
     <div id="root">
-      <header style="padding: 2rem; font-family: sans-serif; max-width: 800px; margin: 0 auto; color: #1e293b;">
-        <h1 style="font-size: 2rem; color: #ea580c; margin-bottom: 0.5rem;">CanteenCue ITER — College Canteen Food Decision Assistant</h1>
-        <p style="font-size: 1.1rem; line-height: 1.6; color: #475569;">
+      <div
+        id="initial-loader"
+        style="min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; background-color: #0b0f0d; color: #f8fafc; font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;"
+      >
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 16px; text-align: center;">
+          <img
+            src="/logo.png"
+            alt="CanteenCue Logo"
+            width="60"
+            height="60"
+            style="width: 60px; height: 60px; object-fit: contain; animation: canteencue-pulse 1.8s ease-in-out infinite; filter: drop-shadow(0 4px 16px rgba(20, 184, 166, 0.25));"
+          />
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <div
+              style="width: 14px; height: 14px; border: 2px solid rgba(45, 212, 191, 0.25); border-top-color: #2dd4bf; border-radius: 50%; animation: canteencue-spin 0.8s linear infinite;"
+            ></div>
+            <span style="font-size: 13px; color: #94a3b8; font-weight: 500; letter-spacing: 0.04em;">Loading...</span>
+          </div>
+        </div>
+        <style>
+          @keyframes canteencue-spin { to { transform: rotate(360deg); } }
+          @keyframes canteencue-pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.75; transform: scale(0.96); } }
+        </style>
+      </div>
+    </div>
+
+    <noscript>
+      <header style="padding: 2rem; font-family: sans-serif; max-width: 800px; margin: 0 auto; color: #f8fafc; background: #0b0f0d;">
+        <h1 style="font-size: 2rem; color: #f97316; margin-bottom: 0.5rem;">CanteenCue ITER — College Canteen Food Decision Assistant</h1>
+        <p style="font-size: 1.1rem; line-height: 1.6; color: #94a3b8;">
           Welcome to <strong>CanteenCue (Canteen Cue ITER)</strong>, the smart campus food finder and decision engine for students at
           <strong>Institute of Technical Education and Research (ITER)</strong>, Siksha 'O' Anusandhan (SOA) University, Bhubaneswar, Odisha.
         </p>
         <section style="margin-top: 1.5rem;">
-          <h2 style="font-size: 1.3rem; color: #0f172a;">Campus Food Outlets & Canteens Covered:</h2>
-          <ul style="line-height: 1.8; color: #334155;">
+          <h2 style="font-size: 1.3rem; color: #f8fafc;">Campus Food Outlets & Canteens Covered:</h2>
+          <ul style="line-height: 1.8; color: #cbd5e1;">
             <li><strong>Anna's Canteen</strong> — South Indian, Dosa, Idli, Parathas, Quick Breakfast</li>
             <li><strong>Mughlai Stall</strong> — Rolls, Biryani, Rice Meals & Non-Veg Specials</li>
             <li><strong>HALKA PHULKA</strong> — Everyday comfort snacks, tea, light meals & fast bites</li>
@@ -149,20 +176,16 @@
           </ul>
         </section>
         <section style="margin-top: 1.5rem;">
-          <h2 style="font-size: 1.3rem; color: #0f172a;">Key Capabilities:</h2>
-          <p style="color: #64748b;">
+          <h2 style="font-size: 1.3rem; color: #f8fafc;">Key Capabilities:</h2>
+          <p style="color: #94a3b8;">
             Budget filtering (₹40, ₹60, ₹100), strict vegetarian & dietary boundary enforcement, smart meal combos, and 10-minute break optimization.
           </p>
         </section>
-        <p style="margin-top: 2rem; color: #94a3b8; font-size: 0.9rem;">Loading CanteenCue ITER application...</p>
+        <div style="margin-top: 2rem; padding: 1rem; border: 1px solid rgba(249, 115, 22, 0.4); border-radius: 8px; background: rgba(249, 115, 22, 0.1);">
+          <h2 style="font-size: 1.2rem; color: #f97316; margin: 0 0 0.5rem 0;">JavaScript Required</h2>
+          <p style="color: #cbd5e1; margin: 0;">CanteenCue ITER requires JavaScript to enable the AI food recommendation engine and interactive menu catalog.</p>
+        </div>
       </header>
-    </div>
-
-    <noscript>
-      <div style="padding: 2rem; text-align: center; font-family: sans-serif;">
-        <h2>JavaScript Required</h2>
-        <p>CanteenCue ITER requires JavaScript to enable the AI food recommendation engine and interactive menu catalog.</p>
-      </div>
     </noscript>
 
     <script type="module" src="/src/main.tsx"></script>
