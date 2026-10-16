@@ -195,6 +195,12 @@ textarea {
     left: 68px;
     width: calc(100% - 68px);
   }
+  .app-container.sidebar-expanded-layout .composer-fixed {
+    left: 260px;
+  }
+  .app-container.sidebar-collapsed-layout .composer-fixed {
+    left: 68px;
+  }
 }
 
 /* Header */
@@ -1343,6 +1349,8 @@ textarea {
 
 /* Hero Stage (Initial State) */
 .stage {
+  position: relative;
+  z-index: 10;
   flex: 1 1 auto;
   display: flex;
   flex-direction: column;
@@ -1552,6 +1560,8 @@ textarea {
    CHAT WORKSPACE (Matching Image 3 UI Reference)
    ------------------------------------------------------------- */
 .chat-workspace {
+  position: relative;
+  z-index: 10;
   flex: 1 1 auto;
   display: flex;
   flex-direction: column;
@@ -1805,6 +1815,7 @@ textarea {
   z-index: 50;
   padding: 0 16px;
   pointer-events: none;
+  transition: left 0.28s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .composer-inner {
