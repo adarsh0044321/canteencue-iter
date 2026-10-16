@@ -7,6 +7,8 @@ import {
   testAiConnection,
   SYSTEM_GEMINI_KEY,
   isSystemGeminiKey,
+  getAiTrialInfo,
+  YOUTUBE_TUTORIAL_URL,
 } from "../services/aiService";
 import {
   X,
@@ -23,6 +25,9 @@ import {
   Activity,
   Lock,
   RefreshCw,
+  Play,
+  ExternalLink,
+  Clock,
 } from "lucide-react";
 
 interface ApiConfigModalProps {
@@ -79,6 +84,8 @@ export const ApiConfigModal: React.FC<ApiConfigModalProps> = ({
       return updated;
     });
   };
+
+  const trialInfo = getAiTrialInfo(aiConfig.apiKey);
 
   if (!isOpen) return null;
 
@@ -245,8 +252,80 @@ export const ApiConfigModal: React.FC<ApiConfigModalProps> = ({
         </div>
 
         {/* AI CONFIGURATION & MODEL SELECTOR */}
-            {/* Provider Cards */}
-            <div style={{ marginBottom: "20px" }}>
+        {/* Trial & Account Profile Sync Status Banner */}
+        <div
+          style={{
+            marginBottom: "18px",
+            padding: "12px 16px",
+            borderRadius: "14px",
+            background: isCustomKeyMode
+              ? "linear-gradient(135deg, rgba(20, 184, 166, 0.14) 0%, rgba(13, 148, 136, 0.08) 100%)"
+              : trialInfo.isTrialExpired
+              ? "linear-gradient(135deg, rgba(239, 68, 68, 0.18) 0%, rgba(185, 28, 28, 0.1) 100%)"
+              : "linear-gradient(135deg, rgba(59, 130, 246, 0.14) 0%, rgba(37, 99, 235, 0.08) 100%)",
+            border: isCustomKeyMode
+              ? "1px solid rgba(45, 212, 191, 0.4)"
+              : trialInfo.isTrialExpired
+              ? "1px solid rgba(239, 68, 68, 0.45)"
+              : "1px solid rgba(59, 130, 246, 0.35)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            flexWrap: "wrap",
+            gap: "10px",
+          }}
+        >
+          <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+            {isCustomKeyMode ? (
+              <ShieldCheck size={18} color="#2dd4bf" />
+            ) : trialInfo.isTrialExpired ? (
+              <AlertCircle size={18} color="#ef4444" />
+            ) : (
+              <Clock size={18} color="#60a5fa" />
+            )}
+            <div>
+              <div style={{ fontSize: "13px", fontWeight: 600, color: "#ffffff" }}>
+                {isCustomKeyMode
+                  ? "Personal API Key Active (Permanent)"
+                  : trialInfo.isTrialExpired
+                  ? "3-Day Free Trial Expired"
+                  : `Free AI Trial Active: ${trialInfo.daysRemaining} day${trialInfo.daysRemaining === 1 ? "" : "s"} remaining`}
+              </div>
+              <div style={{ fontSize: "11px", color: "#cbd5e1", lineHeight: 1.4 }}>
+                {isCustomKeyMode
+                  ? "Saved to your account profile across login/logout on all your devices"
+                  : trialInfo.isTrialExpired
+                  ? "Please configure your personal free Gemini API key to continue online reasoning"
+                  : "Enjoy pre-configured rotating campus API keys. After 3 days, easily add your personal key"}
+              </div>
+            </div>
+          </div>
+          <a
+            href={YOUTUBE_TUTORIAL_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "6px",
+              background: "#ef4444",
+              color: "#ffffff",
+              padding: "6px 12px",
+              borderRadius: "8px",
+              fontSize: "11px",
+              fontWeight: 600,
+              textDecoration: "none",
+              whiteSpace: "nowrap",
+            }}
+          >
+            <Play size={12} fill="#ffffff" />
+            <span>Video Guide</span>
+            <ExternalLink size={11} />
+          </a>
+        </div>
+
+        {/* Provider Cards */}
+        <div style={{ marginBottom: "20px" }}>
               <label style={{ display: "block", fontSize: "12.5px", fontWeight: 600, color: "#cbd5e1", marginBottom: "10px" }}>
                 Select Decision Engine & AI Provider
               </label>
@@ -490,6 +569,50 @@ export const ApiConfigModal: React.FC<ApiConfigModalProps> = ({
                         {showKey ? <EyeOff size={16} /> : <Eye size={16} />}
                       </button>
                     </div>
+
+                    {/* YouTube Video Demonstration Tutorial Card */}
+                    <div
+                      style={{
+                        padding: "10px 14px",
+                        background: "rgba(239, 68, 68, 0.08)",
+                        border: "1px solid rgba(239, 68, 68, 0.25)",
+                        borderRadius: "10px",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "space-between",
+                        flexWrap: "wrap",
+                        gap: "8px",
+                      }}
+                    >
+                      <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                        <Play size={14} color="#ef4444" fill="#ef4444" />
+                        <span style={{ fontSize: "11.5px", color: "#e2e8f0" }}>
+                          Need a free Gemini key? Watch the video demonstration:
+                        </span>
+                      </div>
+                      <a
+                        href={YOUTUBE_TUTORIAL_URL}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style={{
+                          display: "inline-flex",
+                          alignItems: "center",
+                          gap: "4px",
+                          color: "#f87171",
+                          fontSize: "11px",
+                          fontWeight: 600,
+                          textDecoration: "underline",
+                          whiteSpace: "nowrap",
+                        }}
+                      >
+                        <span>Watch on YouTube</span>
+                        <ExternalLink size={11} />
+                      </a>
+                    </div>
+
+                    <p style={{ margin: 0, fontSize: "11px", color: "#94a3b8", lineHeight: 1.45 }}>
+                      🔒 Your custom API key is encrypted and saved directly to your account profile in Supabase. It will remain active across logins on all your devices until you change it.
+                    </p>
                   </div>
                 )}
 

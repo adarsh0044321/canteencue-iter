@@ -13,7 +13,7 @@ import { AvatarModal } from "./components/AvatarModal";
 import { getStoredAvatarId, setStoredAvatarId } from "./data/avatars";
 import { ChatMessage, UserPreferenceState, RecommendationCandidate } from "./data/types";
 import { INITIAL_PREFERENCE_STATE } from "./engine/conversationState";
-import { getStoredAiConfig, AiConfig } from "./services/aiService";
+import { getStoredAiConfig, saveAiConfig, AiConfig } from "./services/aiService";
 import { routeUserDecision } from "./services/hybridRouter";
 import {
   saveChatSession,
@@ -27,6 +27,7 @@ import {
   signOutUser,
   isGuestModeActive,
   setGuestMode,
+  loadUserCustomAiConfigFromMetadata,
 } from "./services/authService";
 
 // Helper to check if a Supabase session or guest state exists synchronously before initial async fetch
@@ -138,6 +139,19 @@ export const App: React.FC = () => {
   useEffect(() => {
     let isMounted = true;
 
+    const applyUserAiConfig = (loggedInUser: User) => {
+      const customConfig = loadUserCustomAiConfigFromMetadata(loggedInUser);
+      if (customConfig) {
+        saveAiConfig(customConfig);
+        setAiConfig(customConfig);
+      }
+      if (loggedInUser.user_metadata?.trial_started_at) {
+        try {
+          localStorage.setItem("canteencue_trial_started_at", String(loggedInUser.user_metadata.trial_started_at));
+        } catch {}
+      }
+    };
+
     async function initAuth() {
       try {
         const { user } = await getInitialSession();
@@ -145,6 +159,7 @@ export const App: React.FC = () => {
           if (user) {
             setCurrentUser(user);
             setIsGuest(false);
+            applyUserAiConfig(user);
           } else {
             setIsGuest(isGuestModeActive());
           }
@@ -165,6 +180,7 @@ export const App: React.FC = () => {
         if (user) {
           setCurrentUser(user);
           setIsGuest(false);
+          applyUserAiConfig(user);
           if (typeof window !== "undefined" && (window.location.hash || window.location.search)) {
             window.history.replaceState(null, "", window.location.pathname);
           }
@@ -292,6 +308,15 @@ export const App: React.FC = () => {
     // Quick action trigger for AI settings
     if (userText.trim().toLowerCase() === "open ai settings") {
       openApiConfig();
+      return;
+    }
+
+    // Quick action trigger for tutorial video
+    if (
+      userText.trim().toLowerCase() === "watch video guide" ||
+      userText.trim().toLowerCase().includes("video guide")
+    ) {
+      window.open("https://youtu.be/ruecxk8So4Q", "_blank", "noopener,noreferrer");
       return;
     }
 

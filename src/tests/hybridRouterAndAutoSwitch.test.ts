@@ -1,4 +1,16 @@
 import { describe, it, expect, vi } from "vitest";
+
+// Polyfill localStorage and window for node test runner
+const storageMap = new Map<string, string>();
+const mockLocalStorage = {
+  getItem: (key: string) => storageMap.get(key) || null,
+  setItem: (key: string, value: string) => storageMap.set(key, String(value)),
+  removeItem: (key: string) => storageMap.delete(key),
+  clear: () => storageMap.clear(),
+};
+(globalThis as any).localStorage = mockLocalStorage;
+(globalThis as any).window = { location: { origin: "http://localhost:3000", href: "" } };
+
 import {
   isFoodRelatedQuery,
   isOfflineEngineConfidentlyCatching,
@@ -187,6 +199,71 @@ describe("Hybrid Router & Auto-Switching to Online AI", () => {
       expect(switchResult.response.summaryText).toContain(`Skipping ${lastPrimary.item.name}`);
       expect(switchResult.nextState.exclusions).toContain(lastPrimary.item.name);
       expect(switchResult.response.primaryItem?.item.name).not.toBe(lastPrimary.item.name);
+    });
+  });
+
+  describe("5. Shared API Key Pool, Failover Rotation & 3-Day Trial System", () => {
+    it("manages pool of shared API keys with rotation and cooldown failover", () => {
+      aiService.addSystemGeminiPoolKeys(["test_key_1", "test_key_2", "test_key_3"]);
+      expect(aiService.SYSTEM_GEMINI_KEYS_POOL).toContain("test_key_1");
+      expect(aiService.SYSTEM_GEMINI_KEYS_POOL).toContain("test_key_2");
+
+      const keyA = aiService.getRotatedSystemKey();
+      const keyB = aiService.getRotatedSystemKey();
+      expect(keyA).toBeDefined();
+      expect(keyB).toBeDefined();
+
+      // Test cooling down rate-limited key
+      aiService.markSystemKeyCoolingDown("test_key_1");
+      const rotated = aiService.getRotatedSystemKey();
+      expect(rotated).not.toBe("test_key_1");
+    });
+
+    it("tracks 3-day trial period and flags expiration after 3 days without custom key", () => {
+      // 1. Fresh trial start
+      localStorage.setItem("canteencue_trial_started_at", String(Date.now()));
+      const activeTrial = aiService.getAiTrialInfo();
+      expect(activeTrial.isTrialActive).toBe(true);
+      expect(activeTrial.isTrialExpired).toBe(false);
+      expect(activeTrial.daysRemaining).toBeGreaterThanOrEqual(1);
+
+      // 2. 4 days elapsed -> expired
+      const fourDaysAgo = Date.now() - 4 * 24 * 60 * 60 * 1000;
+      localStorage.setItem("canteencue_trial_started_at", String(fourDaysAgo));
+      const expiredTrial = aiService.getAiTrialInfo();
+      expect(expiredTrial.isTrialExpired).toBe(true);
+      expect(expiredTrial.daysRemaining).toBe(0);
+
+      // 3. User with custom key -> unlimited (never expired)
+      const customKeyTrial = aiService.getAiTrialInfo("AIzaSyMyCustomKey123");
+      expect(customKeyTrial.isTrialExpired).toBe(false);
+      expect(customKeyTrial.hasCustomKey).toBe(true);
+    });
+
+    it("routes to trial expiration notice with video tutorial link when 3 days have ended", async () => {
+      const fourDaysAgo = Date.now() - 4 * 24 * 60 * 60 * 1000;
+      localStorage.setItem("canteencue_trial_started_at", String(fourDaysAgo));
+
+      vi.spyOn(aiService, "getStoredAiConfig").mockReturnValue({
+        provider: "gemini",
+        apiKey: aiService.SYSTEM_GEMINI_KEY,
+        model: "gemini-flash-lite-latest",
+        enableMemory: true,
+      });
+
+      const result = await routeUserDecision(
+        "damnnnn dosa isn't light", // triggers online reasoning
+        [],
+        INITIAL_PREFERENCE_STATE
+      );
+
+      expect(result.response.type).toBe("clarification");
+      expect(result.response.summaryText).toContain("3-day free AI trial has ended");
+      expect(result.response.whyFitsList.some((w) => w.includes("youtu.be/ruecxk8So4Q"))).toBe(true);
+      expect(result.response.suggestedFollowUps).toContain("Watch Video Guide");
+      expect(result.response.suggestedFollowUps).toContain("Open AI Settings");
+
+      vi.restoreAllMocks();
     });
   });
 });

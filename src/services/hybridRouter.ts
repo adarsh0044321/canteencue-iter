@@ -5,7 +5,7 @@ import {
   RecommendationCandidate,
 } from "../data/types";
 import { processUserDecision } from "../engine";
-import { processAiDecision, getStoredAiConfig } from "./aiService";
+import { processAiDecision, getStoredAiConfig, getAiTrialInfo, YOUTUBE_TUTORIAL_URL } from "./aiService";
 import { saveChatSession, updateUserProfile, getCurrentSessionId } from "./chatDatabase";
 
 /**
@@ -330,14 +330,47 @@ export async function routeUserDecision(
     result = offlineResult;
     source = "deterministic_engine";
   } else if (hasLiveAiKey) {
-    // Offline model isn't catching it -> AUTO SWITCH to configured online AI model!
-    source = "live_llm";
-    try {
-      result = await processAiDecision(cleanQuery, history, currentState, lastPrimaryItem);
-    } catch (err) {
-      console.warn("Auto-switch to online AI failed, falling back to offline engine:", err);
-      result = offlineResult;
+    const trialInfo = getAiTrialInfo(aiConfig.apiKey);
+
+    if (trialInfo.isTrialExpired && !trialInfo.hasCustomKey) {
+      // 3-day free shared AI trial concluded -> ask user to add their own free key or watch tutorial
+      const trialExpiredResponse: DecisionResponse = {
+        type: "clarification",
+        summaryText:
+          "⏳ Your 3-day free AI trial has ended! To continue using online AI reasoning with Google Gemini, please configure your own free Gemini API key (it's 100% free and takes 1 minute to generate). You can watch the video tutorial below.\n\nOur instant built-in campus decision engine is still 100% active and free to help you decide!",
+        whyFitsList: [
+          "Free 3-Day Trial Period Concluded",
+          "Add your personal free API key in AI Settings to resume unlimited online reasoning",
+          `Watch video demonstration: ${YOUTUBE_TUTORIAL_URL}`,
+          "Instant offline campus decision engine remains active with 0 token cost",
+        ],
+        alternatives: offlineResult.response.alternatives || [],
+        suggestedFollowUps: [
+          "Open AI Settings",
+          "Watch Video Guide",
+          "Recommend something to eat",
+          "Vegetarian food under ₹80",
+        ],
+        activePreferences: currentState,
+        apiErrorDetails: {
+          provider: "gemini",
+          message: "Your 3-day free AI trial has ended. Please configure your personal free Gemini API key in AI Settings.",
+          hadFallback: true,
+          requiresApiKey: true,
+        },
+      };
+      result = { response: trialExpiredResponse, nextState: currentState };
       source = "deterministic_engine";
+    } else {
+      // User is within 3-day trial or has their own custom key -> AUTO SWITCH to online AI!
+      source = "live_llm";
+      try {
+        result = await processAiDecision(cleanQuery, history, currentState, lastPrimaryItem);
+      } catch (err) {
+        console.warn("Auto-switch to online AI failed, falling back to offline engine:", err);
+        result = offlineResult;
+        source = "deterministic_engine";
+      }
     }
   } else {
     // Online model is not configured (built-in mode) -> use the best offline response

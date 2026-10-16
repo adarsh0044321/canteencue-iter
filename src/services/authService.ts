@@ -757,3 +757,62 @@ export function removeStoredAccountProfile(): void {
     }
   } catch {}
 }
+
+/**
+ * Persists a user's custom API key and AI configuration to their Supabase user profile.
+ * Stored in user.user_metadata so it persists across login/logout and across devices permanently.
+ */
+export async function syncCustomAiConfigToProfile(config: {
+  provider: string;
+  apiKey: string;
+  model: string;
+  enableMemory?: boolean;
+}): Promise<boolean> {
+  const client = getSupabaseClient();
+  if (!client) return false;
+
+  try {
+    const { data: { user } } = await client.auth.getUser();
+    if (!user) return false;
+
+    let trialStart = localStorage.getItem("canteencue_trial_started_at");
+    if (!trialStart) {
+      trialStart = String(Date.now());
+      localStorage.setItem("canteencue_trial_started_at", trialStart);
+    }
+
+    await client.auth.updateUser({
+      data: {
+        custom_ai_config: config,
+        trial_started_at: user.user_metadata?.trial_started_at || trialStart,
+      },
+    });
+    return true;
+  } catch (err) {
+    console.warn("Could not sync custom AI config to Supabase user profile:", err);
+    return false;
+  }
+}
+
+/**
+ * Loads custom AI config from Supabase user_metadata if available.
+ */
+export function loadUserCustomAiConfigFromMetadata(user: User): {
+  provider: "builtin" | "gemini" | "openai";
+  apiKey: string;
+  model: string;
+  enableMemory: boolean;
+} | null {
+  try {
+    const customConfig = user.user_metadata?.custom_ai_config;
+    if (customConfig && typeof customConfig === "object" && customConfig.apiKey) {
+      return {
+        provider: customConfig.provider || "gemini",
+        apiKey: customConfig.apiKey,
+        model: customConfig.model || "gemini-flash-lite-latest",
+        enableMemory: customConfig.enableMemory !== false,
+      };
+    }
+  } catch {}
+  return null;
+}

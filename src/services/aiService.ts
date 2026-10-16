@@ -8,6 +8,7 @@ import {
 } from "../data/types";
 import { ALL_MENU_ITEMS, getItemPriceForPortion } from "../data/menuService";
 import { processUserDecision } from "../engine";
+import { syncCustomAiConfigToProfile } from "./authService";
 
 export type AiProvider = "builtin" | "gemini" | "openai";
 
@@ -18,20 +19,135 @@ export interface AiConfig {
   enableMemory: boolean;
 }
 
-const STORAGE_KEY = "canteencue_ai_config";
+export const YOUTUBE_TUTORIAL_URL = "https://youtu.be/ruecxk8So4Q";
 
-const envGeminiKey = (import.meta as any).env?.VITE_GEMINI_API_KEY || "";
+const STORAGE_KEY = "canteencue_ai_config";
+const TRIAL_STORAGE_KEY = "canteencue_trial_started_at";
+const TRIAL_DURATION_MS = 3 * 24 * 60 * 60 * 1000; // 3 Days in milliseconds
+
+const envGeminiKey = ((import.meta as any).env?.VITE_GEMINI_API_KEY || "").trim();
+const envMultipleKeysRaw = ((import.meta as any).env?.VITE_GEMINI_API_KEYS || "").trim();
 const envModel = (import.meta as any).env?.VITE_GEMINI_MODEL || "gemini-flash-lite-latest";
 
-export const SYSTEM_GEMINI_KEY = envGeminiKey;
+// Extensible System Key Pool: Combines VITE_GEMINI_API_KEYS and VITE_GEMINI_API_KEY
+const initialPool: string[] = [
+  ...envMultipleKeysRaw
+    .split(/[,\n]/)
+    .map((k: string) => k.trim())
+    .filter(Boolean),
+  ...(envGeminiKey ? [envGeminiKey] : []),
+].filter((k, idx, arr) => arr.indexOf(k) === idx);
+
+export const SYSTEM_GEMINI_KEYS_POOL: string[] = initialPool;
+
+export function addSystemGeminiPoolKeys(newKeys: string[]): void {
+  for (const k of newKeys) {
+    const trimmed = k.trim();
+    if (trimmed && !SYSTEM_GEMINI_KEYS_POOL.includes(trimmed)) {
+      SYSTEM_GEMINI_KEYS_POOL.push(trimmed);
+    }
+  }
+}
+
+export const SYSTEM_GEMINI_KEY = SYSTEM_GEMINI_KEYS_POOL[0] || envGeminiKey;
+
+// Track cooling down keys (e.g. rate-limited 429) for 60 seconds before retrying
+const keyCooldownMap = new Map<string, number>();
+const KEY_COOLDOWN_MS = 60 * 1000;
+let keyRotationCounter = 0;
+
+export function markSystemKeyCoolingDown(key: string): void {
+  if (key) {
+    keyCooldownMap.set(key, Date.now());
+  }
+}
+
+export function getRotatedSystemKey(preferredUserId?: string): string {
+  if (SYSTEM_GEMINI_KEYS_POOL.length === 0) return envGeminiKey || "";
+  if (SYSTEM_GEMINI_KEYS_POOL.length === 1) return SYSTEM_GEMINI_KEYS_POOL[0];
+
+  const now = Date.now();
+  const activeKeys = SYSTEM_GEMINI_KEYS_POOL.filter((k) => {
+    const cooldown = keyCooldownMap.get(k);
+    return !cooldown || now - cooldown > KEY_COOLDOWN_MS;
+  });
+
+  const poolToUse = activeKeys.length > 0 ? activeKeys : SYSTEM_GEMINI_KEYS_POOL;
+
+  // Consistent per-user rotation so different users distribute load evenly across keys
+  if (preferredUserId && preferredUserId !== "guest") {
+    let hash = 0;
+    for (let i = 0; i < preferredUserId.length; i++) {
+      hash = (hash << 5) - hash + preferredUserId.charCodeAt(i);
+      hash |= 0;
+    }
+    const idx = Math.abs(hash) % poolToUse.length;
+    return poolToUse[idx];
+  }
+
+  // Round-robin for anonymous / guest turns
+  const selected = poolToUse[keyRotationCounter % poolToUse.length];
+  keyRotationCounter = (keyRotationCounter + 1) % poolToUse.length;
+  return selected;
+}
 
 export function isSystemGeminiKey(key: string): boolean {
-  return key === envGeminiKey || !key.trim();
+  if (!key || !key.trim()) return true;
+  return (
+    key === envGeminiKey ||
+    SYSTEM_GEMINI_KEYS_POOL.includes(key.trim())
+  );
+}
+
+export interface AiTrialInfo {
+  trialStartedAt: number;
+  isTrialActive: boolean;
+  isTrialExpired: boolean;
+  daysRemaining: number;
+  hoursRemaining: number;
+  hasCustomKey: boolean;
+}
+
+export function getAiTrialInfo(apiKey?: string): AiTrialInfo {
+  const currentKey = apiKey ?? getStoredAiConfig().apiKey;
+  const hasCustomKey = !isSystemGeminiKey(currentKey) && !!currentKey.trim();
+
+  let startedAt = 0;
+  try {
+    const raw = typeof window !== "undefined" ? localStorage.getItem(TRIAL_STORAGE_KEY) : null;
+    if (raw) {
+      startedAt = parseInt(raw, 10);
+    }
+    if (!startedAt || isNaN(startedAt)) {
+      startedAt = Date.now();
+      if (typeof window !== "undefined") {
+        localStorage.setItem(TRIAL_STORAGE_KEY, String(startedAt));
+      }
+    }
+  } catch {
+    startedAt = Date.now();
+  }
+
+  const elapsed = Date.now() - startedAt;
+  const remainingMs = Math.max(0, TRIAL_DURATION_MS - elapsed);
+  const isTrialExpired = !hasCustomKey && elapsed >= TRIAL_DURATION_MS;
+  const isTrialActive = !hasCustomKey && !isTrialExpired;
+  const daysRemaining = Math.ceil(remainingMs / (24 * 60 * 60 * 1000));
+  const hoursRemaining = Math.ceil(remainingMs / (60 * 60 * 1000));
+
+  return {
+    trialStartedAt: startedAt,
+    isTrialActive,
+    isTrialExpired,
+    daysRemaining,
+    hoursRemaining,
+    hasCustomKey,
+  };
 }
 
 export const DEFAULT_AI_CONFIG: AiConfig = {
-  provider: envGeminiKey ? "gemini" : "builtin",
-  apiKey: envGeminiKey,
+  provider: SYSTEM_GEMINI_KEY ? "gemini" : "builtin",
+  apiKey: SYSTEM_GEMINI_KEY,
   model: envModel,
   enableMemory: true,
 };
@@ -50,9 +166,9 @@ export function getStoredAiConfig(): AiConfig {
     ) {
       parsed.model = "gemini-flash-lite-latest";
     }
-    // If no apiKey in storage but env has it, use env
-    if (!parsed.apiKey && envGeminiKey) {
-      parsed.apiKey = envGeminiKey;
+    // If no apiKey in storage but pool has it, use pool
+    if (!parsed.apiKey && SYSTEM_GEMINI_KEY) {
+      parsed.apiKey = SYSTEM_GEMINI_KEY;
       parsed.provider = "gemini";
     }
     return { ...DEFAULT_AI_CONFIG, ...parsed };
@@ -64,6 +180,8 @@ export function getStoredAiConfig(): AiConfig {
 export function saveAiConfig(config: AiConfig): void {
   try {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(config));
+    // Asynchronously sync to Supabase user profile if authenticated
+    syncCustomAiConfigToProfile(config).catch(() => {});
   } catch (err) {
     console.error("Failed to save AI config to localStorage:", err);
   }
@@ -386,40 +504,54 @@ async function callGeminiApi(
     },
   };
 
+  // Determine API key candidates: Rotate through pool keys with automatic failover if using system key
+  const isSystemKey = isSystemGeminiKey(trimmedKey);
+  const candidateKeys: string[] = isSystemKey
+    ? Array.from(new Set([getRotatedSystemKey(), ...SYSTEM_GEMINI_KEYS_POOL, trimmedKey])).filter(Boolean)
+    : [trimmedKey];
+
   let lastError: Error | null = null;
-  for (const model of candidateModels) {
-    try {
-      const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${trimmedKey}`;
-      const res = await fetch(url, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "x-goog-api-key": trimmedKey,
-        },
-        body: JSON.stringify(payload),
-      });
+  for (const apiKey of candidateKeys) {
+    for (const model of candidateModels) {
+      try {
+        const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
+        const res = await fetch(url, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "x-goog-api-key": apiKey,
+          },
+          body: JSON.stringify(payload),
+        });
 
-      if (!res.ok) {
-        const errorJson = await res.json().catch(() => ({}));
-        const errorMsg = errorJson?.error?.message || `HTTP ${res.status}`;
-        throw new Error(`Gemini API error (${model}): ${errorMsg}`);
+        if (!res.ok) {
+          const errorJson = await res.json().catch(() => ({}));
+          const errorMsg = errorJson?.error?.message || `HTTP ${res.status}`;
+          if (res.status === 429 || errorMsg.toLowerCase().includes("quota") || errorMsg.toLowerCase().includes("rate limit")) {
+            markSystemKeyCoolingDown(apiKey);
+            console.warn(`Gemini key rate-limited on model ${model}, auto-rotating to next key in pool:`, errorMsg);
+            // Break model loop to immediately try next key in candidateKeys
+            break;
+          }
+          throw new Error(`Gemini API error (${model}): ${errorMsg}`);
+        }
+
+        const data = await res.json();
+        const textResponse = data?.candidates?.[0]?.content?.parts?.[0]?.text;
+        if (!textResponse) {
+          throw new Error(`Empty response from Gemini API (${model})`);
+        }
+
+        const parsed = JSON.parse(textResponse);
+        return mapLlmJsonToDecisionResponse(parsed, currentState, query);
+      } catch (err: any) {
+        lastError = err;
+        console.warn(`Model ${model} with key ...${apiKey.slice(-6)} failed, evaluating failover:`, err.message);
       }
-
-      const data = await res.json();
-      const textResponse = data?.candidates?.[0]?.content?.parts?.[0]?.text;
-      if (!textResponse) {
-        throw new Error(`Empty response from Gemini API (${model})`);
-      }
-
-      const parsed = JSON.parse(textResponse);
-      return mapLlmJsonToDecisionResponse(parsed, currentState, query);
-    } catch (err: any) {
-      lastError = err;
-      console.warn(`Model ${model} unavailable, trying failover model:`, err.message);
     }
   }
 
-  throw lastError || new Error("All candidate Gemini models failed");
+  throw lastError || new Error("All candidate Gemini models and pool keys failed");
 }
 
 // Call OpenAI API

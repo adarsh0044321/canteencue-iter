@@ -7,7 +7,8 @@ import { AlternativeCard } from "./AlternativeCard";
 import { TradeoffCard } from "./TradeoffCard";
 import { PromptInput } from "./PromptInput";
 import { AiThinkingPhase } from "./AiThinkingPhase";
-import { User, AlertTriangle, Settings, ZapOff } from "lucide-react";
+import { User, AlertTriangle, Settings, ZapOff, Play } from "lucide-react";
+import { YOUTUBE_TUTORIAL_URL } from "../services/aiService";
 
 interface ChatWorkspaceProps {
   messages: ChatMessage[];
@@ -99,16 +100,36 @@ export const ChatWorkspace: React.FC<ChatWorkspaceProps> = ({
                       <div className="api-error-body">
                         {decision.apiErrorDetails.message}
                       </div>
-                      {onOpenApiConfigModal && (
-                        <button
-                          type="button"
+                      <div style={{ display: "flex", gap: "8px", flexWrap: "wrap", marginTop: "6px" }}>
+                        {onOpenApiConfigModal && (
+                          <button
+                            type="button"
+                            className="api-error-action-btn"
+                            onClick={onOpenApiConfigModal}
+                          >
+                            <Settings size={13} />
+                            <span>Configure API Key in AI Settings</span>
+                          </button>
+                        )}
+                        <a
+                          href={YOUTUBE_TUTORIAL_URL}
+                          target="_blank"
+                          rel="noopener noreferrer"
                           className="api-error-action-btn"
-                          onClick={onOpenApiConfigModal}
+                          style={{
+                            background: "rgba(239, 68, 68, 0.15)",
+                            borderColor: "rgba(239, 68, 68, 0.35)",
+                            color: "#fca5a5",
+                            textDecoration: "none",
+                            display: "inline-flex",
+                            alignItems: "center",
+                            gap: "6px",
+                          }}
                         >
-                          <Settings size={13} />
-                          <span>Configure API Key in AI Settings</span>
-                        </button>
-                      )}
+                          <Play size={12} fill="#fca5a5" />
+                          <span>Watch Video Tutorial</span>
+                        </a>
+                      </div>
                     </div>
                   ) : (
                     <div className="api-fallback-badge">
