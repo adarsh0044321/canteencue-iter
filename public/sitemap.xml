@@ -1,9 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://canteencue-iter.pages.dev/</loc>
-    <lastmod>2026-10-16</lastmod>
+    <lastmod>2026-10-19</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://canteencue-iter.pages.dev/logo-with-name.png</image:loc>
+      <image:title>CanteenCue ITER Logo</image:title>
+      <image:caption>CanteenCue ITER — College Canteen Food Decision Assistant &amp; Menus for SOA Bhubaneswar</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://canteencue-iter.pages.dev/logo.png</image:loc>
+      <image:title>CanteenCue Mascot Emblem</image:title>
+      <image:caption>Official CanteenCue Icon</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://canteencue-iter.pages.dev/login-dining-illustration.png</image:loc>
+      <image:title>ITER Campus Dining Illustration</image:title>
+      <image:caption>Student dining experience across ITER campus food outlets</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://canteencue-iter.pages.dev/banquet.jpg</image:loc>
+      <image:title>ITER Food Court Atmosphere</image:title>
+      <image:caption>Campus food stalls and student lunch breaks</image:caption>
+    </image:image>
   </url>
 </urlset>
