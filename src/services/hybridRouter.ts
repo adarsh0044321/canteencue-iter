@@ -168,6 +168,14 @@ export function isFoodRelatedQuery(query: string, history: ChatMessage[] = []): 
     return true;
   }
 
+  // Open-ended food decision starters and student appetite cues
+  const decisionStarterRegex =
+    /\b(?:what\s+(?:should|can|do|shall)\s+(?:i|we)\s+(?:go\s+for|eat|order|have|get|pick|choose)|what\s+to\s+(?:eat|order|have|get)|what'?s\s+good(?:\s+today|\s+to\s+eat)?|suggest\s+(?:me\s+)?(?:something|food|dish|meal)|recommend\s+(?:me\s+)?(?:something|food|dish|meal)|help\s+(?:me\s+)?(?:decide|choose)|confused\s+(?:what|about)|hungry|starving|bhook|surprise\s+me)\b/i;
+
+  if (decisionStarterRegex.test(text)) {
+    return true;
+  }
+
   // Follow-up, alternative, rejection, or preference adjustment cues
   const followUpCues = [
     "why did you choose this",

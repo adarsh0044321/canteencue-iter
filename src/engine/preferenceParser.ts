@@ -29,6 +29,21 @@ export interface ParsedIntent {
 }
 
 /**
+ * Robust culinary negation checker supporting English, colloquial student phrases, and Hinglish
+ */
+export function hasNegatedTerm(text: string, termPattern: string): boolean {
+  const regexPrefix = new RegExp(
+    `(?:not|no|never|without|avoid(?:ing)?|don'?t\\s+want|dont\\s+want|must\\s+not\\s+be|should\\s+not\\s+be|shouldn'?t\\s+be|said\\s+not|said\\s+it\\s+must\\s+not\\s+be|said\\s+it\\s+should\\s+not\\s+be|told\\s+you\\s+not|non-?|less|zero|anything\\s+but|but\\s+not)\\s+(?:to\\s+be\\s+|too\\s+|very\\s+|so\\s+|much\\s+|really\\s+|any\\s+|it\\s+|anything\\s+)*(?:${termPattern})`,
+    "i"
+  );
+  const regexSuffix = new RegExp(
+    `(?:${termPattern})\\s+(?:nahi|nhi|mat|avoid|mat\\s+karna|mat\\s+karo|nahi\\s+chahiye|nhi\\s+chahiye)`,
+    "i"
+  );
+  return regexPrefix.test(text) || regexSuffix.test(text);
+}
+
+/**
  * Direct lookup for specific items from live menu catalog
  */
 export function findMatchingMenuItem(cleanQuery: string): MenuItem | undefined {
@@ -532,26 +547,51 @@ export function parseUserQuery(query: string, currentState: UserPreferenceState)
   // Extract Exclusions
   const exclusionList: string[] = [...(currentState.exclusions || [])];
   const exclusionPatterns = [
-    /(?:not|no|don't want|dont want|without|exclude)\s+(noodles?|rice|rolls?|thali|chicken|paneer|gravy|mushrooms?)/gi,
+    /(?:not|no|don't want|dont want|without|exclude|avoid|never)\s+(?:any\s+)?(noodles?|rice|rolls?|thali|chicken|paneer|gravy|mushrooms?|egg|eggs?|meat|fish|curd|dosa|sandwich|burger|pizza|pasta|spicy|sweet|fried|oily|sugar|heavy)/gi,
   ];
 
   for (const regex of exclusionPatterns) {
     let match;
     while ((match = regex.exec(text)) !== null) {
       const item = match[1].toLowerCase();
-      const normalized = item.endsWith("s") ? item.slice(0, -1) : item;
+      const normalized = item.endsWith("s") && !["noodles", "desserts"].includes(item) ? item.slice(0, -1) : item;
       if (!exclusionList.includes(normalized)) {
         exclusionList.push(normalized);
       }
     }
   }
+
+  // Explicit semantic negations for core culinary dimensions:
+  const isNegatingSpicy = hasNegatedTerm(text, "spicy|spice|schezwan|chilly|chilli|hot|tikha|teekha");
+  if (isNegatingSpicy && !exclusionList.includes("spicy")) {
+    exclusionList.push("spicy");
+  }
+
+  const isNegatingSweet = hasNegatedTerm(text, "sweet|sugar|sugary|meetha");
+  if (isNegatingSweet && !exclusionList.includes("sweet")) {
+    exclusionList.push("sweet");
+  }
+
+  const isNegatingHeavy = hasNegatedTerm(text, "heavy|filling|stomach\\s+filling");
+  if (isNegatingHeavy && !exclusionList.includes("heavy")) {
+    exclusionList.push("heavy");
+  }
+
+  const isNegatingChicken = hasNegatedTerm(text, "chicken|kukkad|murga");
+  if (isNegatingChicken) {
+    if (!exclusionList.includes("chicken")) {
+      exclusionList.push("chicken");
+    }
+    extracted.preferredProtein = undefined;
+  }
+
   if (exclusionList.length > 0) {
     extracted.exclusions = exclusionList;
   }
 
   // Extract Cravings
   const cravings: string[] = [];
-  if (/\b(spicy|schezwan|chilly|chilli|hot)\b/i.test(text) || text.includes("kuch spicy")) {
+  if (!isNegatingSpicy && (/\b(spicy|schezwan|chilly|chilli|hot)\b/i.test(text) || text.includes("kuch spicy"))) {
     cravings.push("spicy");
   }
 
@@ -565,12 +605,13 @@ export function parseUserQuery(query: string, currentState: UserPreferenceState)
     /\b(replace\s+(?:my\s+)?lunch|instead\s+of\s+lunch|for\s+lunch|heavy\s+lunch|can\s+replace\s+lunch)\b/i.test(text);
 
   const isExplicitFilling =
-    isCompleteMealOrTummy ||
+    !isNegatingHeavy &&
+    (isCompleteMealOrTummy ||
     /\b(filling meal|filling food|something filling|want filling|solid meal|hearty)\b/i.test(text) ||
     text.includes("bhook") ||
     text.includes("hungry") ||
     text.includes("broke student") ||
-    (/\b(filling|heavy)\b/i.test(text) && !isFeelingVerb && !/\b(feel|feeling)\b/i.test(text));
+    (/\b(filling|heavy)\b/i.test(text) && !isFeelingVerb && !/\b(feel|feeling)\b/i.test(text)));
 
   if (isExplicitFilling) {
     cravings.push("filling");
@@ -613,23 +654,31 @@ export function parseUserQuery(query: string, currentState: UserPreferenceState)
       }
       extracted.exclusions = updatedExclusions;
     }
-  } else if (/\b(light|quick bite|snack)\b/i.test(text) && !isCompleteMealOrTummy) {
+  } else if ((/\b(light|quick bite|snack)\b/i.test(text) && !isCompleteMealOrTummy) || isNegatingHeavy) {
     cravings.push("light");
   }
   if (/\b(crispy|crunchy)\b/i.test(text)) {
     cravings.push("crispy");
   }
-  if (/\b(sweet|drink|cold coffee|beverage|tea|juice|coffee)\b/i.test(text)) {
+  if (!isNegatingSweet && /\b(sweet|dessert|mithai|pastry|meetha)\b/i.test(text)) {
     cravings.push("sweet");
   }
+
+  // Prune any craving that is now present in exclusionList
+  const sanitizedPriorCravings = (currentState.craving || []).filter(
+    (c) => !exclusionList.includes(c.toLowerCase())
+  );
+  const sanitizedNewCravings = cravings.filter(
+    (c) => !exclusionList.includes(c.toLowerCase())
+  );
 
   if (isCompleteMealOrTummy) {
     extracted.mood = "Comfort food";
     // User explicitly asked to fill tummy / complete meal: clear any lingering 'light' craving
-    const baseCravings = (currentState.craving || []).filter((c) => c !== "light");
-    extracted.craving = Array.from(new Set([...baseCravings, ...cravings.filter((c) => c !== "light"), "filling"]));
-  } else if (cravings.length > 0) {
-    extracted.craving = Array.from(new Set([...(currentState.craving || []), ...cravings]));
+    const baseCravings = sanitizedPriorCravings.filter((c) => c !== "light");
+    extracted.craving = Array.from(new Set([...baseCravings, ...sanitizedNewCravings.filter((c) => c !== "light"), "filling"]));
+  } else if (sanitizedNewCravings.length > 0 || sanitizedPriorCravings.length > 0 || exclusionList.length > 0) {
+    extracted.craving = Array.from(new Set([...sanitizedPriorCravings, ...sanitizedNewCravings]));
   }
 
   // Extract Mood (TCS problem statement dimensions)
@@ -769,10 +818,31 @@ export function parseUserQuery(query: string, currentState: UserPreferenceState)
     "didn't mention budget",
     "didnt specify budget",
     "didnt mention budget",
+    "what should i go for",
+    "what should we go for",
+    "what to go for",
+    "what should i order",
+    "what to order",
+    "what should i have",
+    "what to have",
+    "what can i have",
+    "what can i get",
+    "help me decide",
+    "help me choose",
+    "confused what to eat",
+    "confused what to order",
+    "kya khaye",
+    "kya khayein",
+    "kya khau",
+    "kya order karu",
+    "suggest me",
+    "give me recommendations",
   ];
 
   const isExplicitRecommendationAsk =
     explicitRecommendationPrompts.some((phrase) => text.includes(phrase)) ||
+    /\bwhat\s+(?:should|can|to)\s+(?:i|we)?\s*(?:go\s+for|order|eat|have|pick|choose)\b/i.test(text) ||
+    /\b(suggest|recommend|pick)\s+(?:something|food|dish|meal)\b/i.test(text) ||
     (text.includes("eat") && (text.includes("want") || text.includes("what") || text.includes("something") || text.includes("like"))) ||
     (text.includes("food") && (text.includes("want") || text.includes("get") || text.includes("some")));
 

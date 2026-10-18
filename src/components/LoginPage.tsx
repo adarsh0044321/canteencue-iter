@@ -498,7 +498,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({
                       <input
                         type="email"
                         className="login-input"
-                        placeholder="jaisingh004@outlook.com"
+                        placeholder="student@soa.ac.in or your email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         required
@@ -638,7 +638,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({
                       <input
                         type="email"
                         className="login-input"
-                        placeholder="jaisingh@soa.ac.in"
+                        placeholder="student@soa.ac.in"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         required

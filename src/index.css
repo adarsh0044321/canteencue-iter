@@ -2900,4 +2900,78 @@ textarea {
   }
 }
 
+/* ==========================================================================
+   Print & PDF Export Media Styles
+   Prevents double headers (CCaanntteeeennCue), hides interactive rails/buttons,
+   and cleanly formats full chat transcripts for browser PDF export.
+   ========================================================================== */
+@media print {
+  /* Hide sidebar navigation rail, backdrops, interactive widgets, and inputs */
+  .sidebar-rail,
+  .sidebar-mobile-backdrop,
+  .sidebar-rail-tooltip,
+  .sidebar-toggle-mobile-btn,
+  .btn-header-new-decision,
+  .prompt-input-wrapper,
+  .chat-input-bar,
+  .prompt-input-container,
+  .site-header-right,
+  .modal-backdrop,
+  .modal-container,
+  .background-atmosphere {
+    display: none !important;
+  }
+
+  /* Single clean static header */
+  header.site-header-wrapper {
+    position: static !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    border-bottom: 1px solid #e2e8f0 !important;
+    padding: 8px 0 !important;
+    margin-bottom: 16px !important;
+  }
+
+  .site-header {
+    max-width: 100% !important;
+    padding: 0 !important;
+  }
+
+  .brand-text {
+    font-size: 22px !important;
+    color: #0f172a !important;
+  }
+
+  /* Unroll container so full multi-turn conversation prints */
+  body,
+  #root,
+  .app-container,
+  .app-layout,
+  main,
+  .chat-viewport,
+  .chat-scroll-area {
+    overflow: visible !important;
+    height: auto !important;
+    max-height: none !important;
+    position: static !important;
+    background: #ffffff !important;
+    color: #0f172a !important;
+  }
+
+  /* Prevent page breaks inside cards */
+  .chat-message-row,
+  .rec-card,
+  .rec-primary-block,
+  .rec-alternative-card {
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+    margin-bottom: 14px !important;
+  }
+
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+}
+
 

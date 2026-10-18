@@ -83,12 +83,48 @@ export function filterCandidates(
         const name = c.item.name.toLowerCase();
         const cat = c.item.category.toLowerCase();
         const ft = (c.item.foodType || "").toLowerCase();
-        const tags = (c.item.tags || []).join(" ").toLowerCase();
+        const tags = (c.item.tags || []).map((t) => t.toLowerCase());
+
+        // Specialized check for spicy exclusion
+        if (excLower === "spicy" || excLower === "spice" || excLower === "hot") {
+          if (
+            c.item.spiceLevel === "spicy" ||
+            tags.includes("spicy") ||
+            name.includes("spicy") ||
+            name.includes("schezwan") ||
+            name.includes("chilli") ||
+            name.includes("chilly")
+          ) {
+            return false;
+          }
+        }
+
+        // Specialized check for sweet exclusion
+        if (excLower === "sweet" || excLower === "sugar") {
+          if (
+            tags.includes("sweet") ||
+            cat.includes("dessert") ||
+            cat.includes("desserts") ||
+            name.includes("sweet") ||
+            name.includes("sugar")
+          ) {
+            return false;
+          }
+        }
+
+        // Specialized check for heavy exclusion
+        if (excLower === "heavy" || excLower === "filling") {
+          if (c.item.fillingLevel === "heavy") {
+            return false;
+          }
+        }
+
+        // General substring match on item attributes
         return (
           !name.includes(excLower) &&
           !cat.includes(excLower) &&
           !ft.includes(excLower) &&
-          !tags.includes(excLower)
+          !tags.some((t) => t.includes(excLower))
         );
       });
     }

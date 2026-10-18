@@ -51,8 +51,11 @@ export function generateExplanation(
 
   // 3. Craving breakdown
   if (state.craving && state.craving.length > 0) {
-    const matchedCravings = state.craving.filter((c: string) =>
-      item.tags.includes(c) ||
+    const exclusions = (state.exclusions || []).map((e) => e.toLowerCase());
+    const validCravings = state.craving.filter((c: string) => !exclusions.includes(c.toLowerCase()));
+
+    const matchedCravings = validCravings.filter((c: string) =>
+      item.tags.map((t) => t.toLowerCase()).includes(c.toLowerCase()) ||
       (c === "spicy" && item.spiceLevel === "spicy") ||
       (c === "filling" && item.fillingLevel === "heavy") ||
       (c === "light" && item.fillingLevel === "light") ||
@@ -66,6 +69,15 @@ export function generateExplanation(
         whyFitsList.push(`${mc.charAt(0).toUpperCase() + mc.slice(1)} ✓`);
       }
     }
+  }
+
+  // Specialized exclusion callouts (e.g. Non-spicy / Mild ✓)
+  if (state.exclusions && (state.exclusions.includes("spicy") || state.exclusions.includes("spice"))) {
+    reasons.push("is mild and non-spicy");
+    whyFitsList.push("Non-spicy / Mild ✓");
+  } else if (state.exclusions && state.exclusions.includes("sweet")) {
+    reasons.push("is crisp and non-sweet");
+    whyFitsList.push("Non-sweet ✓");
   }
 
   // 3.5 Mood breakdown
@@ -88,7 +100,10 @@ export function generateExplanation(
 
   // 5. Exclusions mention
   if (state.exclusions && state.exclusions.length > 0) {
-    whyFitsList.push(`Excludes ${state.exclusions.join(", ")} as requested ✓`);
+    const otherExclusions = state.exclusions.filter((e) => e !== "spicy" && e !== "spice" && e !== "sweet");
+    if (otherExclusions.length > 0) {
+      whyFitsList.push(`Excludes ${otherExclusions.join(", ")} as requested ✓`);
+    }
   }
 
   // 6. Smart Combo mention
