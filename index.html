@@ -4,6 +4,25 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>CanteenCue ITER — College Canteen Food Assistant & Menus | SOA Bhubaneswar</title>
+
+    <!-- Explicit Site Name Definition for Google Search & Browsers -->
+    <meta name="application-name" content="CanteenCue ITER" />
+    <meta name="apple-mobile-web-app-title" content="CanteenCue ITER" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "@id": "https://canteencue-iter.pages.dev/#website",
+        "name": "CanteenCue ITER",
+        "alternateName": [
+          "CanteenCue",
+          "Canteen Cue",
+          "Canteen Cue ITER",
+          "CampusCue"
+        ],
+        "url": "https://canteencue-iter.pages.dev/"
+      }
+    </script>
     
     <!-- Primary SEO Meta Tags -->
     <meta name="title" content="CanteenCue ITER — College Canteen Food Assistant & Menus | SOA Bhubaneswar" />
@@ -65,13 +84,16 @@
         "@context": "https://schema.org",
         "@graph": [
           {
-            "@type": "WebSite",
-            "@id": "https://canteencue-iter.pages.dev/#website",
-            "url": "https://canteencue-iter.pages.dev/",
+            "@type": "Organization",
+            "@id": "https://canteencue-iter.pages.dev/#organization-publisher",
             "name": "CanteenCue ITER",
-            "alternateName": ["Canteen Cue", "CanteenCue", "CampusCue", "ITER Canteen Cue"],
-            "description": "AI-assisted college canteen food decision engine & multi-outlet dining platform for ITER SOA campus students.",
-            "inLanguage": "en-US"
+            "url": "https://canteencue-iter.pages.dev/",
+            "logo": {
+              "@type": "ImageObject",
+              "url": "https://canteencue-iter.pages.dev/favicon-192x192.png",
+              "width": 192,
+              "height": 192
+            }
           },
           {
             "@type": "WebApplication",
@@ -80,6 +102,12 @@
             "applicationCategory": "LifestyleApplication",
             "operatingSystem": "Web",
             "url": "https://canteencue-iter.pages.dev/",
+            "publisher": {
+              "@id": "https://canteencue-iter.pages.dev/#organization-publisher"
+            },
+            "creator": {
+              "@id": "https://canteencue-iter.pages.dev/#organization-publisher"
+            },
             "description": "Decision engine helping ITER Bhubaneswar students find food within budget and break times across campus canteens.",
             "offers": {
               "@type": "Offer",
