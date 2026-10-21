@@ -9,7 +9,7 @@
     "test": "vitest run",
     "lint": "oxlint",
     "preview": "vite preview --port 3000",
-    "deploy": "npm run build && wrangler deploy"
+    "deploy": "npm run build && wrangler pages deploy dist"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.117.2",
