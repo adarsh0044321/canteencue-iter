@@ -43,6 +43,200 @@ export function hasNegatedTerm(text: string, termPattern: string): boolean {
   return regexPrefix.test(text) || regexSuffix.test(text);
 }
 
+export const DISH_ALIASES: Record<string, string> = {
+  // Chhole Bhature & extras (HALKA PHULKA)
+  "chola bhatura": "Chhole Bhature",
+  "chola bhature": "Chhole Bhature",
+  "chole bhature": "Chhole Bhature",
+  "chole bhatura": "Chhole Bhature",
+  "chhole bhatura": "Chhole Bhature",
+  "chhole bhature": "Chhole Bhature",
+  "chhola bhatura": "Chhole Bhature",
+  "chhola bhature": "Chhole Bhature",
+  "bhatura": "Chhole Bhature",
+  "bhature": "Chhole Bhature",
+  "chole": "Chhole Bhature",
+  "chhole": "Chhole Bhature",
+  "chola": "Chhole Bhature",
+  "extra chhole": "Extra Chhole",
+  "extra chole": "Extra Chhole",
+  "extra bhature": "Extra Bhature",
+  "extra bhatura": "Extra Bhature",
+
+  // Street Snacks & Chaat
+  "pani puri": "Pani Puri",
+  "panipuri": "Pani Puri",
+  "golgappa": "Pani Puri",
+  "golgappe": "Pani Puri",
+  "puchka": "Pani Puri",
+  "phuchka": "Pani Puri",
+  "gupchup": "Spl Masala Gupchup",
+  "masala gupchup": "Spl Masala Gupchup",
+  "dahi gupchup": "Dahi Gupchup",
+  "papdi chat": "Papdi Chat",
+  "papdi chaat": "Papdi Chat",
+  "samosa chat": "Samosa Chat",
+  "samosa chaat": "Samosa Chat",
+  "alu tika chat": "Alu Tika Chat",
+  "aloo tikki chaat": "Alu Tika Chat",
+  "cutlet chat": "Cutlet Chat",
+  "cutlet chaat": "Cutlet Chat",
+
+  // Pav Bhaji & Vada Pav
+  "pav bhaji": "Plain Pav Bhaji",
+  "pavbhaji": "Plain Pav Bhaji",
+  "butter pav bhaji": "Butter Pav Bhaji",
+  "cheese pav bhaji": "Cheese Pav Bhaji",
+  "vada pav": "Classic Vada Pav",
+  "vadapav": "Classic Vada Pav",
+  "wada pav": "Classic Vada Pav",
+  "wadapav": "Classic Vada Pav",
+  "butter vada pav": "Butter Vada Pav",
+  "cheese vada pav": "Cheese Vada Pav",
+
+  // Dahiwada & Odia Breakfast
+  "dahi vada": "Aludum Dahiwada",
+  "dahiwada": "Aludum Dahiwada",
+  "dahi wada": "Aludum Dahiwada",
+  "aludum dahiwada": "Aludum Dahiwada",
+  "aloo dum dahi vada": "Aludum Dahiwada",
+  "khata meetha dahiwada": "Khata Meetha Dahiwada",
+  "upma": "Upama",
+  "upama": "Upama",
+  "aluchop": "Aluchop",
+  "aloo chop": "Aluchop",
+
+  // Dosa & South Indian
+  "dosa": "Masala Dosa",
+  "plain dosa": "Plain Dosa",
+  "masala dosa": "Masala Dosa",
+  "onion dosa": "Plain Onion Dosa",
+  "butter masala dosa": "Butter Masala Dosa",
+  "paneer dosa": "Paneer Masala Dosa",
+  "paneer masala dosa": "Paneer Masala Dosa",
+  "cheese masala dosa": "Cheese Masala Dosa",
+  "uttapam": "Vegetable Uttapam",
+  "veg uttapam": "Vegetable Uttapam",
+  "onion uttapam": "Onion Uttapam",
+  "tomato uttapam": "Tomato Uttapam",
+
+  // Paratha
+  "alu paratha": "Alu Paratha",
+  "aloo paratha": "Alu Paratha",
+  "paneer paratha": "Paneer Paratha",
+
+  // Rolls
+  "veg roll": "Veg Roll",
+  "paneer roll": "Paneer Roll",
+  "mushroom roll": "Mushroom Roll",
+  "egg roll": "Egg Roll",
+  "chicken roll": "Egg Chicken Roll",
+  "egg chicken roll": "Egg Chicken Roll",
+
+  // Maggi & Noodles
+  "maggi": "Original Masala Maggi",
+  "maggie": "Original Masala Maggi",
+  "masala maggi": "Original Masala Maggi",
+  "chilli garlic maggi": "Chilli Garlic Maggi",
+  "peri peri maggi": "Periperi Maggi",
+  "veg noodles": "Veg Noodles",
+  "paneer noodles": "Paneer Noodles",
+  "egg noodles": "Egg Noodles",
+  "schezwan noodles": "Veg Schezwan Noodles",
+
+  // Curries & Non-Veg Specials
+  "chicken kasa": "Chicken Kasa",
+  "chicken kassa": "Chicken Kasa",
+  "chicken kosha": "Chicken Kasa",
+  "kadhai chicken": "Kadhai Chicken",
+  "kadai chicken": "Kadhai Chicken",
+  "tandoori chicken": "Tandoori Chicken",
+  "butter chicken": "Butter Chicken Masala",
+  "butter chicken masala": "Butter Chicken Masala",
+  "chicken tikka": "Chicken Tikka",
+  "chicken lollipop": "Chicken Lollipop",
+  "chilli chicken": "Chilli Chicken",
+  "chilly chicken": "Chilli Chicken",
+  "chicken manchurian": "Chicken Manchurian",
+  "chicken 65": "Chicken 65",
+
+  // Paneer Specialties
+  "paneer butter masala": "Paneer Butter Masala",
+  "paneer butter": "Paneer Butter Masala",
+  "butter paneer": "Paneer Butter Masala",
+  "kadai paneer": "Kadai Paneer",
+  "kadhai paneer": "Kadai Paneer",
+  "chilli paneer": "Chilli Paneer",
+  "chilly paneer": "Chilli Paneer",
+  "paneer manchurian": "Paneer Manchurian",
+  "crispy paneer": "Crispy Paneer",
+
+  // Thalis
+  "veg thali": "Veg Thali",
+  "paneer thali": "Paneer Thali",
+  "egg thali": "Egg Thali",
+  "chicken thali": "Chicken Thali",
+  "fish thali": "Fish Thali",
+
+  // Coffee, Shakes & Beverages
+  "cold coffee": "Café Frappe (Cold Coffee)",
+  "cold coffee shake": "Cold Coffee Shake",
+  "frappe": "Café Frappe (Cold Coffee)",
+  "cafe frappe": "Café Frappe (Cold Coffee)",
+  "espresso": "Espresso Black Coffee",
+  "black coffee": "Espresso Black Coffee",
+  "cappuccino": "Cappuccino",
+  "latte": "Café Latte",
+  "hot chocolate": "Hot Chocolate",
+  "cold chocolate": "Cold Chocolate",
+  "tea": "Masala Tea",
+  "chai": "Masala Tea",
+  "lemon tea": "Lemon Tea",
+  "oreo shake": "Oreo Shake",
+  "mango shake": "Mango Shake",
+  "banana shake": "Banana Shake",
+  "chocolate shake": "Chocolate Shake",
+  "kitkat shake": "Spl Kitkat",
+  "lassi": "Spl Lassi",
+  "sweet lassi": "Spl Lassi",
+};
+
+/**
+ * Strips conversational conversational prefixes, suffixes, and outlet mentions
+ * to isolate the target dish name.
+ */
+export function cleanItemSearchTerm(query: string): string {
+  let text = (query || "").toLowerCase().trim();
+
+  // Iteratively strip conversational question/suggestion prefixes
+  let prev = "";
+  while (text !== prev) {
+    prev = text;
+    text = text
+      .replace(/^(?:okay|ok|so|well|then|umm+|uhh+|hmm+|yo|hey|hi|hello)\b[\s,]*/i, "")
+      .replace(/^(?:can\s+(?:i|we)\s+get|can\s+(?:i|we)\s+have|could\s+(?:i|we)\s+get|could\s+(?:i|we)\s+have|where\s+(?:can|do)\s+(?:i|we)\s+get|where\s+(?:can|do)\s+(?:i|we)\s+have|what\s+about|how\s+about|tell\s+me\s+more\s+about|tell\s+me\s+about|ask\s+about|i\s+want\s+to\s+get|i\s+want|i\s+would\s+like|i'd\s+like|id\s+like|give\s+me|show\s+me|order|switch\s+to|keep|how\s+is|what\s+is|do\s+(?:you|they)\s+have|is\s+there|are\s+there|lets\s+go\s+for|let's\s+go\s+for|lets\s+get|let's\s+get|maybe|suggest|recommend)\b[\s,]*/i, "")
+      .replace(/^(?:a|an|the|some)\b[\s,]*/i, "")
+      .trim();
+  }
+
+  // Iteratively strip conversational suffixes
+  prev = "";
+  while (text !== prev) {
+    prev = text;
+    text = text
+      .replace(/[\s,]+(?:somewhere(?:\s+on\s+campus|\s+in\s+campus)?|anywhere(?:\s+on\s+campus|\s+in\s+campus)?|on\s+campus|in\s+campus|near\s+me|here|please|available|available\s+hai(?:\s+kya)?|milega|mil\s+jayega|mil\s+sakta\s+hai|hoga|hai\s+kya|bhai|bro|yaar)$/i, "")
+      .replace(/[\s?!.,~]+$/g, "")
+      .trim();
+  }
+
+  // Strip trailing outlet mentions (e.g. "from iter juice", "from anna's", "at halka phulka")
+  text = text
+    .replace(/\s+(?:from|at)\s+(?:the\s+)?(?:iter\s+juice(?:\s+centre|\s+center)?|juice\s+(?:centre|center|corner|shop)|anna'?s?(?:\s+restaurant)?|mughlai(?:\s+affair'?s?)?|maggie\s+point|maggi\s+point|4th\s+floor|halka\s+phulka).*$/i, "")
+    .trim();
+
+  return text;
+}
+
 /**
  * Direct lookup for specific items from live menu catalog
  */
@@ -55,17 +249,14 @@ export function findMatchingMenuItem(cleanQuery: string): MenuItem | undefined {
     return undefined;
   }
 
-  let stripped = cleanQuery
-    .replace(/^(can\s+i\s+get|can\s+i\s+have|what\s+about|how\s+about|tell\s+me\s+more\s+about|tell\s+me\s+about|ask\s+about|i\s+want\s+to\s+get|i\s+want|give\s+me|show\s+me|order|switch\s+to|keep|how\s+is|what\s+is)\s+/i, "")
-    .replace(/^(a|an|the)\s+/i, "")
-    .replace(/[\s?!.,~]+$/g, "")
-    .trim()
-    .toLowerCase();
+  // If the query contains conversational negation or dissatisfaction, let exclusion filters process it
+  if (
+    /\b(isn'?t|is\s+not|not|no|don'?t|dont|hate|avoid|dislike|dam+n+|wth|wtf)\b/i.test(cleanQuery)
+  ) {
+    return undefined;
+  }
 
-  // Strip trailing outlet mentions (e.g. "from iter juice", "from juice center", "from anna's")
-  stripped = stripped
-    .replace(/\s+(?:from|at)\s+(?:the\s+)?(?:iter\s+juice(?:\s+centre|\s+center)?|juice\s+(?:centre|center|corner|shop)|anna'?s?(?:\s+restaurant)?|mughlai(?:\s+affair'?s?)?|maggie\s+point|maggi\s+point|4th\s+floor|halka\s+phulka).*$/i, "")
-    .trim();
+  const stripped = cleanItemSearchTerm(cleanQuery);
 
   if (
     !stripped ||
@@ -82,11 +273,26 @@ export function findMatchingMenuItem(cleanQuery: string): MenuItem | undefined {
     return undefined;
   }
 
-  // 1. Exact name match
+  // 1. Direct Alias & Synonym Dictionary Lookup
+  if (DISH_ALIASES[stripped]) {
+    const aliasTarget = DISH_ALIASES[stripped].toLowerCase();
+    const found = ALL_MENU_ITEMS.find((it) => it.name.toLowerCase() === aliasTarget);
+    if (found) return found;
+  }
+
+  // Alias lookup without trailing descriptors like "plate", "combo", "order", "dish"
+  const strippedWithoutDescriptor = stripped.replace(/\s+(?:plate|dish|item|combo|order)$/i, "");
+  if (DISH_ALIASES[strippedWithoutDescriptor]) {
+    const aliasTarget = DISH_ALIASES[strippedWithoutDescriptor].toLowerCase();
+    const found = ALL_MENU_ITEMS.find((it) => it.name.toLowerCase() === aliasTarget);
+    if (found) return found;
+  }
+
+  // 2. Exact name match
   const exact = ALL_MENU_ITEMS.find((it) => it.name.toLowerCase() === stripped);
   if (exact) return exact;
 
-  // 2. Match without parenthetical annotations, e.g. "Café Frappe (Cold Coffee)" vs "Café Frappe"
+  // 3. Match without parenthetical annotations, e.g. "Café Frappe (Cold Coffee)" vs "Café Frappe"
   const strippedParen = stripped.replace(/\s*\([^)]*\)/g, "").trim();
   const withoutParen = ALL_MENU_ITEMS.find((it) => {
     const itemNameClean = it.name.replace(/\s*\([^)]*\)/g, "").trim().toLowerCase();
@@ -94,7 +300,7 @@ export function findMatchingMenuItem(cleanQuery: string): MenuItem | undefined {
   });
   if (withoutParen) return withoutParen;
 
-  // 3. Exact query equals or matches full item name
+  // 4. Exact query equals or matches full item name
   const sorted = [...ALL_MENU_ITEMS].sort((a, b) => b.name.length - a.name.length);
   const substringMatch = sorted.find((it) => {
     const name = it.name.toLowerCase();
@@ -107,6 +313,13 @@ export function findMatchingMenuItem(cleanQuery: string): MenuItem | undefined {
     );
   });
   if (substringMatch) return substringMatch;
+
+  // 5. Match by dish tags (e.g. tag "chhole_bhature")
+  const tagNormalized = stripped.replace(/\s+/g, "_");
+  const tagMatch = ALL_MENU_ITEMS.find((it) =>
+    it.tags?.some((t) => t.toLowerCase() === tagNormalized || t.toLowerCase() === stripped)
+  );
+  if (tagMatch) return tagMatch;
 
   return undefined;
 }
@@ -122,6 +335,33 @@ export function parseUserQuery(query: string, currentState: UserPreferenceState)
 
   // Normalize common user typos and phonetic variations
   text = text
+    .replace(/\bchola\s+bhatura\b/gi, "chhole bhature")
+    .replace(/\bchola\s+bhature\b/gi, "chhole bhature")
+    .replace(/\bchole\s+bhatura\b/gi, "chhole bhature")
+    .replace(/\bchole\s+bhature\b/gi, "chhole bhature")
+    .replace(/\bchhola\s+bhatura\b/gi, "chhole bhature")
+    .replace(/\bchhola\s+bhature\b/gi, "chhole bhature")
+    .replace(/\bchhole\s+bhatura\b/gi, "chhole bhature")
+    .replace(/\bchola\b/gi, "chhole")
+    .replace(/\bchole\b/gi, "chhole")
+    .replace(/\bchhola\b/gi, "chhole")
+    .replace(/\bbhatura\b/gi, "bhature")
+    .replace(/\bpanipuri\b/gi, "pani puri")
+    .replace(/\bgolgappa\b/gi, "pani puri")
+    .replace(/\bgolgappe\b/gi, "pani puri")
+    .replace(/\bpuchka\b/gi, "pani puri")
+    .replace(/\bphuchka\b/gi, "pani puri")
+    .replace(/\bvadapav\b/gi, "vada pav")
+    .replace(/\bwadapav\b/gi, "vada pav")
+    .replace(/\bwada\s+pav\b/gi, "vada pav")
+    .replace(/\bpavbhaji\b/gi, "pav bhaji")
+    .replace(/\bpaav\s+bhaji\b/gi, "pav bhaji")
+    .replace(/\bdahiwada\b/gi, "dahi vada")
+    .replace(/\bdahi\s+wada\b/gi, "dahi vada")
+    .replace(/\baloo\s+paratha\b/gi, "alu paratha")
+    .replace(/\baloo\s+chop\b/gi, "aluchop")
+    .replace(/\bchow\s*mein\b/gi, "noodles")
+    .replace(/\bmaggie\b/gi, "maggi")
     .replace(/\bfillilng\b/gi, "feeling")
     .replace(/\bfealin\b/gi, "feeling")
     .replace(/\bfeelng\b/gi, "feeling")

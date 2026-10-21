@@ -338,5 +338,41 @@ describe("CanteenCue Decision Engine — TCS Problem Statement Tests", () => {
     expect(coffeeQuery.response.primaryItem!.item.name).toBe("Coffee");
     expect(coffeeQuery.response.primaryItem!.item.shop).toBe("Anna's Restaurant & Catering");
   });
+
+  // Scenario W — Conversational Dish Proposals & Phonetic Variations (Chhole Bhature)
+  it("Scenario W: Correctly matches 'okay so maybe chola bhatura' and switches outlet to HALKA PHULKA", () => {
+    // 1. User was at Anna's with exclusions
+    const turn1 = processUserDecision("something from Anna's under 80 without veg roll");
+    expect(turn1.nextState.preferredShop).toBe("Anna's Restaurant & Catering");
+
+    // 2. User then proposes: "okay so maybe chola bhatura"
+    const turn2 = processUserDecision("okay so maybe chola bhatura", turn1.nextState, turn1.response.primaryItem);
+    expect(turn2.response.type).toBe("recommendation");
+    expect(turn2.response.primaryItem).toBeDefined();
+    expect(turn2.response.primaryItem!.item.name).toBe("Chhole Bhature");
+    expect(turn2.response.primaryItem!.item.shop).toBe("HALKA PHULKA");
+    expect(turn2.response.primaryItem!.selectedPrice).toBe(60);
+    expect(turn2.nextState.preferredShop).toBe("HALKA PHULKA");
+
+    // 3. Suffix variant: "can i get chola bhatura somewhere"
+    const turn3 = processUserDecision("can i get chola bhatura somewhere");
+    expect(turn3.response.type).toBe("recommendation");
+    expect(turn3.response.primaryItem).toBeDefined();
+    expect(turn3.response.primaryItem!.item.name).toBe("Chhole Bhature");
+    expect(turn3.response.primaryItem!.item.shop).toBe("HALKA PHULKA");
+
+    // 4. Spelling variations
+    const choleQuery = processUserDecision("where can i get chole bhature");
+    expect(choleQuery.response.primaryItem!.item.name).toBe("Chhole Bhature");
+
+    const bhaturaQuery = processUserDecision("i want bhatura");
+    expect(bhaturaQuery.response.primaryItem!.item.name).toBe("Chhole Bhature");
+
+    const paniPuriQuery = processUserDecision("okay maybe golgappa");
+    expect(paniPuriQuery.response.primaryItem!.item.name).toBe("Pani Puri");
+
+    const vadaPavQuery = processUserDecision("can we get wada pav please");
+    expect(vadaPavQuery.response.primaryItem!.item.name).toBe("Classic Vada Pav");
+  });
 });
 

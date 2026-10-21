@@ -324,8 +324,8 @@ export function sanitizeErrorMessage(msg: string): string {
   sanitized = sanitized.replace(/Bearer\s+[a-zA-Z0-9_.-]+/gi, "Bearer [REDACTED]");
   // Redact API key query parameters
   sanitized = sanitized.replace(/key=[a-zA-Z0-9_-]+/gi, "key=[REDACTED]");
-  // Redact Google AI Studio / Gemini API key patterns
-  sanitized = sanitized.replace(/AIza[0-9A-Za-z-_]{20,}/g, "[REDACTED_API_KEY]");
+  // Redact Google AI Studio / Gemini API key patterns (both legacy AIza... and new AQ.... formats)
+  sanitized = sanitized.replace(/(?:AIza[0-9A-Za-z-_]{20,}|AQ\.[0-9A-Za-z-_]{20,})/g, "[REDACTED_API_KEY]");
   // Redact OpenAI API key patterns
   sanitized = sanitized.replace(/sk-[a-zA-Z0-9_-]{20,}/g, "[REDACTED_API_KEY]");
   // Redact full URLs to prevent exposing endpoint internals

@@ -124,7 +124,7 @@ export function isFoodRelatedQuery(query: string, history: ChatMessage[] = []): 
     "pizza", "pizzas", "burger", "burgers", "roll", "rolls", "wrap", "wraps", "frankie",
     "noodle", "noodles", "maggi", "maggie", "pasta", "pastas", "macaroni", "sandwich", "sandwiches",
     "dosa", "dosas", "idli", "idlis", "vada", "vadas", "uttapam", "sambar", "chutney",
-    "poori", "puri", "chole", "bhature", "kulcha", "paratha", "parathas", "roti", "rotis", "chapati", "naan",
+    "poori", "puri", "chole", "chola", "chhole", "chhola", "bhature", "bhatura", "kulcha", "paratha", "parathas", "roti", "rotis", "chapati", "naan",
     "biryani", "biryany", "biriani", "pulao", "rice", "fried rice", "schezwan", "khichdi", "curd rice",
     "thali", "curry", "gravy", "dal", "dal makhani", "paneer", "chicken", "egg", "eggs", "anda",
     "mutton", "fish", "prawn", "prawns", "kebab", "tikka", "manchurian", "chilly", "chilli",
@@ -238,6 +238,16 @@ export function isOfflineEngineConfidentlyCatching(
 ): boolean {
   const text = cleanQuery.toLowerCase();
   const resp = offlineResult.response;
+
+  // 0. If the offline engine caught an exact specific menu dish (e.g. "Chhole Bhature", "Paneer Roll", "Masala Dosa")
+  if (
+    resp.type === "recommendation" &&
+    resp.primaryItem &&
+    (resp.summaryText.startsWith("Yes! You can get") ||
+      resp.primaryItem.matchedReasons?.some((r) => r.startsWith("Direct selection:")))
+  ) {
+    return true;
+  }
 
   // 1. If the offline engine gave "I didn't quite catch that...", it definitely did not catch it!
   if (resp.type === "clarification" && resp.summaryText.includes("didn't quite catch that")) {

@@ -257,6 +257,8 @@ describe("CanteenCue Security Audit & Hardening Suite", () => {
       expect(content).toContain("generativelanguage.googleapis.com");
       expect(content).toContain("candidateKeys");
       expect(content).toContain("isQuotaOrRateLimit");
+      expect(content).toContain("AbortSignal.timeout");
+      expect(content).toContain("51200");
     });
 
     it("verifies frontend aiService routes Gemini calls to the /gemini backend proxy", () => {
@@ -266,6 +268,20 @@ describe("CanteenCue Security Audit & Hardening Suite", () => {
       expect(content).toContain('fetch("/gemini"');
       // Ensure frontend doesn't directly hit generativelanguage in callGeminiApi or testAiConnection
       expect(content).not.toMatch(/fetch\(`https:\/\/generativelanguage\.googleapis\.com/);
+    });
+  });
+
+  describe("10. Phonetic & Colloquial Dish Alias Mapping", () => {
+    it("verifies DISH_ALIASES maps student colloquial terms to official menu items", () => {
+      const parserPath = path.resolve(process.cwd(), "src/engine/preferenceParser.ts");
+      const content = fs.readFileSync(parserPath, "utf-8");
+
+      expect(content).toContain("chola bhatura");
+      expect(content).toContain("Chhole Bhature");
+      expect(content).toContain("pani puri");
+      expect(content).toContain("Pani Puri");
+      expect(content).toContain("vada pav");
+      expect(content).toContain("Classic Vada Pav");
     });
   });
 });
