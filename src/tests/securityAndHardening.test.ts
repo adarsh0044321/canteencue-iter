@@ -251,9 +251,12 @@ describe("CanteenCue Security Audit & Hardening Suite", () => {
       expect(content).toContain("export async function onRequestPost");
       expect(content).toContain("export async function onRequestOptions");
       expect(content).toContain("env.GEMINI_API_KEY");
+      expect(content).toContain("env.GEMINI_API_KEYS");
       expect(content).toContain("Access-Control-Allow-Origin");
       expect(content).toContain("gemini-2.5-flash");
       expect(content).toContain("generativelanguage.googleapis.com");
+      expect(content).toContain("candidateKeys");
+      expect(content).toContain("isQuotaOrRateLimit");
     });
 
     it("verifies frontend aiService routes Gemini calls to the /gemini backend proxy", () => {

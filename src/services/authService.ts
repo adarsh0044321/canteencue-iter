@@ -379,6 +379,61 @@ export function isEmailKnownRegistered(email: string): boolean {
   return getKnownRegisteredEmails().includes(clean);
 }
 
+interface LoginAttemptRecord {
+  attempts: number;
+  lastAttemptTime: number;
+  lockedUntil: number;
+}
+
+const loginAttemptsMap = new Map<string, LoginAttemptRecord>();
+const MAX_FAILED_LOGIN_ATTEMPTS = 5;
+const LOGIN_ATTEMPT_WINDOW_MS = 60 * 1000; // 1 minute window
+const LOGIN_LOCKOUT_MS = 30 * 1000; // 30 second cooldown
+
+export function checkLoginRateLimit(email: string): { isLocked: boolean; waitSeconds?: number } {
+  const cleanEmail = email.trim().toLowerCase();
+  const record = loginAttemptsMap.get(cleanEmail);
+  if (!record) return { isLocked: false };
+
+  const now = Date.now();
+  if (record.lockedUntil > now) {
+    const waitSeconds = Math.ceil((record.lockedUntil - now) / 1000);
+    return { isLocked: true, waitSeconds };
+  }
+
+  // If window expired, reset attempts
+  if (now - record.lastAttemptTime > LOGIN_ATTEMPT_WINDOW_MS) {
+    loginAttemptsMap.delete(cleanEmail);
+    return { isLocked: false };
+  }
+
+  return { isLocked: false };
+}
+
+export function recordFailedLoginAttempt(email: string): void {
+  const cleanEmail = email.trim().toLowerCase();
+  const now = Date.now();
+  const record = loginAttemptsMap.get(cleanEmail) || {
+    attempts: 0,
+    lastAttemptTime: now,
+    lockedUntil: 0,
+  };
+
+  record.attempts += 1;
+  record.lastAttemptTime = now;
+
+  if (record.attempts >= MAX_FAILED_LOGIN_ATTEMPTS) {
+    record.lockedUntil = now + LOGIN_LOCKOUT_MS;
+  }
+
+  loginAttemptsMap.set(cleanEmail, record);
+}
+
+export function clearLoginAttempts(email: string): void {
+  const cleanEmail = email.trim().toLowerCase();
+  loginAttemptsMap.delete(cleanEmail);
+}
+
 /**
  * Sign in with email and password
  */
@@ -393,6 +448,24 @@ export async function signInWithPassword(
 
   try {
     const trimmedEmail = email.trim().toLowerCase();
+
+    // Input length bounds
+    if (trimmedEmail.length > 254) {
+      return { success: false, message: "Email exceeds maximum permitted length (254 characters)." };
+    }
+    if (password.length > 128) {
+      return { success: false, message: "Password exceeds maximum permitted length (128 characters)." };
+    }
+
+    // Brute-force rate limiting check
+    const rateCheck = checkLoginRateLimit(trimmedEmail);
+    if (rateCheck.isLocked) {
+      return {
+        success: false,
+        message: `Too many failed login attempts. Please wait ${rateCheck.waitSeconds} seconds before trying again.`,
+      };
+    }
+
     const validation = validateRealEmail(trimmedEmail);
     if (!validation.isValid) {
       return { success: false, message: validation.reason || "Please enter a valid email address." };
@@ -404,6 +477,7 @@ export async function signInWithPassword(
     });
 
     if (error) {
+      recordFailedLoginAttempt(trimmedEmail);
       const isKnown = isEmailKnownRegistered(trimmedEmail);
       const isInvalidCredentials =
         error.message.toLowerCase().includes("invalid login credentials") ||
@@ -426,7 +500,8 @@ export async function signInWithPassword(
       };
     }
 
-    // Success: register this email as a known user
+    // Success: clear rate limit counter and record email
+    clearLoginAttempts(trimmedEmail);
     recordRegisteredEmail(trimmedEmail);
     setGuestMode(false);
     return {
@@ -460,6 +535,14 @@ export async function registerWithEmailAndPassword(
   }
 
   const trimmedEmail = email.trim().toLowerCase();
+
+  if (trimmedEmail.length > 254) {
+    return { success: false, message: "Email exceeds maximum permitted length (254 characters)." };
+  }
+  if (password.length > 128) {
+    return { success: false, message: "Password exceeds maximum permitted length (128 characters)." };
+  }
+
   const validation = validateRealEmail(trimmedEmail);
 
   if (!validation.isValid) {

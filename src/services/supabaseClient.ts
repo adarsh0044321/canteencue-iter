@@ -27,12 +27,33 @@ export interface SupabaseConfig {
 
 const STORAGE_KEY = "canteen_cue_supabase_config";
 
+/**
+ * Validates that a Supabase URL uses HTTPS and points to a genuine Supabase project or localhost
+ */
+export function isValidSupabaseUrl(urlStr: string): boolean {
+  if (!urlStr || typeof urlStr !== "string") return false;
+  try {
+    const parsed = new URL(urlStr.trim());
+    if (parsed.protocol !== "https:") {
+      // Allow http only on local development hosts
+      if (parsed.protocol === "http:" && (parsed.hostname === "localhost" || parsed.hostname === "127.0.0.1")) {
+        return true;
+      }
+      return false;
+    }
+    const host = parsed.hostname.toLowerCase();
+    return host.endsWith(".supabase.co") || host === "localhost" || host === "127.0.0.1";
+  } catch {
+    return false;
+  }
+}
+
 export function getStoredSupabaseConfig(): SupabaseConfig {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
     if (raw) {
       const parsed = JSON.parse(raw);
-      if (parsed.url && parsed.anonKey) {
+      if (parsed.url && parsed.anonKey && isValidSupabaseUrl(parsed.url)) {
         return parsed;
       }
     }
@@ -57,6 +78,10 @@ export function getStoredSupabaseConfig(): SupabaseConfig {
 
 export function saveSupabaseConfig(config: SupabaseConfig): void {
   try {
+    if (!isValidSupabaseUrl(config.url)) {
+      console.warn("Rejected invalid Supabase URL. Must be HTTPS and end with .supabase.co");
+      return;
+    }
     localStorage.setItem(STORAGE_KEY, JSON.stringify(config));
     clientInstance = null; // Reset cached client
   } catch (e) {
@@ -206,10 +231,14 @@ export async function syncChatMessageToSupabase(
   if (!client) return;
 
   try {
-    // Ensure session exists with user and readable title
+    const { data: userData } = await client.auth.getUser();
+    const currentUser = userData?.user;
+
+    // Ensure session exists with user ID association and readable title
     await client.from("chat_sessions").upsert({
       id: sessionId,
-      user_name: userEmail || "Student",
+      user_id: currentUser?.id || null,
+      user_name: userEmail || currentUser?.email || "Student",
       session_name: sessionTitle || "Campus Food Decision",
       last_interaction: new Date().toISOString(),
     });
@@ -233,7 +262,7 @@ export async function syncChatMessageToSupabase(
  */
 export async function loadCloudChatHistory(sessionId: string): Promise<ChatMessage[] | null> {
   const client = getSupabaseClient();
-  if (!client) return null;
+  if (!client || !sessionId) return null;
 
   try {
     const { data, error } = await client
@@ -259,6 +288,7 @@ export async function loadCloudChatHistory(sessionId: string): Promise<ChatMessa
 
 /**
  * Fetch all past chat sessions from Supabase cloud database.
+ * Strictly checks user ownership to prevent unauthenticated data leaks (IDOR protection).
  */
 export async function fetchAllCloudSessions(
   userEmail?: string | null
@@ -277,6 +307,15 @@ export async function fetchAllCloudSessions(
   if (!client) return [];
 
   try {
+    const { data: userData } = await client.auth.getUser();
+    const currentUser = userData?.user;
+    const effectiveEmail = currentUser?.email || (userEmail && userEmail !== "all" ? userEmail : null);
+
+    // Prevent unconstrained queries across all users' chat histories
+    if (!currentUser && !effectiveEmail) {
+      return [];
+    }
+
     const sevenDaysAgoIso = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString();
     let query = client
       .from("chat_sessions")
@@ -285,8 +324,10 @@ export async function fetchAllCloudSessions(
       .order("last_interaction", { ascending: false })
       .limit(50);
 
-    if (userEmail && userEmail !== "all") {
-      query = query.eq("user_name", userEmail);
+    if (currentUser?.id) {
+      query = query.or(`user_id.eq.${currentUser.id},user_name.eq.${currentUser.email || effectiveEmail}`);
+    } else if (effectiveEmail) {
+      query = query.eq("user_name", effectiveEmail);
     }
 
     const { data: sessionRows, error } = await query;
@@ -345,12 +386,16 @@ export async function fetchAllCloudSessions(
 
 /**
  * Delete a chat session and its messages from Supabase cloud database.
+ * Requires user authentication before executing deletion.
  */
 export async function deleteCloudChatSession(sessionId: string): Promise<void> {
   const client = getSupabaseClient();
-  if (!client) return;
+  if (!client || !sessionId) return;
 
   try {
+    const { data: userData } = await client.auth.getUser();
+    if (!userData?.user) return; // Only authenticated users delete cloud sessions
+
     await client.from("chat_messages").delete().eq("session_id", sessionId);
     await client.from("chat_sessions").delete().eq("id", sessionId);
   } catch (err) {

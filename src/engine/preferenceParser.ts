@@ -112,7 +112,7 @@ export function findMatchingMenuItem(cleanQuery: string): MenuItem | undefined {
 }
 
 export function parseUserQuery(query: string, currentState: UserPreferenceState): ParsedIntent {
-  let text = query.trim().toLowerCase();
+  let text = (query || "").trim().slice(0, 1000).toLowerCase();
 
   // Normalize Unicode quotes, backticks, dashes
   text = text

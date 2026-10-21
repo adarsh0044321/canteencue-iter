@@ -34,3 +34,20 @@ dist-ssr
 # Temporary CLI files
 supabase/.temp/
 .temp/
+
+# Private certificates and keys
+*.pem
+*.key
+*.cert
+*.pfx
+*.p12
+
+# Untracked project files & Gradle artifacts
+.gradle/
+.kotlin/
+app-customer/
+app-delivery/
+core-shared/
+gradle/
+gradlew
+gradlew.bat

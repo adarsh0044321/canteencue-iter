@@ -81,7 +81,8 @@ export const PromptInput: React.FC<PromptInputProps> = ({
   const handleSubmit = () => {
     const trimmed = input.trim();
     if (!trimmed || isLoading) return;
-    onSubmit(trimmed);
+    const sanitizedInput = trimmed.length > 1000 ? trimmed.substring(0, 1000) : trimmed;
+    onSubmit(sanitizedInput);
     setInput("");
   };
 
@@ -103,6 +104,7 @@ export const PromptInput: React.FC<PromptInputProps> = ({
         onKeyDown={handleKeyDown}
         placeholder={placeholder}
         rows={2}
+        maxLength={1000}
         disabled={isLoading}
       />
 

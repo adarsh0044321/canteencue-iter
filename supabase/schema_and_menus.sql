@@ -55,6 +55,7 @@ CREATE POLICY "Allow public read access on menu items" ON public.menu_items
 -- 4. CHAT SESSIONS & CONVERSATION MEMORY TABLE
 CREATE TABLE IF NOT EXISTS public.chat_sessions (
     id TEXT PRIMARY KEY,
+    user_id UUID REFERENCES auth.users(id) ON DELETE CASCADE,
     user_name TEXT DEFAULT 'Student',
     session_name TEXT DEFAULT 'Campus Food Chat',
     last_interaction TIMESTAMPTZ DEFAULT NOW(),
@@ -62,9 +63,42 @@ CREATE TABLE IF NOT EXISTS public.chat_sessions (
     created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
+CREATE INDEX IF NOT EXISTS idx_chat_sessions_user_id ON public.chat_sessions(user_id);
+CREATE INDEX IF NOT EXISTS idx_chat_sessions_user_name ON public.chat_sessions(user_name);
+
 ALTER TABLE public.chat_sessions ENABLE ROW LEVEL SECURITY;
-CREATE POLICY "Allow public all access on chat sessions" ON public.chat_sessions
-    FOR ALL USING (true);
+
+CREATE POLICY "Users can select own chat sessions" ON public.chat_sessions
+    FOR SELECT TO authenticated
+    USING (
+        auth.uid() = user_id 
+        OR (user_id IS NULL AND user_name = auth.jwt()->>'email')
+    );
+
+CREATE POLICY "Users can insert own chat sessions" ON public.chat_sessions
+    FOR INSERT TO authenticated
+    WITH CHECK (
+        auth.uid() = user_id 
+        OR (user_id IS NULL AND user_name = auth.jwt()->>'email')
+    );
+
+CREATE POLICY "Users can update own chat sessions" ON public.chat_sessions
+    FOR UPDATE TO authenticated
+    USING (
+        auth.uid() = user_id 
+        OR (user_id IS NULL AND user_name = auth.jwt()->>'email')
+    )
+    WITH CHECK (
+        auth.uid() = user_id 
+        OR (user_id IS NULL AND user_name = auth.jwt()->>'email')
+    );
+
+CREATE POLICY "Users can delete own chat sessions" ON public.chat_sessions
+    FOR DELETE TO authenticated
+    USING (
+        auth.uid() = user_id 
+        OR (user_id IS NULL AND user_name = auth.jwt()->>'email')
+    );
 
 -- 5. CHAT MESSAGES TABLE
 CREATE TABLE IF NOT EXISTS public.chat_messages (
@@ -77,9 +111,39 @@ CREATE TABLE IF NOT EXISTS public.chat_messages (
     created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
+CREATE INDEX IF NOT EXISTS idx_chat_messages_session_id ON public.chat_messages(session_id);
+
 ALTER TABLE public.chat_messages ENABLE ROW LEVEL SECURITY;
-CREATE POLICY "Allow public all access on chat messages" ON public.chat_messages
-    FOR ALL USING (true);
+
+CREATE POLICY "Users can select own chat messages" ON public.chat_messages
+    FOR SELECT TO authenticated
+    USING (
+        EXISTS (
+            SELECT 1 FROM public.chat_sessions cs
+            WHERE cs.id = chat_messages.session_id
+            AND (cs.user_id = auth.uid() OR (cs.user_id IS NULL AND cs.user_name = auth.jwt()->>'email'))
+        )
+    );
+
+CREATE POLICY "Users can insert own chat messages" ON public.chat_messages
+    FOR INSERT TO authenticated
+    WITH CHECK (
+        EXISTS (
+            SELECT 1 FROM public.chat_sessions cs
+            WHERE cs.id = chat_messages.session_id
+            AND (cs.user_id = auth.uid() OR (cs.user_id IS NULL AND cs.user_name = auth.jwt()->>'email'))
+        )
+    );
+
+CREATE POLICY "Users can delete own chat messages" ON public.chat_messages
+    FOR DELETE TO authenticated
+    USING (
+        EXISTS (
+            SELECT 1 FROM public.chat_sessions cs
+            WHERE cs.id = chat_messages.session_id
+            AND (cs.user_id = auth.uid() OR (cs.user_id IS NULL AND cs.user_name = auth.jwt()->>'email'))
+        )
+    );
 
 -- 6. PRODUCT RATINGS & REVIEWS TABLE (Ready for ratings integration)
 CREATE TABLE IF NOT EXISTS public.product_reviews (
