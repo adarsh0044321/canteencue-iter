@@ -888,10 +888,10 @@ export function loadUserCustomAiConfigFromMetadata(user: User): {
 } | null {
   try {
     const customConfig = user.user_metadata?.custom_ai_config;
-    if (customConfig && typeof customConfig === "object" && customConfig.apiKey) {
+    if (customConfig && typeof customConfig === "object" && (customConfig.apiKey || customConfig.provider)) {
       return {
         provider: customConfig.provider || "gemini",
-        apiKey: customConfig.apiKey,
+        apiKey: customConfig.apiKey || "",
         model: customConfig.model || "gemini-flash-lite-latest",
         enableMemory: customConfig.enableMemory !== false,
       };

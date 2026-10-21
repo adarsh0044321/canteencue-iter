@@ -888,7 +888,11 @@ export const ApiConfigModal: React.FC<ApiConfigModalProps> = ({
                 type="button"
                 className="chip"
                 onClick={handleAiTest}
-                disabled={isAiTesting || !aiConfig.apiKey.trim()}
+                disabled={
+                  isAiTesting ||
+                  (aiConfig.provider === "openai" && !aiConfig.apiKey.trim()) ||
+                  (aiConfig.provider === "gemini" && isCustomKeyMode && !aiConfig.apiKey.trim())
+                }
                 style={{ padding: "8px 16px", fontSize: "13px" }}
               >
                 {isAiTesting ? "Testing AI..." : "Test AI Model Connection"}
