@@ -95,7 +95,7 @@ export function isStandardTestStatement(query: string): boolean {
  * non-food queries from being forwarded to the live LLM.
  */
 export function isFoodRelatedQuery(query: string, history: ChatMessage[] = []): boolean {
-  const text = query.trim().toLowerCase();
+  const text = (query || "").trim().slice(0, 1000).toLowerCase();
   if (!text) return false;
 
   // Explicit non-food patterns (programming, homework, general trivia, politics, bot meta-prompts)
@@ -284,7 +284,7 @@ export async function routeUserDecision(
   currentState: UserPreferenceState,
   lastPrimaryItem?: RecommendationCandidate
 ): Promise<DecisionExecutionResult> {
-  const cleanQuery = query.trim();
+  const cleanQuery = (query || "").trim().slice(0, 1000);
   const isReset = /^(reset|clear|start over|new decision)$/i.test(cleanQuery);
 
   // 1. Reset command -> handled instantly by offline engine
@@ -325,7 +325,7 @@ export async function routeUserDecision(
 
   // Check if an online AI model (Gemini or OpenAI) is configured
   const aiConfig = getStoredAiConfig();
-  const hasLiveAiKey = aiConfig.provider !== "builtin" && !!aiConfig.apiKey.trim();
+  const hasLiveAiKey = aiConfig.provider === "gemini" || (aiConfig.provider !== "builtin" && !!aiConfig.apiKey.trim());
 
   // Check if offline model caught it with confidence
   const isOfflineCatching = isOfflineEngineConfidentlyCatching(cleanQuery, offlineResult);

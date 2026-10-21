@@ -427,7 +427,7 @@ export const ApiConfigModal: React.FC<ApiConfigModalProps> = ({
                       <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
                         <Lock size={16} color="#2dd4bf" />
                         <span style={{ fontSize: "13px", fontWeight: 600, color: "#ffffff" }}>
-                          Pre-Configured System Gemini Key
+                          Cloudflare Serverless Gemini Proxy
                         </span>
                         <span
                           style={{
@@ -440,7 +440,7 @@ export const ApiConfigModal: React.FC<ApiConfigModalProps> = ({
                             fontWeight: 600,
                           }}
                         >
-                          ● Encrypted & Active
+                          ● Secure & Active
                         </span>
                       </div>
                       <button
@@ -487,7 +487,7 @@ export const ApiConfigModal: React.FC<ApiConfigModalProps> = ({
                     </div>
 
                     <p style={{ margin: 0, fontSize: "11.5px", color: "#94a3b8", lineHeight: 1.45 }}>
-                      CanteenCue is automatically connected to Google Gemini AI. If you experience quota pauses or wish to use your personal Google AI Studio tier, click "Switch to Custom Key".
+                      CanteenCue is connected to Google Gemini AI via our secure Cloudflare serverless proxy. API keys remain protected server-side. If you wish to use your personal Google AI Studio tier, click "Switch to Custom Key".
                     </p>
                   </div>
                 ) : (

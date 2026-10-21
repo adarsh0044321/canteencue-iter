@@ -27,7 +27,7 @@ const TRIAL_DURATION_MS = 3 * 24 * 60 * 60 * 1000; // 3 Days in milliseconds
 
 const envGeminiKey = ((import.meta as any).env?.VITE_GEMINI_API_KEY || "").trim();
 const envMultipleKeysRaw = ((import.meta as any).env?.VITE_GEMINI_API_KEYS || "").trim();
-const envModel = (import.meta as any).env?.VITE_GEMINI_MODEL || "gemini-flash-lite-latest";
+const envModel = (import.meta as any).env?.VITE_GEMINI_MODEL || "gemini-2.5-flash";
 
 // Extensible System Key Pool: Combines VITE_GEMINI_API_KEYS and VITE_GEMINI_API_KEY
 const initialPool: string[] = [
@@ -49,7 +49,7 @@ export function addSystemGeminiPoolKeys(newKeys: string[]): void {
   }
 }
 
-export const SYSTEM_GEMINI_KEY = SYSTEM_GEMINI_KEYS_POOL[0] || envGeminiKey;
+export const SYSTEM_GEMINI_KEY = SYSTEM_GEMINI_KEYS_POOL[0] || envGeminiKey || "";
 
 // Track cooling down keys (e.g. rate-limited 429) for 60 seconds before retrying
 const keyCooldownMap = new Map<string, number>();
@@ -92,7 +92,7 @@ export function getRotatedSystemKey(preferredUserId?: string): string {
 }
 
 export function isSystemGeminiKey(key: string): boolean {
-  if (!key || !key.trim()) return true;
+  if (!key || !key.trim() || key === "backend-proxy") return true;
   return (
     key === envGeminiKey ||
     SYSTEM_GEMINI_KEYS_POOL.includes(key.trim())
@@ -146,8 +146,8 @@ export function getAiTrialInfo(apiKey?: string): AiTrialInfo {
 }
 
 export const DEFAULT_AI_CONFIG: AiConfig = {
-  provider: SYSTEM_GEMINI_KEY ? "gemini" : "builtin",
-  apiKey: SYSTEM_GEMINI_KEY,
+  provider: "gemini",
+  apiKey: "",
   model: envModel,
   enableMemory: true,
 };
@@ -157,19 +157,8 @@ export function getStoredAiConfig(): AiConfig {
     const raw = localStorage.getItem(STORAGE_KEY);
     if (!raw) return DEFAULT_AI_CONFIG;
     const parsed = JSON.parse(raw);
-    // Auto-migrate legacy deprecated or congested models
-    if (
-      parsed.model === "gemini-2.5-flash" ||
-      parsed.model === "gemini-1.5-flash" ||
-      parsed.model === "gemini-flash-latest" ||
-      !parsed.model
-    ) {
-      parsed.model = "gemini-flash-lite-latest";
-    }
-    // If no apiKey in storage but pool has it, use pool
-    if (!parsed.apiKey && SYSTEM_GEMINI_KEY) {
-      parsed.apiKey = SYSTEM_GEMINI_KEY;
-      parsed.provider = "gemini";
+    if (!parsed.model) {
+      parsed.model = "gemini-2.5-flash";
     }
     return { ...DEFAULT_AI_CONFIG, ...parsed };
   } catch {
@@ -249,53 +238,45 @@ export async function testAiConnection(config: AiConfig): Promise<{ success: boo
   }
 
   const trimmedKey = config.apiKey.trim();
-  if (!trimmedKey) {
+  if (config.provider === "openai" && !trimmedKey) {
     return {
       success: false,
-      message: "Please enter a valid API key.",
+      message: "Please enter a valid OpenAI API key.",
     };
   }
 
   try {
     if (config.provider === "gemini") {
-      const preferredModel = config.model || "gemini-flash-lite-latest";
-      const candidateModels = [preferredModel, "gemini-flash-lite-latest", "gemini-3.8-flash"].filter(
-        (m, idx, arr) => arr.indexOf(m) === idx
-      );
-
-      let lastError = "";
-      for (const model of candidateModels) {
-        try {
-          const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${trimmedKey}`;
-          const res = await fetch(url, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              "x-goog-api-key": trimmedKey,
-            },
-            body: JSON.stringify({
-              contents: [{ parts: [{ text: "Explain how AI works in a few words" }] }],
-              generationConfig: { maxOutputTokens: 40 },
-            }),
-          });
-
-          if (res.ok) {
-            const data = await res.json().catch(() => ({}));
-            const reply = data?.candidates?.[0]?.content?.parts?.[0]?.text?.trim() || "Connected";
-            return {
-              success: true,
-              message: `Connected successfully to Google Gemini (${model})! Response: "${reply}"`,
-            };
-          } else {
-            const errorData = await res.json().catch(() => ({}));
-            lastError = errorData?.error?.message || `HTTP ${res.status}: ${res.statusText}`;
-          }
-        } catch (e: any) {
-          lastError = e.message || String(e);
-        }
+      const targetModel = config.model || "gemini-2.5-flash";
+      const headers: Record<string, string> = {
+        "Content-Type": "application/json",
+      };
+      if (trimmedKey && !isSystemGeminiKey(trimmedKey)) {
+        headers["x-gemini-api-key"] = trimmedKey;
       }
 
-      return { success: false, message: `Gemini API Error: ${lastError}` };
+      const res = await fetch("/gemini", {
+        method: "POST",
+        headers,
+        body: JSON.stringify({
+          model: targetModel,
+          prompt: "Explain how AI works in a few words",
+          generationConfig: { maxOutputTokens: 40 },
+        }),
+      });
+
+      if (res.ok) {
+        const data = await res.json().catch(() => ({}));
+        const reply = data?.candidates?.[0]?.content?.parts?.[0]?.text?.trim() || "Connected";
+        return {
+          success: true,
+          message: `Connected successfully to Google Gemini (${targetModel}) via secure server proxy! Response: "${reply}"`,
+        };
+      } else {
+        const errorData = await res.json().catch(() => ({}));
+        const lastError = errorData?.error?.message || `HTTP ${res.status}: ${res.statusText}`;
+        return { success: false, message: `Gemini Proxy Error: ${lastError}` };
+      }
     } else if (config.provider === "openai") {
       const targetModel = config.model || "gpt-4o-mini";
       const url = "https://api.openai.com/v1/chat/completions";
@@ -333,6 +314,29 @@ export async function testAiConnection(config: AiConfig): Promise<{ success: boo
   return { success: false, message: "Unknown provider configuration." };
 }
 
+/**
+ * Sanitizes external error messages to prevent leaking API keys, credentials, or internal endpoints
+ */
+export function sanitizeErrorMessage(msg: string): string {
+  if (!msg || typeof msg !== "string") return "Connection to external AI service failed.";
+  let sanitized = msg;
+  // Redact Bearer tokens first
+  sanitized = sanitized.replace(/Bearer\s+[a-zA-Z0-9_.-]+/gi, "Bearer [REDACTED]");
+  // Redact API key query parameters
+  sanitized = sanitized.replace(/key=[a-zA-Z0-9_-]+/gi, "key=[REDACTED]");
+  // Redact Google AI Studio / Gemini API key patterns
+  sanitized = sanitized.replace(/AIza[0-9A-Za-z-_]{20,}/g, "[REDACTED_API_KEY]");
+  // Redact OpenAI API key patterns
+  sanitized = sanitized.replace(/sk-[a-zA-Z0-9_-]{20,}/g, "[REDACTED_API_KEY]");
+  // Redact full URLs to prevent exposing endpoint internals
+  sanitized = sanitized.replace(/https?:\/\/[^\s"'<>]+/gi, "[API_ENDPOINT]");
+  // Trim excessive length
+  if (sanitized.length > 200) {
+    sanitized = sanitized.substring(0, 197) + "...";
+  }
+  return sanitized.trim();
+}
+
 export async function processAiDecision(
   query: string,
   history: ChatMessage[],
@@ -341,8 +345,8 @@ export async function processAiDecision(
 ): Promise<{ response: DecisionResponse; nextState: UserPreferenceState }> {
   const config = getStoredAiConfig();
 
-  // If Built-in engine or no API key, use the enhanced local engine
-  if (config.provider === "builtin" || !config.apiKey.trim()) {
+  // If Built-in engine, use the enhanced local engine
+  if (config.provider === "builtin" || (config.provider === "openai" && !config.apiKey.trim())) {
     return processUserDecision(query, currentState, lastPrimaryItem);
   }
 
@@ -358,7 +362,7 @@ export async function processAiDecision(
     console.warn("AI API request failed, evaluating fallback behavior:", err);
   }
 
-  const rawErrorMsg = apiError?.message || "Connection to external AI service failed.";
+  const rawErrorMsg = sanitizeErrorMessage(apiError?.message || "Connection to external AI service failed.");
   const offlineResult = processUserDecision(query, currentState, lastPrimaryItem);
 
   // Check if the deterministic offline engine can handle this query with a confident recommendation
@@ -434,11 +438,7 @@ async function callGeminiApi(
   currentState: UserPreferenceState,
   _lastPrimaryItem?: RecommendationCandidate
 ): Promise<{ response: DecisionResponse; nextState: UserPreferenceState }> {
-  const preferredModel = config.model || "gemini-flash-lite-latest";
   const trimmedKey = config.apiKey.trim();
-  const candidateModels = [preferredModel, "gemini-flash-lite-latest", "gemini-3.8-flash"].filter(
-    (m, idx, arr) => arr.indexOf(m) === idx
-  );
 
   // Keep last 8 messages (4 complete turns) to save tokens while keeping exact conversational context
   const contents: Array<{ role: "user" | "model"; parts: Array<{ text: string }> }> = [];
@@ -504,54 +504,39 @@ async function callGeminiApi(
     },
   };
 
-  // Determine API key candidates: Rotate through pool keys with automatic failover if using system key
-  const isSystemKey = isSystemGeminiKey(trimmedKey);
-  const candidateKeys: string[] = isSystemKey
-    ? Array.from(new Set([getRotatedSystemKey(), ...SYSTEM_GEMINI_KEYS_POOL, trimmedKey])).filter(Boolean)
-    : [trimmedKey];
+  const targetModel = config.model || "gemini-2.5-flash";
+  const proxyPayload = {
+    ...payload,
+    model: targetModel,
+  };
 
-  let lastError: Error | null = null;
-  for (const apiKey of candidateKeys) {
-    for (const model of candidateModels) {
-      try {
-        const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
-        const res = await fetch(url, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "x-goog-api-key": apiKey,
-          },
-          body: JSON.stringify(payload),
-        });
-
-        if (!res.ok) {
-          const errorJson = await res.json().catch(() => ({}));
-          const errorMsg = errorJson?.error?.message || `HTTP ${res.status}`;
-          if (res.status === 429 || errorMsg.toLowerCase().includes("quota") || errorMsg.toLowerCase().includes("rate limit")) {
-            markSystemKeyCoolingDown(apiKey);
-            console.warn(`Gemini key rate-limited on model ${model}, auto-rotating to next key in pool:`, errorMsg);
-            // Break model loop to immediately try next key in candidateKeys
-            break;
-          }
-          throw new Error(`Gemini API error (${model}): ${errorMsg}`);
-        }
-
-        const data = await res.json();
-        const textResponse = data?.candidates?.[0]?.content?.parts?.[0]?.text;
-        if (!textResponse) {
-          throw new Error(`Empty response from Gemini API (${model})`);
-        }
-
-        const parsed = JSON.parse(textResponse);
-        return mapLlmJsonToDecisionResponse(parsed, currentState, query);
-      } catch (err: any) {
-        lastError = err;
-        console.warn(`Model ${model} with key ...${apiKey.slice(-6)} failed, evaluating failover:`, err.message);
-      }
-    }
+  const headers: Record<string, string> = {
+    "Content-Type": "application/json",
+  };
+  if (trimmedKey && !isSystemGeminiKey(trimmedKey)) {
+    headers["x-gemini-api-key"] = trimmedKey;
   }
 
-  throw lastError || new Error("All candidate Gemini models and pool keys failed");
+  const res = await fetch("/gemini", {
+    method: "POST",
+    headers,
+    body: JSON.stringify(proxyPayload),
+  });
+
+  if (!res.ok) {
+    const errorJson = await res.json().catch(() => ({}));
+    const errorMsg = errorJson?.error?.message || `HTTP ${res.status}: ${res.statusText}`;
+    throw new Error(`Gemini proxy error: ${errorMsg}`);
+  }
+
+  const data = await res.json();
+  const textResponse = data?.candidates?.[0]?.content?.parts?.[0]?.text;
+  if (!textResponse) {
+    throw new Error(`Empty response from Gemini proxy (${targetModel})`);
+  }
+
+  const parsed = JSON.parse(textResponse);
+  return mapLlmJsonToDecisionResponse(parsed, currentState, query);
 }
 
 // Call OpenAI API

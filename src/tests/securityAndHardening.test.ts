@@ -241,4 +241,28 @@ describe("CanteenCue Security Audit & Hardening Suite", () => {
       expect(content).toContain("DROP POLICY IF EXISTS \"Allow public all access on menu items\"");
     });
   });
+
+  describe("9. Cloudflare Pages Gemini Serverless Proxy", () => {
+    it("verifies functions/gemini.js exists and exports onRequestPost and onRequestOptions", () => {
+      const funcPath = path.resolve(process.cwd(), "functions/gemini.js");
+      expect(fs.existsSync(funcPath)).toBe(true);
+
+      const content = fs.readFileSync(funcPath, "utf-8");
+      expect(content).toContain("export async function onRequestPost");
+      expect(content).toContain("export async function onRequestOptions");
+      expect(content).toContain("env.GEMINI_API_KEY");
+      expect(content).toContain("Access-Control-Allow-Origin");
+      expect(content).toContain("gemini-2.5-flash");
+      expect(content).toContain("generativelanguage.googleapis.com");
+    });
+
+    it("verifies frontend aiService routes Gemini calls to the /gemini backend proxy", () => {
+      const servicePath = path.resolve(process.cwd(), "src/services/aiService.ts");
+      const content = fs.readFileSync(servicePath, "utf-8");
+
+      expect(content).toContain('fetch("/gemini"');
+      // Ensure frontend doesn't directly hit generativelanguage in callGeminiApi or testAiConnection
+      expect(content).not.toMatch(/fetch\(`https:\/\/generativelanguage\.googleapis\.com/);
+    });
+  });
 });
