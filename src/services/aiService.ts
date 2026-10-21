@@ -765,11 +765,19 @@ function mapLlmJsonToDecisionResponse(
           (m) => m.name.toLowerCase() === alt.itemName.toLowerCase()
         );
         if (found) {
+          const isCheaper = primaryCandidate ? found.price < primaryCandidate.selectedPrice : false;
+          const isOtherShop = primaryCandidate ? found.shop !== primaryCandidate.item.shop : false;
+          const altType: AlternativeCandidate["type"] = isCheaper
+            ? "cheaper"
+            : isOtherShop
+            ? "other_shop"
+            : "relaxed_constraint";
+
           alternatives.push({
             item: found,
             selectedPrice: found.price,
             reason: alt.reason || "Alternative option",
-            type: "cheaper",
+            type: altType,
           });
         }
       }

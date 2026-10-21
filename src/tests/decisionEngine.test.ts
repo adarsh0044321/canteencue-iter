@@ -374,5 +374,38 @@ describe("CanteenCue Decision Engine — TCS Problem Statement Tests", () => {
     const vadaPavQuery = processUserDecision("can we get wada pav please");
     expect(vadaPavQuery.response.primaryItem!.item.name).toBe("Classic Vada Pav");
   });
+
+  // Scenario X — Multi-Outlet Rotation Across All 6 Campus Canteens
+  it("Scenario X: Rotates through campus shops without locking only to Anna's & Mughlai", () => {
+    // Start at HALKA PHULKA
+    const turn1 = processUserDecision("chole bhature");
+    expect(turn1.nextState.preferredShop).toBe("HALKA PHULKA");
+
+    // Ask for other shop -> should move to next campus outlet (MAGGIE POINT)
+    const turn2 = processUserDecision("anything from another shop", turn1.nextState, turn1.response.primaryItem);
+    expect(turn2.nextState.preferredShop).toBe("MAGGIE POINT");
+
+    // Ask again -> should move to 4TH FLOOR
+    const turn3 = processUserDecision("other shop", turn2.nextState, turn2.response.primaryItem);
+    expect(turn3.nextState.preferredShop).toBe("4TH FLOOR");
+
+    // Ask again -> should move to Iter Juice Centre
+    const turn4 = processUserDecision("another shop", turn3.nextState, turn3.response.primaryItem);
+    expect(turn4.nextState.preferredShop).toBe("Iter Juice Centre");
+  });
+
+  // Scenario Y — Negation on Chicken Tikka / Thali & Grounded Over-Budget Handling
+  it("Scenario Y: Negation doesn't falsely trigger unavailable/over-budget failure case", () => {
+    // "no chicken tikka" should be treated as exclusion, NOT unavailable item failure
+    const turn1 = processUserDecision("I have ₹100, no chicken tikka, give me something filling");
+    expect(turn1.response.type).not.toBe("alternative_only");
+    expect(turn1.nextState.exclusions?.some((e) => e.includes("chicken"))).toBe(true);
+
+    // Over-budget chicken query references real menu item (Chicken Thali ₹149)
+    const overBudgetTurn = processUserDecision("I have ₹60, want chicken thali");
+    expect(overBudgetTurn.response.type).toBe("alternative_only");
+    expect(overBudgetTurn.response.failureCase?.originalItemName).toBe("Chicken Thali");
+    expect(overBudgetTurn.response.failureCase?.originalPrice).toBe(149);
+  });
 });
 

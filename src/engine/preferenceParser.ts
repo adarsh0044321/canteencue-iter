@@ -575,15 +575,23 @@ export function parseUserQuery(query: string, currentState: UserPreferenceState)
   }
 
   // Check for "Anything from the other shop?"
+  // Rotates cleanly through all 6 campus canteens instead of locking to just Anna's & Mughlai
   if (
     text.includes("other shop") ||
     text.includes("another shop") ||
-    text.includes("second shop")
+    text.includes("second shop") ||
+    text.includes("different shop")
   ) {
-    const nextShop: ShopName =
-      currentState.preferredShop === "Anna's Restaurant & Catering"
-        ? "Mughlai Affair's"
-        : "Anna's Restaurant & Catering";
+    const ALL_SHOPS: ShopName[] = [
+      "Anna's Restaurant & Catering",
+      "Mughlai Affair's",
+      "HALKA PHULKA",
+      "MAGGIE POINT",
+      "4TH FLOOR",
+      "Iter Juice Centre",
+    ];
+    const currentIdx = currentState.preferredShop ? ALL_SHOPS.indexOf(currentState.preferredShop) : 0;
+    const nextShop: ShopName = ALL_SHOPS[(currentIdx + 1) % ALL_SHOPS.length];
     return {
       intentType: "other_shop",
       extractedPreferences: { preferredShop: nextShop },
@@ -946,7 +954,7 @@ export function parseUserQuery(query: string, currentState: UserPreferenceState)
   }
 
   // Check Failure Case 1: Specific request for item marked unavailable (e.g. Chicken Tikka)
-  if (text.includes("chicken tikka")) {
+  if (text.includes("chicken tikka") && !hasNegatedTerm(text, "chicken\\s+tikka")) {
     return {
       intentType: "unavailable_item",
       extractedPreferences: extracted,
@@ -954,14 +962,19 @@ export function parseUserQuery(query: string, currentState: UserPreferenceState)
     };
   }
 
-  // Check Failure Case 2: Specific request for item that exceeds budget (e.g. Chicken Thali or Biryani under ₹100)
-  if ((text.includes("chicken thali") || text.includes("chicken biryani")) && (extracted.budget || currentState.budget || 0) <= 100) {
+  // Check Failure Case 2: Specific request for item that exceeds budget (e.g. Chicken Thali or Special Mix Non-Veg Fried Rice under ₹100)
+  // Strictly grounded on official campus catalog items (Chicken Thali ₹149 or Special Mix Non-Veg Rice ₹150)
+  if (
+    (text.includes("chicken thali") || text.includes("chicken rice") || text.includes("mix non-veg") || text.includes("chicken biryani")) &&
+    !hasNegatedTerm(text, "chicken\\s+thali|chicken\\s+rice|chicken\\s+biryani") &&
+    (extracted.budget || currentState.budget || 0) <= 100
+  ) {
     return {
       intentType: "over_budget_item",
       extractedPreferences: extracted,
       targetOverBudgetItem: text.includes("chicken thali")
         ? { name: "Chicken Thali", price: 149 }
-        : { name: "Chicken Biryani", price: 150 },
+        : { name: "Special Mix Non-Veg Fried Rice", price: 150 },
     };
   }
 

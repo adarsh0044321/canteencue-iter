@@ -133,9 +133,14 @@ export function generateExplanation(
     suggestedFollowUps.push("Something cheaper");
   }
 
-  // Cross-shop check
-  if (item.shop === "Anna's Restaurant & Catering") {
+  // Cross-shop check: Dynamically surface alternatives from other campus outlets
+  const otherShopAlt = alternatives.find((a) => a.item.shop !== item.shop);
+  if (otherShopAlt) {
+    suggestedFollowUps.push(`Anything from ${otherShopAlt.item.shop}?`);
+  } else if (item.shop === "Anna's Restaurant & Catering") {
     suggestedFollowUps.push("Anything from Mughlai Affair’s?");
+  } else if (item.shop === "HALKA PHULKA") {
+    suggestedFollowUps.push("Anything from MAGGIE POINT?");
   } else {
     suggestedFollowUps.push("Anything from Anna’s?");
   }
