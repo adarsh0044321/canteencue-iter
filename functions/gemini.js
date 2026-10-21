@@ -80,28 +80,37 @@ export async function onRequestPost(context) {
     }
 
     // Determine custom key passed by user in header or body
-    const customKey =
+    const rawCustomKey =
       request.headers.get("x-gemini-api-key") ||
       body.customApiKey ||
       body.apiKey;
 
-    // Build the pool of available API keys:
-    // Supports GEMINI_API_KEY, GEMINI_API_KEYS, GOOGLE_API_KEY, KEY, or KEYS
-    // Also gracefully handles values with leading "KEY=", quotes, or whitespace
-    const rawKeysString = [
+    let cleanedCustomKey = null;
+    if (rawCustomKey && typeof rawCustomKey === "string") {
+      const c = rawCustomKey
+        .trim()
+        .replace(/^(?:key|api_key|gemini_api_key|google_api_key)\s*[:=]\s*/i, "")
+        .replace(/^["']|["']$/g, "")
+        .trim();
+      if (c && c !== "backend-proxy") {
+        cleanedCustomKey = c;
+      }
+    }
+
+    // Build the pool of available system API keys from Cloudflare environment
+    const rawSystemKeysString = [
       env.GEMINI_API_KEY,
       env.GEMINI_API_KEYS,
       env.GOOGLE_API_KEY,
       env.KEY,
       env.KEYS,
-      customKey,
     ]
       .filter(Boolean)
       .join(",");
 
-    const keyPool = Array.from(
+    const systemKeyPool = Array.from(
       new Set(
-        rawKeysString
+        rawSystemKeysString
           .split(/[,\n;]/)
           .map((k) =>
             k
@@ -114,7 +123,7 @@ export async function onRequestPost(context) {
       )
     );
 
-    if (keyPool.length === 0) {
+    if (!cleanedCustomKey && systemKeyPool.length === 0) {
       return new Response(
         JSON.stringify({
           error: {
@@ -124,6 +133,21 @@ export async function onRequestPost(context) {
         }),
         { status: 500, headers: corsHeaders }
       );
+    }
+
+    // Key prioritization:
+    // When a user provides their personal custom key, ALWAYS attempt it FIRST so their queries count
+    // against their personal Google AI Studio project and quota.
+    // If no custom key is provided, distribute initial key selection randomly across system keys to balance load.
+    let candidateKeys = [];
+    if (cleanedCustomKey) {
+      candidateKeys = [cleanedCustomKey, ...systemKeyPool.filter((k) => k !== cleanedCustomKey)];
+    } else {
+      const startIndex = Math.floor(Math.random() * systemKeyPool.length);
+      candidateKeys = [
+        ...systemKeyPool.slice(startIndex),
+        ...systemKeyPool.slice(0, startIndex),
+      ];
     }
 
     // Default model to gemini-3.8-flash (with auto-fallback to gemini-2.5-flash, gemini-flash-latest and gemini-flash-lite-latest)
@@ -174,13 +198,6 @@ export async function onRequestPost(context) {
       googlePayload.generationConfig = { maxOutputTokens: 600 };
     }
 
-    // Distribute initial key selection randomly across the pool to balance load
-    const startIndex = Math.floor(Math.random() * keyPool.length);
-    const candidateKeys = [
-      ...keyPool.slice(startIndex),
-      ...keyPool.slice(0, startIndex),
-    ];
-
     let lastResponse = null;
     let lastData = null;
     const MAX_TOTAL_ATTEMPTS = 3;
@@ -219,7 +236,29 @@ export async function onRequestPost(context) {
             });
           }
 
-          // If rate-limited (429) or quota exceeded, try next key in the pool
+          // If the student's personal key was deleted or invalidated in Google AI Studio,
+          // return an immediate explicit error so they know their key must be replaced
+          const isApiKeyInvalidError =
+            (googleResponse.status === 400 || googleResponse.status === 403) &&
+            (JSON.stringify(responseData).includes("API_KEY_INVALID") ||
+              JSON.stringify(responseData).toLowerCase().includes("api key not valid") ||
+              responseData?.error?.status === "PERMISSION_DENIED");
+
+          if (isApiKeyInvalidError && apiKey === cleanedCustomKey) {
+            return new Response(
+              JSON.stringify({
+                error: {
+                  code: 401,
+                  status: "CUSTOM_KEY_INVALID",
+                  message:
+                    "Your personal Google Gemini API key was deleted, revoked, or is invalid in Google AI Studio. Please generate a new key or revert to the system key in AI Settings.",
+                },
+              }),
+              { status: 401, headers: corsHeaders }
+            );
+          }
+
+          // If rate-limited (429) or quota exceeded, try next key in the pool (e.g. fallback to system pool)
           const isQuotaOrRateLimit =
             googleResponse.status === 429 ||
             responseData?.error?.code === 429 ||

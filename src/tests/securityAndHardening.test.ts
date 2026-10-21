@@ -269,6 +269,16 @@ describe("CanteenCue Security Audit & Hardening Suite", () => {
       // Ensure frontend doesn't directly hit generativelanguage in callGeminiApi or testAiConnection
       expect(content).not.toMatch(/fetch\(`https:\/\/generativelanguage\.googleapis\.com/);
     });
+
+    it("verifies functions/gemini.js prioritizes custom student API keys and detects deleted/invalid keys", () => {
+      const funcPath = path.resolve(process.cwd(), "functions/gemini.js");
+      const content = fs.readFileSync(funcPath, "utf-8");
+
+      expect(content).toContain("cleanedCustomKey");
+      expect(content).toContain("candidateKeys = [cleanedCustomKey");
+      expect(content).toContain("CUSTOM_KEY_INVALID");
+      expect(content).toContain("API_KEY_INVALID");
+    });
   });
 
   describe("10. Phonetic & Colloquial Dish Alias Mapping", () => {

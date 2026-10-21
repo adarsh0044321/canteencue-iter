@@ -362,6 +362,36 @@ export async function processAiDecision(
     console.warn("AI API request failed, evaluating fallback behavior:", err);
   }
 
+  // Check if failure is due to a revoked, deleted, or invalid personal API key
+  const isCustomKeyFailure =
+    apiError?.message?.includes("CUSTOM_KEY_INVALID") ||
+    apiError?.message?.includes("deleted, revoked, or is invalid") ||
+    apiError?.message?.toLowerCase().includes("api key not valid") ||
+    apiError?.message?.includes("API_KEY_INVALID");
+
+  const trialInfo = getAiTrialInfo(config.apiKey);
+
+  // If the student's personal key was deleted in Google AI Studio BUT their 3-day free trial is still active,
+  // automatically failover to CanteenCue's shared system key so their lunch decision is not disrupted!
+  if (isCustomKeyFailure && trialInfo.isTrialActive && config.provider === "gemini") {
+    try {
+      const fallbackConfig: AiConfig = { ...config, apiKey: SYSTEM_GEMINI_KEY };
+      const systemResult = await callGeminiApi(fallbackConfig, query, history, currentState, lastPrimaryItem);
+      return {
+        response: {
+          ...systemResult.response,
+          whyFitsList: [
+            ...(systemResult.response.whyFitsList || []),
+            "⚡ Your personal Gemini API key was invalid or deleted in Google AI Studio. Seamlessly fell back to CanteenCue's free trial key (update your key in AI Settings)."
+          ],
+        },
+        nextState: systemResult.nextState,
+      };
+    } catch (sysErr) {
+      console.warn("Seamless fallback to system trial key also failed:", sysErr);
+    }
+  }
+
   const rawErrorMsg = sanitizeErrorMessage(apiError?.message || "Connection to external AI service failed.");
   const offlineResult = processUserDecision(query, currentState, lastPrimaryItem);
 
@@ -394,7 +424,9 @@ export async function processAiDecision(
   // If the query is complex, conversational, or the offline engine cannot handle it:
   // Provide clear, actionable feedback directing the user to configure their own API key
   const friendlyErrorMsg =
-    rawErrorMsg.includes("429") || rawErrorMsg.toLowerCase().includes("quota")
+    isCustomKeyFailure
+      ? `Your personal Google Gemini API key has been deleted or invalidated in Google AI Studio. Since your 3-day trial has ended, please generate a new free key in AI Settings (⚙️) or switch to the Built-in Engine.`
+      : rawErrorMsg.includes("429") || rawErrorMsg.toLowerCase().includes("quota")
       ? `API quota or rate limit reached on ${config.provider.toUpperCase()}. Please configure your own API key in AI Settings (⚙️).`
       : rawErrorMsg.includes("400") || rawErrorMsg.toLowerCase().includes("key")
       ? `Invalid or inactive API key for ${config.provider.toUpperCase()}. Please update your API key in AI Settings (⚙️).`
@@ -404,17 +436,24 @@ export async function processAiDecision(
     type: "clarification",
     summaryText: `⚠️ Live AI Service Notice: ${friendlyErrorMsg}\n\nSince this query requires open-ended conversational reasoning, the offline engine could not fulfill it. Please configure or use your own API key in AI Settings, or ask with specific budget/dietary constraints.`,
     whyFitsList: [
-      `Live model (${config.provider.toUpperCase()}) error: ${rawErrorMsg}`,
+      `Live model (${config.provider.toUpperCase()}) notice: ${rawErrorMsg}`,
       "Tap 'AI Settings' in the sidebar to configure your personal Gemini or OpenAI API key",
       "Or state a specific budget (e.g. ₹100) or craving (e.g. spicy roll) to use the built-in offline engine"
     ],
     alternatives: [],
-    suggestedFollowUps: [
-      "Open AI Settings",
-      "Vegetarian food under ₹80",
-      "Something spicy and filling",
-      "What can I get for ₹100?"
-    ],
+    suggestedFollowUps: isCustomKeyFailure
+      ? [
+          "Open AI Settings",
+          "Reset to Built-in",
+          "Watch Video Guide",
+          "Vegetarian food under ₹80",
+        ]
+      : [
+          "Open AI Settings",
+          "Vegetarian food under ₹80",
+          "Something spicy and filling",
+          "What can I get for ₹100?",
+        ],
     activePreferences: currentState,
     apiErrorDetails: {
       provider: config.provider,
