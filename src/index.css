@@ -2906,7 +2906,8 @@ textarea {
    and cleanly formats full chat transcripts for browser PDF export.
    ========================================================================== */
 @media print {
-  /* Hide sidebar navigation rail, backdrops, interactive widgets, and inputs */
+  /* Hide sidebar navigation rail, backdrops, interactive widgets, floating composer, and inputs */
+  aside,
   .sidebar-rail,
   .sidebar-mobile-backdrop,
   .sidebar-rail-tooltip,
@@ -2915,6 +2916,11 @@ textarea {
   .prompt-input-wrapper,
   .chat-input-bar,
   .prompt-input-container,
+  .composer-fixed,
+  .composer-inner,
+  .prompt-card,
+  .chat-quick-chips-wrapper,
+  .quick-chips,
   .site-header-right,
   .modal-backdrop,
   .modal-container,

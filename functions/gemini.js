@@ -78,8 +78,20 @@ export async function onRequestPost(context) {
       );
     }
 
-    // Default model to gemini-2.5-flash as specified
-    const model = (body.model || "gemini-2.5-flash").trim();
+    // Default model to gemini-3.8-flash (with auto-fallback to gemini-flash-latest and gemini-flash-lite-latest)
+    let requestedModel = (body.model || "gemini-3.8-flash").trim();
+    if (requestedModel === "gemini-2.5-flash" || requestedModel === "gemini-2.0-flash" || requestedModel === "gemini-1.5-flash") {
+      requestedModel = "gemini-3.8-flash";
+    }
+
+    const candidateModels = Array.from(
+      new Set([
+        requestedModel,
+        "gemini-3.8-flash",
+        "gemini-flash-latest",
+        "gemini-flash-lite-latest",
+      ])
+    );
 
     // Construct the Google Generative Language API payload
     let googlePayload;
@@ -114,51 +126,59 @@ export async function onRequestPost(context) {
     let lastData = null;
 
     for (const apiKey of candidateKeys) {
-      const googleEndpoint = `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(
-        model
-      )}:generateContent?key=${encodeURIComponent(apiKey)}`;
+      for (const model of candidateModels) {
+        const googleEndpoint = `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(
+          model
+        )}:generateContent?key=${encodeURIComponent(apiKey)}`;
 
-      try {
-        const googleResponse = await fetch(googleEndpoint, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(googlePayload),
-        });
-
-        const responseData = await googleResponse.json().catch(() => ({}));
-        lastResponse = googleResponse;
-        lastData = responseData;
-
-        // If request succeeded (200), return immediately
-        if (googleResponse.ok) {
-          return new Response(JSON.stringify(responseData), {
-            status: 200,
-            headers: corsHeaders,
+        try {
+          const googleResponse = await fetch(googleEndpoint, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(googlePayload),
           });
-        }
 
-        // If rate-limited (429) or quota exceeded, try next key in the pool
-        const isQuotaOrRateLimit =
-          googleResponse.status === 429 ||
-          responseData?.error?.code === 429 ||
-          responseData?.error?.status === "RESOURCE_EXHAUSTED" ||
-          JSON.stringify(responseData).toLowerCase().includes("quota") ||
-          JSON.stringify(responseData).toLowerCase().includes("rate limit");
+          const responseData = await googleResponse.json().catch(() => ({}));
+          lastResponse = googleResponse;
+          lastData = responseData;
 
-        if (isQuotaOrRateLimit && candidateKeys.length > 1) {
-          console.warn("Gemini key hit quota/rate-limit, failing over to next key in pool");
-          continue; // Try next key in candidateKeys
-        }
+          // If request succeeded (200), return immediately
+          if (googleResponse.ok) {
+            return new Response(JSON.stringify(responseData), {
+              status: 200,
+              headers: corsHeaders,
+            });
+          }
 
-        // If it's a non-retriable error (e.g. 400 Bad Request in user prompt), stop
-        if (googleResponse.status === 400) {
-          break;
+          // If rate-limited (429) or quota exceeded, try next key in the pool
+          const isQuotaOrRateLimit =
+            googleResponse.status === 429 ||
+            responseData?.error?.code === 429 ||
+            responseData?.error?.status === "RESOURCE_EXHAUSTED" ||
+            JSON.stringify(responseData).toLowerCase().includes("quota") ||
+            JSON.stringify(responseData).toLowerCase().includes("rate limit");
+
+          if (isQuotaOrRateLimit && candidateKeys.length > 1) {
+            console.warn("Gemini key hit quota/rate-limit, failing over to next key in pool");
+            break; // Try next key in candidateKeys
+          }
+
+          // If model is retired (404) or temporarily congested (503), try next candidate model
+          if (googleResponse.status === 404 || googleResponse.status === 503) {
+            console.warn(`Model ${model} returned ${googleResponse.status}, failing over to next model`);
+            continue;
+          }
+
+          // If it's a 400 Bad Request in user prompt, stop
+          if (googleResponse.status === 400) {
+            break;
+          }
+        } catch (networkErr) {
+          lastData = { error: { message: networkErr.message } };
+          continue;
         }
-      } catch (networkErr) {
-        lastData = { error: { message: networkErr.message } };
-        continue;
       }
     }
 

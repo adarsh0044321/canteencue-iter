@@ -27,7 +27,7 @@ const TRIAL_DURATION_MS = 3 * 24 * 60 * 60 * 1000; // 3 Days in milliseconds
 
 const envGeminiKey = ((import.meta as any).env?.VITE_GEMINI_API_KEY || "").trim();
 const envMultipleKeysRaw = ((import.meta as any).env?.VITE_GEMINI_API_KEYS || "").trim();
-const envModel = (import.meta as any).env?.VITE_GEMINI_MODEL || "gemini-2.5-flash";
+const envModel = (import.meta as any).env?.VITE_GEMINI_MODEL || "gemini-flash-latest";
 
 // Extensible System Key Pool: Combines VITE_GEMINI_API_KEYS and VITE_GEMINI_API_KEY
 const initialPool: string[] = [
@@ -157,8 +157,8 @@ export function getStoredAiConfig(): AiConfig {
     const raw = localStorage.getItem(STORAGE_KEY);
     if (!raw) return DEFAULT_AI_CONFIG;
     const parsed = JSON.parse(raw);
-    if (!parsed.model) {
-      parsed.model = "gemini-2.5-flash";
+    if (!parsed.model || parsed.model === "gemini-2.5-flash" || parsed.model === "gemini-2.0-flash" || parsed.model === "gemini-1.5-flash") {
+      parsed.model = envModel;
     }
     return { ...DEFAULT_AI_CONFIG, ...parsed };
   } catch {
@@ -247,7 +247,7 @@ export async function testAiConnection(config: AiConfig): Promise<{ success: boo
 
   try {
     if (config.provider === "gemini") {
-      const targetModel = config.model || "gemini-2.5-flash";
+      const targetModel = config.model || "gemini-flash-latest";
       const headers: Record<string, string> = {
         "Content-Type": "application/json",
       };
@@ -504,7 +504,7 @@ async function callGeminiApi(
     },
   };
 
-  const targetModel = config.model || "gemini-2.5-flash";
+  const targetModel = config.model || "gemini-flash-latest";
   const proxyPayload = {
     ...payload,
     model: targetModel,
