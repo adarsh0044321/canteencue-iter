@@ -175,6 +175,10 @@ describe("CanteenCue Security Audit & Hardening Suite", () => {
       expect(content).toContain("Referrer-Policy: strict-origin-when-cross-origin");
       expect(content).toContain("Strict-Transport-Security");
       expect(content).toContain("Content-Security-Policy");
+      expect(content).toContain("script-src 'self'");
+      expect(content).not.toContain("script-src 'self' 'unsafe-inline'");
+      expect(content).toContain("Cross-Origin-Opener-Policy: same-origin-allow-popups");
+      expect(content).toContain("Cross-Origin-Resource-Policy");
       expect(content).toContain("Permissions-Policy");
     });
 
